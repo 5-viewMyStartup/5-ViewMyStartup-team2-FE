@@ -1,10 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { Single } from "./single";
 
 export default function Main() {
   return (
-    <Box sx={mainLayout}>
+    <Stack sx={mainLayout}>
       <Features.ListTitle />
 
       <Box sx={scrollWrapper}>
@@ -15,14 +15,13 @@ export default function Main() {
       </Box>
 
       <Features.ListPagination />
-    </Box>
+    </Stack>
   );
 }
 
 const mainLayout = {
   pt: "40px",
   pb: "140px",
-  display: "flex",
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
