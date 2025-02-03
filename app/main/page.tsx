@@ -5,9 +5,7 @@ import { Single } from "./single";
 export default function Main() {
   return (
     <Box sx={mainLayout}>
-      <Box sx={contentContainerStyle}>
-        <Features.ListTitle />
-      </Box>
+      <Features.ListTitle />
 
       <Box sx={scrollWrapper}>
         <Box sx={listWrapperStyle}>
@@ -30,30 +28,23 @@ const mainLayout = {
   width: "100%",
 };
 
-const contentContainerStyle = {
-  display: "flex",
-  alignItems: "center",
-  width: "100%",
-  maxWidth: ["696px", "696px", "1200px"],
-  px: ["16px", "24px"], // 좌우 패딩
-};
-
 const scrollWrapper = {
-  width: "100%",
+  width: "100vw",
   overflow: "hidden",
+  position: "relative",
 };
 
 // 실제 스크롤되는 컨텐츠
 const listWrapperStyle = {
   width: "100%",
+  pl: { xs: "16px" },
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "flex-start",
+  alignItems: { xs: "flex-start", sm: "center" },
   overflowX: "auto",
   whiteSpace: "nowrap",
   WebkitOverflowScrolling: "touch",
-  // 스크롤바 스타일링 (선택적)
+  // 스크롤바 스타일링
   "&::-webkit-scrollbar": {
     display: "none",
   },

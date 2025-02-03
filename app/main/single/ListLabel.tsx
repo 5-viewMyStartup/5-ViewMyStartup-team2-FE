@@ -66,7 +66,7 @@ export default function ListLabel() {
 }
 
 const listLabelWrapperStyle = {
-  width: ["696px", "696px", "1200px"],
+  width: { xs: "696px", sm: "696px", md: "1200px" },
   borderRadius: "4px",
   flexDirection: "row",
   height: "39px",

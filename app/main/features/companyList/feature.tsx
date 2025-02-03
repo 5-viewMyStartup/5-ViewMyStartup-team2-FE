@@ -36,9 +36,8 @@ export default function CompanyList() {
 }
 
 const companyListWrapperStyle = {
-  width: ["696px", "696px", "1200px"],
+  width: { xs: "696px", sm: "696px", md: "1200px" },
   borderRadius: "4px",
   flexDirection: "column",
   backgroundColor: COLORS.black_300,
-  borderBottom: `1px solid ${COLORS.gray_300}`,
 };

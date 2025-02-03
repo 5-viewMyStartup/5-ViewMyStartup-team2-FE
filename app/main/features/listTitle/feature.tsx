@@ -29,7 +29,8 @@ const listHeaderContainerStyle = {
   alignItems: ["flex-start", "center"],
   height: ["100%", "48px"],
   width: "100%",
-  maxWidth: ["696px", "696px", "1200px"],
+  maxWidth: { sm: "696px", md: "1200px" },
+  pl: { xs: "16px" },
 };
 
 const utilsContainerSytle = {
