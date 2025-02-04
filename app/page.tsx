@@ -1,3 +1,8 @@
+import { CompanyComparison } from "./companyComparison/page";
 export default function Home() {
-  return <></>;
+  return (
+    <>
+      <CompanyComparison></CompanyComparison>
+    </>
+  );
 }
