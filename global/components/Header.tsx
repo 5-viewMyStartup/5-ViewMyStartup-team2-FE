@@ -32,7 +32,7 @@ export const Header = () => {
       <Stack
         maxWidth={"1200px"}
         width={"100%"}
-        spacing={["16px", "24px", "40px"]}
+        spacing={["40px", "24px", "16px"]}
         direction={"row"}
         pl={["16px", "24px", "16px"]}
       >
@@ -78,7 +78,7 @@ export const Header = () => {
 const BottomNavigationActionStyle: BottomNavigationActionProps = {
   sx: {
     paddingX: ["8px", "17px", "17px"],
-    fontSize: ["18px", "16px", "15px"],
+    fontSize: ["15px", "16px", "18px"],
     fontWeight: 600,
     whiteSpace: "nowrap",
     color: COLORS.gray_200,

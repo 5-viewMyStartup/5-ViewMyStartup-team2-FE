@@ -1,4 +1,5 @@
 const COLORS = {
+  white: "#FFFFFF",
   black_400: "#131313",
   black_300: "#212121",
   black_200: "#282828",
@@ -10,6 +11,9 @@ const COLORS = {
   brand_orange: "#EB5230",
   blue: "#EB5230",
   red_error: "#C41013",
+  white: "#FFFFFF",
 };
 
-export { COLORS };
+const PATH = { HOME: "/" };
+
+export { COLORS, PATH };
