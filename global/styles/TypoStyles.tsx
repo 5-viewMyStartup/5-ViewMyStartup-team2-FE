@@ -5,6 +5,27 @@ interface TypoStyles {
 }
 
 export const typographyStyles: TypoStyles = {
+  text_B_24: {
+    fontFamily: "pretendard",
+    fontSize: "24px",
+    fontStyle: "normal",
+    fontWeight: 700,
+    lineHeight: "28.64px",
+  },
+  text_SB_24: {
+    fontFamily: "pretendard",
+    fontSize: "24px",
+    fontStyle: "normal",
+    fontWeight: 600,
+    lineHeight: "28.64px",
+  },
+  text_M_24: {
+    fontFamily: "pretendard",
+    fontSize: "24px",
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: "28.64px",
+  },
   text_B_20: {
     fontFamily: "pretendard",
     fontSize: "20px",
