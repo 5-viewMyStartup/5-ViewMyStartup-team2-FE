@@ -1,6 +1,5 @@
 "use client";
 
-//TODO: 페이지 넘어갔을 때 order +10씩 추가하기
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { ApplicationDTO } from "@/global/types/data-contracts";

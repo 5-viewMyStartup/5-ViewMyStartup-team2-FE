@@ -1,5 +1,7 @@
 "use client";
 
+//TODO: 스켈레톤 뜨기 전에 잠깐 데이터가 보였다가 스켈레톤 보이는데, 이 부분 다시 잡아보자
+
 import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { Single } from "./single";
