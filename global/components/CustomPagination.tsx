@@ -1,7 +1,7 @@
 import { Pagination } from "@mui/material";
 import { colorChips } from "../styles/colorChips";
 
-interface CustomPagenationProps {
+interface CustomPaginationProps {
   page: number; // 현재 페이지
   count: number; // 전체 페이지 수
   handleChange: (event: React.ChangeEvent<unknown>, value: number) => void;
@@ -12,7 +12,7 @@ ex)
    setPage(value);
   };
  */
-export const CustomPagenation: React.FC<CustomPagenationProps> = ({
+export const CustomPagination: React.FC<CustomPaginationProps> = ({
   page,
   count,
   handleChange,
