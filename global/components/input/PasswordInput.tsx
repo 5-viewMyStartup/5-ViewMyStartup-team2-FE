@@ -1,5 +1,5 @@
 "use client";
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { Box, InputProps, OutlinedInput, SxProps } from "@mui/material";
 import Image from "next/image";
@@ -39,14 +39,14 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         sx={{
           ...passwordInputStyles,
           width: props.width,
-          borderColor: error ? COLORS.red_error : COLORS.gray_200,
+          borderColor: error ? colorChips.red_error : colorChips.gray_200,
         }}
         {...props}
       />
       {error && (
         <Typo
           className="text_R_14"
-          color={COLORS.red_error}
+          color={colorChips.red_error}
           content={`*${errorMsg ? errorMsg : "error"}`}
         />
       )}
@@ -59,9 +59,9 @@ const passwordInputStyles: SxProps = {
   height: ["40px", "48px", "48px"],
   borderRadius: "10px",
   paddingX: "20px",
-  border: `1px solid ${COLORS.gray_200}`,
+  border: `1px solid ${colorChips.gray_200}`,
   fontFamily: "pretendard",
-  color: COLORS.white,
+  color: colorChips.white,
   fontSize: "14px",
   fontStyle: "normal",
   fontWeight: 400,

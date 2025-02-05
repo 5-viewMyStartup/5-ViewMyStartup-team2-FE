@@ -1,5 +1,5 @@
 import { InputProps, OutlinedInput, SxProps } from "@mui/material";
-import { COLORS } from "../../styles/colors";
+import { colorChips } from "../../styles/colorChips";
 
 interface CommonInputProps extends Omit<InputProps, "fullWidth"> {
   width?: string;
@@ -23,9 +23,9 @@ const CommonInputStyles: SxProps = {
   height: ["40px", "48px", "48px"],
   borderRadius: "10px",
   paddingX: "20px",
-  border: `1px solid ${COLORS.gray_200}`,
+  border: `1px solid ${colorChips.gray_200}`,
   fontFamily: "pretendard",
-  color: COLORS.white,
+  color: colorChips.white,
   fontSize: "14px",
   fontStyle: "normal",
   fontWeight: 400,

@@ -1,4 +1,4 @@
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Box, OutlinedInput, InputProps, SxProps } from "@mui/material";
 import Image from "next/image";
 
@@ -57,10 +57,10 @@ const SearchStyles: SxProps = {
   height: ["40px", "48px", "48px"],
   borderRadius: "10px",
   paddingX: "12px",
-  border: `1px solid ${COLORS.gray_200}`,
-  backgroundColor: COLORS.black_300,
+  border: `1px solid ${colorChips.gray_200}`,
+  backgroundColor: colorChips.black_300,
   fontFamily: "pretendard",
-  color: COLORS.gray_100,
+  color: colorChips.gray_100,
   fontSize: "14px",
   fontStyle: "normal",
   fontWeight: 400,

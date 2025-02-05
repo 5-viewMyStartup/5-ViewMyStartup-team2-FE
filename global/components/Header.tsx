@@ -1,5 +1,5 @@
 "use client";
-import { COLORS, PATH } from "@/global/styles/colors";
+import { colorChips, PATH } from "@/global/styles/colorChips";
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -26,7 +26,7 @@ export const Header = () => {
   return (
     <Stack
       width={"100%"}
-      sx={{ borderBottom: `1px solid ${COLORS.black_100}` }}
+      sx={{ borderBottom: `1px solid ${colorChips.black_100}` }}
       alignItems={"center"}
     >
       <Stack
@@ -51,7 +51,7 @@ export const Header = () => {
           sx={{
             justifyContent: "left",
             height: "60px",
-            bgcolor: COLORS.black_400,
+            bgcolor: colorChips.black_400,
             padding: 0,
           }}
         >
@@ -81,9 +81,9 @@ const BottomNavigationActionStyle: BottomNavigationActionProps = {
     fontSize: ["15px", "16px", "18px"],
     fontWeight: 600,
     whiteSpace: "nowrap",
-    color: COLORS.gray_200,
+    color: colorChips.gray_200,
     "&.Mui-selected": {
-      color: COLORS.white,
+      color: colorChips.white,
     },
   },
 };

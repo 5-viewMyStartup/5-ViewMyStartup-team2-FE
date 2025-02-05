@@ -1,4 +1,4 @@
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { Button } from "@mui/material";
 
@@ -41,8 +41,8 @@ export const LargeBtn: React.FC<LargeBtnProps> = ({
             width: props.width ? props.width : "183px",
             height: props.height ? props.height : "48px",
             borderRadius: "50px",
-            bgcolor: COLORS.black_100,
-            color: COLORS.gray_200,
+            bgcolor: colorChips.black_100,
+            color: colorChips.gray_200,
             cursor: "not-allowed",
           }}
         >
