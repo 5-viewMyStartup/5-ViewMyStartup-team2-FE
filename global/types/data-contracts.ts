@@ -30,7 +30,7 @@ export interface CompanyDTO {
   applicantCnt: number;
 }
 
-export type ApplicationStatus = "PENDING" | "ACCEPTED" | "REJECTED";
+export type ApplicationStatus = "pending" | "accepted" | "rejected";
 
 export interface ApplicationListQuery {
   page?: number;

@@ -1,16 +1,20 @@
 "use client";
 
-import {
-  dataBoxStyle,
-  descBoxStyle,
-  orderBoxStyle,
-} from "@/app/my-applications/single/ListLabel";
+//TODO: 페이지 넘어갔을 때 order +10씩 추가하기
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { ApplicationDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
-import { useCompanyImg } from "@/global/hooks/useCompanyImg";
-import { CompanyImg } from "@/global/components/CompanyImg";
+import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
+import Image from "next/image";
+import {
+  companyItemBoxStyle,
+  labelOrderBoxStyle,
+  itemNameBoxStyle,
+  labelDescBoxStyle,
+  companyDescTypoStyle,
+  labelDataBoxStyle,
+} from "@/global/styles/companyListStyles";
 
 interface CompanyItemsProps {
   order: number;
@@ -18,7 +22,7 @@ interface CompanyItemsProps {
 }
 
 export function CompanyItems({ order, itemData }: CompanyItemsProps) {
-  const { imgSrc } = useCompanyImg(itemData.image);
+  const { imgSrc, handleImgErr } = useCompanyDefaultImg(itemData.image);
   const formatDate = (dateStr: string): string => {
     const date = new Date(dateStr);
     return date.toISOString().split("T")[0].replace(/-/g, ".");
@@ -36,26 +40,36 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
 
   return (
     <Stack sx={companyItemBoxStyle}>
-      <Box sx={orderBoxStyle}>
+      <Box sx={labelOrderBoxStyle}>
         <Typo
           className="text_R_14"
-          content={`${order + 1}`}
+          content={`${order}`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={imgNameBoxStyle}>
-        <CompanyImg src={imgSrc} width={32} height={32} />
+      <Box sx={itemNameBoxStyle}>
+        <Image
+          src={imgSrc}
+          alt="기업 대표 이미지"
+          width={32}
+          height={32}
+          onError={handleImgErr}
+          style={{ borderRadius: "50%" }}
+        />
         <Typo
           className="text_M_14"
           content={itemData.name}
           color={colorChips.white}
-          customStyle={{ textAlign: "center" }}
+          customStyle={{
+            textAlign: "center",
+            overflow: "hidden",
+          }}
         />
       </Box>
       <Box
         sx={{
-          ...descBoxStyle,
+          ...labelDescBoxStyle,
           padding: "15px 16px",
         }}
       >
@@ -66,7 +80,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
           customStyle={companyDescTypoStyle}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={itemData.category[0].category}
@@ -74,7 +88,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={status}
@@ -88,7 +102,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
           }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={formatDate(itemData.createdAt)}
@@ -96,7 +110,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={`${itemData.applicantCnt.toString()} 명`}
@@ -107,29 +121,3 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
     </Stack>
   );
 }
-
-const companyItemBoxStyle = {
-  flexDirection: "row",
-  height: "64px",
-  borderBottom: `1px solid ${colorChips.gray_300}`,
-  "&:last-child": {
-    borderBottom: "none",
-  },
-};
-
-const imgNameBoxStyle = {
-  display: "flex",
-  alignItems: "center",
-  gap: ["8px", "8px", "12px"],
-  pl: ["16px", "16px", "24px"],
-  width: ["150px", "150px", "216px"],
-};
-
-const companyDescTypoStyle = {
-  overflow: "hidden", //넘치는 내용 숨기기
-  display: "-webkit-box", //말줄임표
-  WebkitLineClamp: 2, //최대 2줄까지만 표시
-  WebkitBoxOrient: "vertical" as const, //세로 방향 줄바꿈 적용
-  whiteSpace: "normal",
-  wordBreak: "break-word" as const, //단어 단위로 줄바꿈
-};

@@ -1,5 +1,5 @@
-import { colorChips } from "@/global/styles/colorChips";
 import { Stack } from "@mui/material";
+import { companyListWrapperStyle } from "@/global/styles/companyListStyles";
 import { CompanyItems } from "./components/CompanyItems";
 
 const mockData = [
@@ -35,10 +35,3 @@ export default function CompanyList() {
     </Stack>
   );
 }
-
-const companyListWrapperStyle = {
-  width: { xs: "696px", sm: "696px", md: "1200px" },
-  borderRadius: "4px",
-  flexDirection: "column",
-  backgroundColor: colorChips.black_300,
-};
