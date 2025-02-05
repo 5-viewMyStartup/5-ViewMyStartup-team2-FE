@@ -9,8 +9,9 @@ import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { CompanyDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
-import Image from "next/image";
-import { useCompanyImg } from "../core/useCompanyImg";
+import { useCompanyImg } from "@/global/hooks/useCompanyImg";
+import { CompanyImg } from "@/global/components/CompanyImg";
+import { formatRevenue } from "@/global/utils/formatRevenue";
 
 interface CompanyItemsProps {
   ranking: number;
@@ -18,7 +19,7 @@ interface CompanyItemsProps {
 }
 
 export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
-  const { handleImgErr, imgSrc } = useCompanyImg(itemData.image);
+  const { imgSrc } = useCompanyImg(itemData.image);
 
   return (
     <Stack sx={companyItemBoxStyle}>
@@ -31,14 +32,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
         />
       </Box>
       <Box sx={imgNameBoxStyle}>
-        <Image
-          src={imgSrc}
-          width={32}
-          height={32}
-          alt="기업 대표 이미지"
-          style={{ borderRadius: "360px", alignContent: "center" }}
-          onError={handleImgErr}
-        />
+        <CompanyImg src={imgSrc} width={32} height={32} />
         <Typo
           className="text_M_14"
           content={itemData.name}
@@ -70,7 +64,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
       <Box sx={dataBoxStyle}>
         <Typo
           className="text_R_14"
-          content={itemData.salesRevenue}
+          content={formatRevenue(itemData.salesRevenue)}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />

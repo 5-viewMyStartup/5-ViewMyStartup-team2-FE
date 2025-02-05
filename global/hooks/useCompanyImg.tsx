@@ -6,7 +6,6 @@ interface UseCompanyImgReturn {
   isLoading: boolean;
 }
 
-//TODO: 이미지 애니메이션 효과 추가하는면 로딩중이라는 표시 더 잘 보일듯듯
 export function useCompanyImg(src: string | undefined): UseCompanyImgReturn {
   const [imgErr, setImgErr] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -37,7 +36,7 @@ export function useCompanyImg(src: string | undefined): UseCompanyImgReturn {
   const handleImgErr = (): void => setImgErr(true);
 
   const imgSrc: string =
-    isLoading || imgErr || !src ? "/assets/default-company-img.svg" : src;
+    imgErr || !src ? "/assets/default-company-img.svg" : src;
 
   return {
     handleImgErr,

@@ -9,8 +9,8 @@ import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { ApplicationsDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
-import Image from "next/image";
-import { useCompanyImg } from "../core/useCompanyImg";
+import { useCompanyImg } from "@/global/hooks/useCompanyImg";
+import { CompanyImg } from "@/global/components/CompanyImg";
 
 interface CompanyItemsProps {
   order: number;
@@ -18,15 +18,20 @@ interface CompanyItemsProps {
 }
 
 export function CompanyItems({ order, itemData }: CompanyItemsProps) {
-  const { handleImgErr, imgSrc } = useCompanyImg(itemData.image);
+  const { imgSrc } = useCompanyImg(itemData.image);
   const formatDate = (date: Date): string => {
     return date.toISOString().split("T")[0].replace(/-/g, ".");
   };
-  console.log(itemData.status);
-  console.log(itemData.status === "ACCEPTED");
+  const status =
+    itemData.status === "PENDING"
+      ? "지원 완료"
+      : itemData.status === "ACCEPTED"
+      ? "합격"
+      : "불합격";
   const statusColor =
-    itemData.status === "ACCEPTED" ? colorChips.blue : colorChips.brand_orange;
-  console.log(statusColor);
+    itemData.status === "ACCEPTED"
+      ? colorChips.brand_orange
+      : colorChips.gray_300;
 
   return (
     <Stack sx={companyItemBoxStyle}>
@@ -39,14 +44,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
         />
       </Box>
       <Box sx={imgNameBoxStyle}>
-        <Image
-          src={imgSrc}
-          width={32}
-          height={32}
-          alt="기업 대표 이미지"
-          style={{ borderRadius: "360px", alignContent: "center" }}
-          onError={handleImgErr}
-        />
+        <CompanyImg src={imgSrc} width={32} height={32} />
         <Typo
           className="text_M_14"
           content={itemData.name}
@@ -78,10 +76,15 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
       <Box sx={dataBoxStyle}>
         <Typo
           className="text_R_14"
-          content={itemData.status}
-          // color={colorChips.gray_100}
-          color={statusColor}
-          customStyle={{ textAlign: "center" }}
+          content={status}
+          color={colorChips.white}
+          customStyle={{
+            textAlign: "center",
+            backgroundColor: statusColor,
+            padding: "4px 0",
+            borderRadius: "4px",
+            width: "78px",
+          }}
         />
       </Box>
       <Box sx={dataBoxStyle}>

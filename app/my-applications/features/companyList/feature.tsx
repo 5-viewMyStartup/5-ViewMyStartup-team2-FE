@@ -29,6 +29,17 @@ const mockData: ApplicationsDTO[] = [
     createdAt: new Date("2024-12-10"),
     updatedAt: new Date("2024-12-10"),
   },
+  {
+    id: "sss",
+    name: "test",
+    image: "/#fdsa",
+    content: "test.",
+    category: [{ id: "test", category: "test" }],
+    status: "REJECTED",
+    applicantCnt: 15,
+    createdAt: new Date("2024-12-10"),
+    updatedAt: new Date("2024-12-10"),
+  },
 ];
 
 export default function CompanyList() {
