@@ -2,9 +2,9 @@ import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { Single } from "./single";
 
-export default function Main() {
+export default function Page() {
   return (
-    <Stack sx={mainLayout}>
+    <Stack sx={ListLayout}>
       <Features.ListTitle />
 
       <Box sx={scrollWrapper}>
@@ -19,7 +19,7 @@ export default function Main() {
   );
 }
 
-const mainLayout = {
+const ListLayout = {
   pt: "40px",
   pb: "140px",
   flexDirection: "column",

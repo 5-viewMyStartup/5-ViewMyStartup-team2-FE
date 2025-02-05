@@ -1,4 +1,4 @@
-export interface CompanyData {
+export interface CompanyDTO {
   /**
    * 기업 명
    */
@@ -15,11 +15,11 @@ export interface CompanyData {
    * 카테고리
    * @example ["에듀테크", "재테크"]
    */
-  category: string[];
+  category: { id: string; category: string }[];
   /**
    * 매출액
    */
-  salesRevenue: number;
+  salesRevenue: string;
   /**
    * 사원 수
    */
@@ -27,5 +27,15 @@ export interface CompanyData {
   /**
    * 지원자 수
    */
-  applicatnsCnt: number;
+  applicantCnt: number;
+}
+
+export type ApplicationStatus = "PENDING" | "ACCEPTED" | "REJECTED";
+
+export interface ApplicationsDTO
+  extends Omit<CompanyDTO, "salesRevenue" | "employeeCnt"> {
+  id: string;
+  status: ApplicationStatus | string;
+  createdAt: Date;
+  updatedAt: Date;
 }

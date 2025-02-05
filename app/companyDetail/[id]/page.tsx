@@ -1,5 +1,11 @@
-import CompanyDetail from "@/app/components/companyDetail/CompanyDetail";
+import CompanyDetail from "@/app/companyDetail/CompanyDetail";
 
-export default function CompanyDetailPage() {
-  return <CompanyDetail />;
+interface CompanyDetailPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function CompanyDetailPage({ params }: CompanyDetailPageProps) {
+  return <CompanyDetail id={params.id} />;
 }
