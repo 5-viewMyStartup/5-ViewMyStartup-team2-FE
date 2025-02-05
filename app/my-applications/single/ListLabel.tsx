@@ -5,14 +5,7 @@ import { Box, Stack } from "@mui/material";
 export default function ListLabel() {
   return (
     <Stack sx={listLabelWrapperStyle}>
-      <Box sx={rankingBoxStyle}>
-        <Typo
-          className="text_M_14"
-          content="순위"
-          color={colorChips.white}
-          customStyle={{ textAlign: "center" }}
-        />
-      </Box>
+      <Box sx={orderBoxStyle} />
       <Box sx={nameBoxStyle}>
         <Typo
           className="text_M_14"
@@ -40,7 +33,7 @@ export default function ListLabel() {
       <Box sx={dataBoxStyle}>
         <Typo
           className="text_M_14"
-          content="매출액"
+          content="지원 상태"
           color={colorChips.white}
           customStyle={{ textAlign: "center" }}
         />
@@ -48,7 +41,7 @@ export default function ListLabel() {
       <Box sx={dataBoxStyle}>
         <Typo
           className="text_M_14"
-          content="사원 수"
+          content="지원 일자"
           color={colorChips.white}
           customStyle={{ textAlign: "center" }}
         />
@@ -80,7 +73,7 @@ const baseLabelBoxStyle = {
   alignItems: "center",
 };
 
-export const rankingBoxStyle = {
+export const orderBoxStyle = {
   ...baseLabelBoxStyle,
   display: ["none", "none", "flex"],
   width: ["50px", "50px", "68px"],

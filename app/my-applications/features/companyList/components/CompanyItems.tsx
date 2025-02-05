@@ -3,29 +3,37 @@
 import {
   dataBoxStyle,
   descBoxStyle,
-  rankingBoxStyle,
-} from "@/app/main/single/ListLabel";
+  orderBoxStyle,
+} from "@/app/my-applications/single/ListLabel";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { CompanyDTO } from "@/global/types/data-contracts";
+import { ApplicationsDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
 import Image from "next/image";
 import { useCompanyImg } from "../core/useCompanyImg";
 
 interface CompanyItemsProps {
-  ranking: number;
-  itemData: CompanyDTO;
+  order: number;
+  itemData: ApplicationsDTO;
 }
 
-export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
+export function CompanyItems({ order, itemData }: CompanyItemsProps) {
   const { handleImgErr, imgSrc } = useCompanyImg(itemData.image);
+  const formatDate = (date: Date): string => {
+    return date.toISOString().split("T")[0].replace(/-/g, ".");
+  };
+  console.log(itemData.status);
+  console.log(itemData.status === "ACCEPTED");
+  const statusColor =
+    itemData.status === "ACCEPTED" ? colorChips.blue : colorChips.brand_orange;
+  console.log(statusColor);
 
   return (
     <Stack sx={companyItemBoxStyle}>
-      <Box sx={rankingBoxStyle}>
+      <Box sx={orderBoxStyle}>
         <Typo
           className="text_R_14"
-          content={`${ranking + 1}위`}
+          content={`${order + 1}`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
@@ -70,7 +78,16 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
       <Box sx={dataBoxStyle}>
         <Typo
           className="text_R_14"
-          content={itemData.salesRevenue}
+          content={itemData.status}
+          // color={colorChips.gray_100}
+          color={statusColor}
+          customStyle={{ textAlign: "center" }}
+        />
+      </Box>
+      <Box sx={dataBoxStyle}>
+        <Typo
+          className="text_R_14"
+          content={formatDate(itemData.createdAt)}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
@@ -78,15 +95,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
       <Box sx={dataBoxStyle}>
         <Typo
           className="text_R_14"
-          content={itemData.employeeCnt.toString()}
-          color={colorChips.gray_100}
-          customStyle={{ textAlign: "center" }}
-        />
-      </Box>
-      <Box sx={dataBoxStyle}>
-        <Typo
-          className="text_R_14"
-          content={itemData.applicantCnt.toString()}
+          content={`${itemData.applicantCnt.toString()} 명`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />

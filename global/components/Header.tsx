@@ -1,4 +1,4 @@
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -12,13 +12,13 @@ export const Header = () => {
   return (
     <Stack
       width={"100%"}
-      sx={{ borderBottom: `1px solid ${COLORS.black_100}` }}
+      sx={{ borderBottom: `1px solid ${colorChips.black_100}` }}
       alignItems={"center"}
     >
       <Box maxWidth={"1200px"} width={"100%"}>
         <BottomNavigation
           showLabels
-          sx={{ height: "60px", bgcolor: COLORS.black_400, padding: 0 }}
+          sx={{ height: "60px", bgcolor: colorChips.black_400, padding: 0 }}
         >
           <BottomNavigationAction
             sx={{ padding: 0 }}
@@ -54,6 +54,6 @@ const BottomNavigationActionStyle: BottomNavigationActionProps = {
     paddingX: "17px",
     fontSize: "15px",
     fontWeight: 600,
-    color: COLORS.gray_100,
+    color: colorChips.gray_100,
   },
 };
