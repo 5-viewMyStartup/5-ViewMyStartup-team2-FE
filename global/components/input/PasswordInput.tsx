@@ -1,12 +1,7 @@
 "use client";
 import { COLORS } from "@/global/styles/colors";
-import {
-  Box,
-  InputProps,
-  OutlinedInput,
-  SxProps,
-  Typography,
-} from "@mui/material";
+import { Typo } from "@/global/styles/Typo";
+import { Box, InputProps, OutlinedInput, SxProps } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -49,9 +44,11 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         {...props}
       />
       {error && (
-        <Typography className="text_R_14" color={COLORS.red_error}>
-          *{errorMsg ? errorMsg : "error"}
-        </Typography>
+        <Typo
+          className="text_R_14"
+          color={COLORS.red_error}
+          content={`*${errorMsg ? errorMsg : "error"}`}
+        />
       )}
     </Box>
   );
