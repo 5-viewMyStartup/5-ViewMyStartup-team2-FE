@@ -1,4 +1,4 @@
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { Box, Stack } from "@mui/material";
 
@@ -10,7 +10,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="기업 명"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -18,7 +18,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="기업 소개"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -26,7 +26,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="카테고리"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -34,7 +34,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="매출액"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -42,7 +42,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="사원 수"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -50,7 +50,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="지원자 수"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -65,7 +65,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="순위"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -73,7 +73,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="기업 명"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -81,7 +81,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="기업 소개"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -89,7 +89,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="카테고리"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -97,7 +97,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="매출액"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -105,7 +105,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="사원 수"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -113,7 +113,7 @@ export const ListLabel = {
           <Typo
             className="text_M_14"
             content="지원자 수"
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -128,7 +128,7 @@ const listLabelWrapperStyle = {
   flexDirection: "row",
   height: "39px",
   mb: "16px",
-  backgroundColor: COLORS.black_100,
+  backgroundColor: colorChips.black_100,
 };
 
 const baseLabelBoxStyle = {

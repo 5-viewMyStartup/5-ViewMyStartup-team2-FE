@@ -1,4 +1,4 @@
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Stack } from "@mui/material";
 import { CompanyItems } from "./components/CompanyItems";
 
@@ -12,7 +12,7 @@ const mockData = [
     category: ["에듀테크"],
     salesRevenue: 140000,
     employeeCnt: 50,
-    applicatnsCnt: 12,
+    applicantsCnt: 12,
   },
   {
     name: "뤼이드",
@@ -22,7 +22,7 @@ const mockData = [
     category: ["에듀테크"],
     salesRevenue: 155000,
     employeeCnt: 12,
-    applicatnsCnt: 6,
+    applicantsCnt: 6,
   },
 ];
 
@@ -51,7 +51,7 @@ export const CompanyList = {
     return (
       <Stack sx={companyListWrapperStyle}>
         {mockData.map((item, idx) => (
-          <CompanyItems.Ranking key={idx} ranking={idx} itemData={item} />
+          <CompanyItems.Ranking key={idx} itemData={item} />
         ))}
       </Stack>
     );
@@ -62,13 +62,13 @@ const companyListWrapperStyle = {
   width: { xs: "696px", sm: "696px", md: "1200px" },
   borderRadius: "4px",
   flexDirection: "column",
-  backgroundColor: COLORS.black_300,
+  backgroundColor: colorChips.black_300,
 };
 
 const BookmarkListWrapperStyle = {
   width: { xs: "696px", sm: "696px", md: "1200px" },
   flexDirection: "row",
-  backgroundColor: COLORS.black_300,
+  backgroundColor: colorChips.black_300,
   height: "100%",
   alignItems: "center",
   justifyContent: "center",

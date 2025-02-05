@@ -1,4 +1,4 @@
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { Box, Stack } from "@mui/material";
 import Link from "next/link";
@@ -11,7 +11,7 @@ export const ListTitle = {
         <Typo
           className="text_B_20"
           content="내가 선택한 기업"
-          color={COLORS.white}
+          color={colorChips.white}
         />
         <Box>
           {/* 빈 문자열은 현재 페이지 */}
@@ -20,7 +20,7 @@ export const ListTitle = {
               <Typo
                 className="text_SB_16"
                 content="다른 기업 비교하기"
-                color={COLORS.white}
+                color={colorChips.white}
               />
             </Box>
           </Link>
@@ -34,11 +34,15 @@ export const ListTitle = {
         <Typo
           className="text_B_20"
           content="비교 결과 확인하기"
-          color={COLORS.white}
+          color={colorChips.white}
         />
         <Box>
           <Box sx={sortBoxStyle}>
-            <Typo className="text_SB_20" content="정렬" color={COLORS.white} />
+            <Typo
+              className="text_SB_20"
+              content="정렬"
+              color={colorChips.white}
+            />
           </Box>
         </Box>
       </Stack>
@@ -51,11 +55,15 @@ export const ListTitle = {
         <Typo
           className="text_B_20"
           content="기업 순위 확인하기"
-          color={COLORS.white}
+          color={colorChips.white}
         />
         <Box>
           <Box sx={sortBoxStyle}>
-            <Typo className="text_SB_20" content="정렬" color={COLORS.white} />
+            <Typo
+              className="text_SB_20"
+              content="정렬"
+              color={colorChips.white}
+            />
           </Box>
         </Box>
       </Stack>
@@ -89,5 +97,5 @@ const sortBoxStyle = {
   justifyContent: "center",
   width: ["146px", "168px"],
   height: ["40px", "48px"],
-  border: `1px solid ${COLORS.white}`, //border는 컴포넌트 넣고 삭제
+  border: `1px solid ${colorChips.white}`, //border는 컴포넌트 넣고 삭제
 };

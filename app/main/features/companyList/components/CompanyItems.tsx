@@ -5,7 +5,7 @@ import {
   descBoxStyle,
   rankingBoxStyle,
 } from "@/app/main/single/ListLabel";
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { CompanyData } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
@@ -26,7 +26,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
         <Typo
           className="text_R_14"
           content={`${ranking + 1}위`}
-          color={COLORS.gray_100}
+          color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
@@ -42,7 +42,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
         <Typo
           className="text_M_14"
           content={itemData.name}
-          color={COLORS.white}
+          color={colorChips.white}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
@@ -55,7 +55,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
         <Typo
           className="text_R_14"
           content={itemData.content}
-          color={COLORS.gray_100}
+          color={colorChips.gray_100}
           customStyle={companyDescTypoStyle}
         />
       </Box>
@@ -63,7 +63,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
         <Typo
           className="text_R_14"
           content={itemData.category[0]}
-          color={COLORS.gray_100}
+          color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
@@ -71,7 +71,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
         <Typo
           className="text_R_14"
           content={itemData.salesRevenue.toString()}
-          color={COLORS.gray_100}
+          color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
@@ -79,7 +79,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
         <Typo
           className="text_R_14"
           content={itemData.employeeCnt.toString()}
-          color={COLORS.gray_100}
+          color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
@@ -87,7 +87,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
         <Typo
           className="text_R_14"
           content={itemData.applicatnsCnt.toString()}
-          color={COLORS.gray_100}
+          color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
@@ -98,7 +98,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
 const companyItemBoxStyle = {
   flexDirection: "row",
   height: "64px",
-  borderBottom: `1px solid ${COLORS.gray_300}`,
+  borderBottom: `1px solid ${colorChips.gray_300}`,
   "&:last-child": {
     borderBottom: "none",
   },

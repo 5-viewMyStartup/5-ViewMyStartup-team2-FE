@@ -1,4 +1,4 @@
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Stack } from "@mui/material";
 import { CompanyItems } from "./components/CompanyItems";
 
@@ -40,5 +40,5 @@ const companyListWrapperStyle = {
   width: { xs: "696px", sm: "696px", md: "1200px" },
   borderRadius: "4px",
   flexDirection: "column",
-  backgroundColor: COLORS.black_300,
+  backgroundColor: colorChips.black_300,
 };

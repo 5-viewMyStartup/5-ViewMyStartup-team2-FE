@@ -2,16 +2,15 @@ import {
   dataBoxStyle,
   descBoxStyle,
   rankingBoxStyle,
-} from "@/app/companyComparison/single/ListLabel";
-import { COLORS } from "@/global/styles/colors";
+} from "@/app/company-comparison/single/ListLabel";
+import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { CompanyData } from "@/global/types/data-contracts";
+import { CompanyData } from "@/app/company-comparison/data-contracts";
 import { Box, Stack } from "@mui/material";
 import Image from "next/image";
 import { useCompanyImg } from "../core/useCompanyImg";
 
 interface CompanyItemsProps {
-  ranking?: number;
   itemData: CompanyData;
 }
 
@@ -35,7 +34,7 @@ export const CompanyItems = {
           <Typo
             className="text_M_20"
             content={itemData.name}
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -43,7 +42,7 @@ export const CompanyItems = {
           <Typo
             className="text_M_18"
             content={itemData.category[0]}
-            color={COLORS.gray_200}
+            color={colorChips.gray_200}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -68,7 +67,7 @@ export const CompanyItems = {
           <Typo
             className="text_M_14"
             content={itemData.name}
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -81,7 +80,7 @@ export const CompanyItems = {
           <Typo
             className="text_R_14"
             content={itemData.content}
-            color={COLORS.gray_100}
+            color={colorChips.gray_100}
             customStyle={companyDescTypoStyle}
           />
         </Box>
@@ -89,7 +88,7 @@ export const CompanyItems = {
           <Typo
             className="text_R_14"
             content={itemData.category[0]}
-            color={COLORS.gray_100}
+            color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -97,7 +96,7 @@ export const CompanyItems = {
           <Typo
             className="text_R_14"
             content={itemData.salesRevenue.toString()}
-            color={COLORS.gray_100}
+            color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -105,15 +104,15 @@ export const CompanyItems = {
           <Typo
             className="text_R_14"
             content={itemData.employeeCnt.toString()}
-            color={COLORS.gray_100}
+            color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.applicatnsCnt.toString()}
-            color={COLORS.gray_100}
+            content={itemData.applicantsCnt.toString()}
+            color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -121,7 +120,7 @@ export const CompanyItems = {
     );
   },
 
-  Ranking: function ({ ranking, itemData }: CompanyItemsProps) {
+  Ranking: function ({ itemData }: CompanyItemsProps) {
     const { handleImgErr, imgSrc } = useCompanyImg(itemData.image);
 
     return (
@@ -129,8 +128,8 @@ export const CompanyItems = {
         <Box sx={rankingBoxStyle}>
           <Typo
             className="text_R_14"
-            content={`${(ranking ?? 0) + 1}위`} // null 또는 undefined인 경우 0으로 반환
-            color={COLORS.gray_100}
+            content={`${(itemData.ranking ?? 0) + 1}위`} // null 또는 undefined인 경우 0으로 반환
+            color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -146,7 +145,7 @@ export const CompanyItems = {
           <Typo
             className="text_M_14"
             content={itemData.name}
-            color={COLORS.white}
+            color={colorChips.white}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -159,7 +158,7 @@ export const CompanyItems = {
           <Typo
             className="text_R_14"
             content={itemData.content}
-            color={COLORS.gray_100}
+            color={colorChips.gray_100}
             customStyle={companyDescTypoStyle}
           />
         </Box>
@@ -167,7 +166,7 @@ export const CompanyItems = {
           <Typo
             className="text_R_14"
             content={itemData.category[0]}
-            color={COLORS.gray_100}
+            color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -175,7 +174,7 @@ export const CompanyItems = {
           <Typo
             className="text_R_14"
             content={itemData.salesRevenue.toString()}
-            color={COLORS.gray_100}
+            color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -183,15 +182,15 @@ export const CompanyItems = {
           <Typo
             className="text_R_14"
             content={itemData.employeeCnt.toString()}
-            color={COLORS.gray_100}
+            color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.applicatnsCnt.toString()}
-            color={COLORS.gray_100}
+            content={itemData.applicantsCnt.toString()}
+            color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
         </Box>
@@ -203,7 +202,7 @@ export const CompanyItems = {
 const companyItemBoxStyle = {
   flexDirection: "row",
   height: "64px",
-  borderBottom: `1px solid ${COLORS.gray_300}`,
+  borderBottom: `1px solid ${colorChips.gray_300}`,
   "&:last-child": {
     borderBottom: "none",
   },

@@ -1,4 +1,4 @@
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { Box, Stack } from "@mui/material";
 import React from "react";
@@ -9,14 +9,22 @@ export default function ListTitle(): React.ReactElement {
       <Typo
         className="text_B_20"
         content="전체 스타트업 목록"
-        color={COLORS.white}
+        color={colorChips.white}
       />
       <Stack sx={utilsContainerSytle}>
         <Box sx={searchBoxStyle}>
-          <Typo className="text_SB_20" content="검색" color={COLORS.white} />
+          <Typo
+            className="text_SB_20"
+            content="검색"
+            color={colorChips.white}
+          />
         </Box>
         <Box sx={sortBoxStyle}>
-          <Typo className="text_SB_20" content="정렬" color={COLORS.white} />
+          <Typo
+            className="text_SB_20"
+            content="정렬"
+            color={colorChips.white}
+          />
         </Box>
       </Stack>
     </Stack>
@@ -45,7 +53,7 @@ const searchBoxStyle = {
   alignItems: "center",
   width: ["189px", "269px", "448px"],
   height: ["40px", "48px"],
-  border: `1px solid ${COLORS.white}`, //border는 컴포넌트 넣고 삭제
+  border: `1px solid ${colorChips.white}`, //border는 컴포넌트 넣고 삭제
 };
 
 const sortBoxStyle = {
@@ -53,5 +61,5 @@ const sortBoxStyle = {
   alignItems: "center",
   width: ["146px", "168px"],
   height: ["40px", "48px"],
-  border: `1px solid ${COLORS.white}`, //border는 컴포넌트 넣고 삭제
+  border: `1px solid ${colorChips.white}`, //border는 컴포넌트 넣고 삭제
 };

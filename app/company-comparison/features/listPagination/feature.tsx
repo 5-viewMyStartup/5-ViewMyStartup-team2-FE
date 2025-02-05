@@ -1,4 +1,4 @@
-import { COLORS } from "@/global/styles/colors";
+import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { Box } from "@mui/material";
 
@@ -15,7 +15,7 @@ export default function ListPagination() {
       <Typo
         className="text_SB_20"
         content="[페이지네이션 컴포넌트]"
-        color={COLORS.white}
+        color={colorChips.white}
       />
     </Box>
   );
