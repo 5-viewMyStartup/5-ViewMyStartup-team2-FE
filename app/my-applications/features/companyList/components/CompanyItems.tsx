@@ -7,14 +7,14 @@ import {
 } from "@/app/my-applications/single/ListLabel";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { ApplicationsDTO } from "@/global/types/data-contracts";
+import { ApplicationDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
 import { useCompanyImg } from "@/global/hooks/useCompanyImg";
 import { CompanyImg } from "@/global/components/CompanyImg";
 
 interface CompanyItemsProps {
   order: number;
-  itemData: ApplicationsDTO;
+  itemData: ApplicationDTO;
 }
 
 export function CompanyItems({ order, itemData }: CompanyItemsProps) {

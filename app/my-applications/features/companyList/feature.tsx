@@ -1,9 +1,9 @@
 import { colorChips } from "@/global/styles/colorChips";
 import { Stack } from "@mui/material";
 import { CompanyItems } from "./components/CompanyItems";
-import { ApplicationsDTO } from "@/global/types/data-contracts";
+import { ApplicationDTO } from "@/global/types/data-contracts";
 
-const mockData: ApplicationsDTO[] = [
+const mockData: ApplicationDTO[] = [
   {
     id: "sss",
     name: "코드잇",

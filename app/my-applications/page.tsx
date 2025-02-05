@@ -1,8 +1,30 @@
 import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { Single } from "./single";
+import { useCallback, useState } from "react";
+import { ApplicationListQuery } from "@/global/types/data-contracts";
+import { useApplicationFetch } from "./core/applicationsFetchHook";
 
 export default function Page() {
+  const [params, setParams] = useState<ApplicationListQuery>({
+    page: 1, //기본 1페이지
+    filter: "all", //정렬 기준: 전체
+  });
+
+  /**
+   * 파라미터 업데이트
+   * @description 기존의 파라미터 복사, 새로운 파라미터를 기존 상태에 추가(덮어씌우기)
+   */
+  const updateParams = useCallback((newParams: ApplicationListQuery): void => {
+    setParams((prev) => ({ ...prev, ...newParams }));
+  }, []);
+
+  //api호출
+  const { applications, totalPages, isLoading } = useApplicationFetch(params);
+  const totalPageCount = totalPages; //백엔드에서 계산해둔 전체 페이지 수 받아오기
+
+  const isShowSkeleton = isLoading || !applications.length;
+
   return (
     <Stack sx={ListLayout}>
       <Features.ListTitle />
@@ -14,7 +36,11 @@ export default function Page() {
         </Box>
       </Box>
 
-      <Features.ListPagination />
+      <Features.ListPagination
+        page={params.page ?? 1}
+        count={totalPageCount}
+        onPageChange={(page) => updateParams({ page })}
+      />
     </Stack>
   );
 }
