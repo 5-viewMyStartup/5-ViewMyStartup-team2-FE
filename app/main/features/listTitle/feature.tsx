@@ -38,7 +38,7 @@ const listHeaderContainerStyle = {
   height: ["100%", "48px"],
   width: "100%",
   maxWidth: { sm: "696px", md: "1200px" },
-  pl: { xs: "16px" },
+  pl: { xs: "16px", sm: "0" },
 };
 
 const utilsContainerSytle = {
