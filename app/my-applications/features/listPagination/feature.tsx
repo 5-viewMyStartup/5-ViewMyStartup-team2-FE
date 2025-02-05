@@ -1,7 +1,5 @@
-// import { colorChips } from "@/global/styles/colorChips";
-// import { Typo } from "@/global/styles/Typo";
+import { CustomPagination } from "@/global/components/CustomPagination";
 import { Box } from "@mui/material";
-import { useState } from "react";
 
 interface CustomPaginationProps {
   page: number; // 현재 페이지
@@ -14,10 +12,11 @@ export default function ListPagination({
   count = 1,
   onPageChange,
 }: CustomPaginationProps) {
-  const [currentPage, setCurrentPage] = useState<number>(page); //현재 페이지
-  const handlePageClick = (page: number): void => {
-    setCurrentPage(page);
-    onPageChange(page);
+  const handlePageClick = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ): void => {
+    onPageChange(value);
   };
 
   return (
@@ -31,7 +30,7 @@ export default function ListPagination({
       }}
     >
       <CustomPagination
-        page={currentPage}
+        page={page}
         count={count}
         handleChange={handlePageClick}
       />

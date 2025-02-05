@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { Single } from "./single";
@@ -21,7 +23,6 @@ export default function Page() {
 
   //api호출
   const { applications, totalPages, isLoading } = useApplicationFetch(params);
-  const totalPageCount = totalPages; //백엔드에서 계산해둔 전체 페이지 수 받아오기
 
   const isShowSkeleton = isLoading || !applications.length;
 
@@ -32,13 +33,13 @@ export default function Page() {
       <Box sx={scrollWrapper}>
         <Box sx={listWrapperStyle}>
           <Single.ListLabel />
-          <Features.CompanyList />
+          <Features.CompanyList applications={applications} />
         </Box>
       </Box>
 
       <Features.ListPagination
         page={params.page ?? 1}
-        count={totalPageCount}
+        count={totalPages}
         onPageChange={(page) => updateParams({ page })}
       />
     </Stack>

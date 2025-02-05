@@ -19,7 +19,8 @@ interface CompanyItemsProps {
 
 export function CompanyItems({ order, itemData }: CompanyItemsProps) {
   const { imgSrc } = useCompanyImg(itemData.image);
-  const formatDate = (date: Date): string => {
+  const formatDate = (dateStr: string): string => {
+    const date = new Date(dateStr);
     return date.toISOString().split("T")[0].replace(/-/g, ".");
   };
   const status =

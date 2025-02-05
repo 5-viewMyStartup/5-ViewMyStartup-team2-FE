@@ -50,11 +50,11 @@ export interface ApplicationDTO
   /**
    * 지원 날짜
    */
-  createdAt: Date;
+  createdAt: string;
   /**
    * 지원서 업데이트 날짜
    */
-  updatedAt: Date;
+  updatedAt: string;
 }
 
 export interface ApplicationListResponse {
