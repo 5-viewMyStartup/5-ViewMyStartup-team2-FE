@@ -1,59 +1,90 @@
+"use client";
 import { colorChips } from "@/global/styles/colorChips";
 import {
   BottomNavigation,
   BottomNavigationAction,
   BottomNavigationActionProps,
-  Box,
+  Button,
   Stack,
 } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { PATH } from "../types/Path";
 
 export const Header = () => {
+  const route = useRouter();
+  const [value, setValue] = useState("");
+
+  const handleChange = (e: React.SyntheticEvent, value: string) => {
+    setValue(value);
+  };
+
+  const handleLogoClick = () => {
+    route.push(PATH.HOME);
+  };
+
   return (
     <Stack
       width={"100%"}
       sx={{ borderBottom: `1px solid ${colorChips.black_100}` }}
       alignItems={"center"}
     >
-      <Box maxWidth={"1200px"} width={"100%"}>
+      <Stack
+        maxWidth={"1200px"}
+        width={"100%"}
+        spacing={["40px", "24px", "16px"]}
+        direction={"row"}
+        pl={["16px", "24px", "16px"]}
+      >
+        <Button sx={{ padding: 0 }} onClick={handleLogoClick}>
+          <Image
+            src={"/assets/logo.svg"}
+            alt={"logo"}
+            width={112}
+            height={40}
+          />
+        </Button>
         <BottomNavigation
           showLabels
-          sx={{ height: "60px", bgcolor: colorChips.black_400, padding: 0 }}
+          value={value}
+          onChange={handleChange}
+          sx={{
+            justifyContent: "left",
+            height: "60px",
+            bgcolor: colorChips.black_400,
+            padding: 0,
+          }}
         >
           <BottomNavigationAction
-            sx={{ padding: 0 }}
-            icon={
-              <Image
-                width={112}
-                height={40}
-                src="/assets/logo.svg"
-                alt="Logo"
-              />
-            }
-          />
-          <BottomNavigationAction
+            value={"compareMyCompany"}
             label="나의 기업 비교"
             {...BottomNavigationActionStyle}
           />
           <BottomNavigationAction
+            value={"compareStatus"}
             label="비교 현황"
             {...BottomNavigationActionStyle}
           />
           <BottomNavigationAction
+            value={"investmentStatus"}
             label="투자 현황"
             {...BottomNavigationActionStyle}
           />
         </BottomNavigation>
-      </Box>
+      </Stack>
     </Stack>
   );
 };
 const BottomNavigationActionStyle: BottomNavigationActionProps = {
   sx: {
-    width: "auto",
-    paddingX: "17px",
-    fontSize: "15px",
+    paddingX: ["8px", "17px", "17px"],
+    fontSize: ["15px", "16px", "18px"],
     fontWeight: 600,
-    color: colorChips.gray_100,
+    whiteSpace: "nowrap",
+    color: colorChips.gray_200,
+    "&.Mui-selected": {
+      color: colorChips.white,
+    },
   },
 };
