@@ -19,17 +19,15 @@ const theme = createTheme({
     },
   },
   // // 추가로 커스터마이징이 필요하면 여기에 작성하세요.
-  // breakpoints: {
-  //   // custom breakpoints: https://mui.com/material-ui/customization/breakpoints/#custom-breakpoints
-  //   // 일단 기본값으로 덮어썼는데, 추후 커스텀 필요하면 수정하기
-  //   values: {
-  //     xs: 0, // mobile
-  //     sm: 600, // tablet
-  //     md: 900,
-  //     lg: 1200, // desktop
-  //     xl: 1536,
-  //   },
-  // },
+  breakpoints: {
+    values: {
+      xs: 0, // mobile
+      sm: 744, // tablet
+      md: 1200, // desktop
+      lg: 1500,
+      xl: 1536,
+    },
+  },
 });
 
 export default theme;

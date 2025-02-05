@@ -1,8 +1,11 @@
-import { CompanyComparison } from "./companyComparison/page";
+// import CompanyComparison from "./companyComparison/page";
+import Main from "./main/page";
+
 export default function Home() {
   return (
     <>
-      <CompanyComparison></CompanyComparison>
+      <Main />
+      {/* <CompanyComparison></CompanyComparison> */}
     </>
   );
 }
