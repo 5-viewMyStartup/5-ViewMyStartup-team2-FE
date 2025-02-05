@@ -1,4 +1,4 @@
-const COLORS = {
+const colorChips = {
   white: "#FFFFFF",
   black_400: "#131313",
   black_300: "#212121",
@@ -9,11 +9,11 @@ const COLORS = {
   gray_200: "#747474",
   gray_100: "#D8D8D8",
   brand_orange: "#EB5230",
-  blue: "#EB5230",
+  blue: "#558FFF",
   red_error: "#C41013",
   white: "#FFFFFF",
 };
 
 const PATH = { HOME: "/" };
 
-export { COLORS, PATH };
+export { colorChips, PATH };
