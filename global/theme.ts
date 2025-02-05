@@ -17,6 +17,12 @@ const theme = createTheme({
     secondary: {
       main: "#558FFF",
     },
+    buttons: {
+      main: "#D8D8D8",
+    },
+    buttons_select: {
+      main: "#747474",
+    },
   },
   // // 추가로 커스터마이징이 필요하면 여기에 작성하세요.
   breakpoints: {
