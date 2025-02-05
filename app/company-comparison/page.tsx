@@ -5,7 +5,7 @@ import { Single } from "./single";
 
 export default function CompanyComparison() {
   return (
-    <Stack sx={mainLayout}>
+    <Stack sx={CompanyComparisonResultLayout}>
       {/* 내가 선택한 기업 */}
       <Features.ListTitle.Bookmark />
       <Box sx={bookmarkScrollWrapper}>
@@ -35,7 +35,7 @@ export default function CompanyComparison() {
   );
 }
 
-const mainLayout = {
+const CompanyComparisonResultLayout = {
   pt: "40px",
   pb: "140px",
   flexDirection: "column",
