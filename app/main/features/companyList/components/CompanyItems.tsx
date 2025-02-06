@@ -1,16 +1,20 @@
 "use client";
 
-import {
-  dataBoxStyle,
-  descBoxStyle,
-  rankingBoxStyle,
-} from "@/app/main/single/ListLabel";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { CompanyDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
+import { formatRevenue } from "@/global/utils/formatRevenue";
+import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 import Image from "next/image";
-import { useCompanyImg } from "../core/useCompanyImg";
+import {
+  companyDescTypoStyle,
+  companyItemBoxStyle,
+  itemNameBoxStyle,
+  labelDataBoxStyle,
+  labelDescBoxStyle,
+  labelOrderBoxStyle,
+} from "@/global/styles/companyListStyles";
 
 interface CompanyItemsProps {
   ranking: number;
@@ -18,11 +22,11 @@ interface CompanyItemsProps {
 }
 
 export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
-  const { handleImgErr, imgSrc } = useCompanyImg(itemData.image);
+  const { imgSrc, handleImgErr } = useCompanyDefaultImg(itemData.image);
 
   return (
     <Stack sx={companyItemBoxStyle}>
-      <Box sx={rankingBoxStyle}>
+      <Box sx={labelOrderBoxStyle}>
         <Typo
           className="text_R_14"
           content={`${ranking + 1}위`}
@@ -30,14 +34,14 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={imgNameBoxStyle}>
+      <Box sx={itemNameBoxStyle}>
         <Image
           src={imgSrc}
+          alt="기업 대표 이미지"
           width={32}
           height={32}
-          alt="기업 대표 이미지"
-          style={{ borderRadius: "360px", alignContent: "center" }}
           onError={handleImgErr}
+          style={{ borderRadius: "50%" }}
         />
         <Typo
           className="text_M_14"
@@ -48,7 +52,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
       </Box>
       <Box
         sx={{
-          ...descBoxStyle,
+          ...labelDescBoxStyle,
           padding: "15px 16px",
         }}
       >
@@ -59,7 +63,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
           customStyle={companyDescTypoStyle}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={itemData.category[0].category}
@@ -67,15 +71,15 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
-          content={itemData.salesRevenue}
+          content={formatRevenue(itemData.salesRevenue)}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={itemData.employeeCnt.toString()}
@@ -83,7 +87,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={itemData.applicantCnt.toString()}
@@ -94,29 +98,3 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
     </Stack>
   );
 }
-
-const companyItemBoxStyle = {
-  flexDirection: "row",
-  height: "64px",
-  borderBottom: `1px solid ${colorChips.gray_300}`,
-  "&:last-child": {
-    borderBottom: "none",
-  },
-};
-
-const imgNameBoxStyle = {
-  display: "flex",
-  alignItems: "center",
-  gap: ["8px", "8px", "12px"],
-  pl: ["16px", "16px", "24px"],
-  width: ["150px", "150px", "216px"],
-};
-
-const companyDescTypoStyle = {
-  overflow: "hidden", //넘치는 내용 숨기기
-  display: "-webkit-box", //말줄임표
-  WebkitLineClamp: 2, //최대 2줄까지만 표시
-  WebkitBoxOrient: "vertical" as const, //세로 방향 줄바꿈 적용
-  whiteSpace: "normal",
-  wordBreak: "break-word" as const, //단어 단위로 줄바꿈
-};
