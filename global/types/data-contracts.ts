@@ -62,3 +62,15 @@ export interface ApplicationListResponse {
   page: number;
   totalPages: number;
 }
+
+//서버에서 반환하는 데이터의 구조
+export interface CompanyListQuery {
+  page?: number; // 페이지 번호 (기본값 1)
+  filter?: string | "all"; // 필터 (기본값 "all")
+}
+//API 요청에 사용하는 파라미터의 구조
+export interface CompanyListResponse {
+  companies: CompanyDTO[]; // 기업 목록
+  page: number; // 현재 페이지 번호
+  totalPages: number; // 전체 페이지 수
+}
