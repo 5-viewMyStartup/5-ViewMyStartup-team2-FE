@@ -112,7 +112,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
       <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
-          content={`${itemData.applicantCnt.toString()} 명`}
+          content={`${itemData.applicantCnt.toString()}명`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />

@@ -1,3 +1,4 @@
+import { SearchInput } from "@/global/components/input/SearchInput";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { Box, Stack } from "@mui/material";
@@ -13,10 +14,10 @@ export default function ListTitle(): React.ReactElement {
       />
       <Stack sx={utilsContainerSytle}>
         <Box sx={searchBoxStyle}>
-          <Typo
-            className="text_SB_20"
-            content="검색"
-            color={colorChips.white}
+          <SearchInput
+            width="100%"
+            variation="left"
+            placeholder="검색어를 입력해주세요"
           />
         </Box>
         <Box sx={sortBoxStyle}>
@@ -53,7 +54,6 @@ const searchBoxStyle = {
   alignItems: "center",
   width: ["189px", "269px", "448px"],
   height: ["40px", "48px"],
-  border: `1px solid ${colorChips.white}`, //border는 컴포넌트 넣고 삭제
 };
 
 const sortBoxStyle = {
