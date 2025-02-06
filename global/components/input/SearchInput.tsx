@@ -3,13 +3,14 @@ import { Box, OutlinedInput, InputProps, SxProps } from "@mui/material";
 import Image from "next/image";
 
 interface SearchProps extends Omit<InputProps, "fullWidth"> {
-  width?: string;
   variation: "left" | "right";
 }
 
 export const SearchInput: React.FC<SearchProps> = (props) => {
   return (
     <OutlinedInput
+      color="input"
+      placeholder=""
       value={props.value}
       startAdornment={
         props.variation === "left" && (
@@ -43,11 +44,11 @@ export const SearchInput: React.FC<SearchProps> = (props) => {
         )
       }
       fullWidth
+      {...props}
       sx={{
         ...SearchStyles,
-        width: props.width,
+        ...props.sx,
       }}
-      {...props}
     />
   );
 };
@@ -58,10 +59,9 @@ const SearchStyles: SxProps = {
   borderRadius: "10px",
   paddingX: "12px",
   border: `1px solid ${colorChips.gray_200}`,
-  backgroundColor: colorChips.black_300,
   fontFamily: "pretendard",
   color: colorChips.gray_100,
-  fontSize: "14px",
+  fontSize: ["14px", "14px", "13px"],
   fontStyle: "normal",
   fontWeight: 400,
   lineHeight: "16.71px",

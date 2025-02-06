@@ -1,19 +1,17 @@
 import { InputProps, OutlinedInput, SxProps } from "@mui/material";
 import { colorChips } from "../../styles/colorChips";
 
-interface CommonInputProps extends Omit<InputProps, "fullWidth"> {
-  width?: string;
-}
+interface CommonInputProps extends Omit<InputProps, "fullWidth"> {}
 
 export const CommonInput: React.FC<CommonInputProps> = (props) => {
   return (
     <OutlinedInput
       fullWidth
+      {...props}
       sx={{
         ...CommonInputStyles,
-        width: props.width,
+        ...props.sx,
       }}
-      {...props}
     />
   );
 };
@@ -26,7 +24,7 @@ const CommonInputStyles: SxProps = {
   border: `1px solid ${colorChips.gray_200}`,
   fontFamily: "pretendard",
   color: colorChips.white,
-  fontSize: "14px",
+  fontSize: ["14px", "14px", "13px"],
   fontStyle: "normal",
   fontWeight: 400,
   lineHeight: "16.71px",
