@@ -29,7 +29,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
       <Box sx={labelOrderBoxStyle}>
         <Typo
           className="text_R_14"
-          content={`${ranking + 1}위`}
+          content={`${ranking}위`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />

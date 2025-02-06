@@ -6,6 +6,7 @@ import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { Single } from "./single";
 import { SkeletonCompanyList } from "@/global/components/SkeletonCompanyItems";
+import { ListPagination } from "@/global/components/ListPagination";
 import { useCallback, useState } from "react";
 import { ApplicationListQuery } from "@/global/types/data-contracts";
 import { useApplicationFetch } from "./core/applicationsFetchHook";
@@ -52,7 +53,7 @@ export default function Page() {
         </Box>
       </Box>
 
-      <Features.ListPagination
+      <ListPagination
         page={params.page ?? 1}
         count={totalPages}
         onPageChange={(page) => updateParams({ page })}

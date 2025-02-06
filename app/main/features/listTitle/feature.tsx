@@ -4,7 +4,27 @@ import { Typo } from "@/global/styles/Typo";
 import { Box, Stack } from "@mui/material";
 import React from "react";
 
-export default function ListTitle(): React.ReactElement {
+interface ListTitleProps {
+  onSearch: (keyword: string) => void;
+}
+
+export default function ListTitle({
+  onSearch,
+}: ListTitleProps): React.ReactElement {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
+    const value = e.target.value.trim();
+    onSearch(value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    const target = e.currentTarget;
+
+    if (e.key === "Enter") {
+      const value = target.value.trim();
+      onSearch(value);
+    }
+  };
+
   return (
     <Stack sx={listHeaderContainerStyle}>
       <Typo
@@ -15,9 +35,10 @@ export default function ListTitle(): React.ReactElement {
       <Stack sx={utilsContainerSytle}>
         <Box sx={searchBoxStyle}>
           <SearchInput
-            width="100%"
             variation="left"
             placeholder="검색어를 입력해주세요"
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
           />
         </Box>
         <Box sx={sortBoxStyle}>
