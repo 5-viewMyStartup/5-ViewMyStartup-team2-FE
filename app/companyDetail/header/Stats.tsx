@@ -5,9 +5,9 @@ import { Typo } from "@/global/styles/Typo";
 // 타입 정의
 interface StatsProps {
   stats: {
-    totalInvestment: number;
     monthlyRevenue: number;
     personnel: number;
+    applicants: number;
   };
 }
 
@@ -15,14 +15,6 @@ interface StatsProps {
 const Stats = ({ stats }: StatsProps) => {
   return (
     <StatsContainer>
-      <StatsItem>
-        <Typo className="text_R_16" color={colorChips.gray_100}>
-          누적 투자 금액
-        </Typo>
-        <Typo className="text_SB_16" color="#ffffff">
-          {stats.totalInvestment}억 원
-        </Typo>
-      </StatsItem>
       <StatsItem>
         <Typo className="text_R_16" color={colorChips.gray_100}>
           매출액
@@ -37,6 +29,14 @@ const Stats = ({ stats }: StatsProps) => {
         </Typo>
         <Typo className="text_SB_16" color="#ffffff">
           {stats.personnel}명
+        </Typo>
+      </StatsItem>
+      <StatsItem>
+        <Typo className="text_R_16" color={colorChips.gray_100}>
+          지원 인원
+        </Typo>
+        <Typo className="text_SB_16" color="#ffffff">
+          {stats.applicants}명
         </Typo>
       </StatsItem>
     </StatsContainer>

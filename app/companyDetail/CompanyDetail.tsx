@@ -13,8 +13,8 @@ const CompanyDetail = ({ id }: CompanyDetailProps) => {
     <div>
       <Header
         name={company.name}
-        logo={company.logo}
         category={company.category}
+        logo={company.logo}
         stats={company.stats}
       />
       <Description description={company.description} />
@@ -32,9 +32,9 @@ const MOCK_DATA = {
   description: `코드잇은 누구나 쉽게 코딩을 배울 수 있도록 도와주는 EdTech 스타트업입니다.
     현재 시리즈 A 투자를 유치하였으며, 매월 꾸준한 성장을 보이고 있습니다.`,
   stats: {
-    totalInvestment: 140,
     monthlyRevenue: 44.3,
     personnel: 95,
+    applicants: 0,
   },
   investments: [
     {

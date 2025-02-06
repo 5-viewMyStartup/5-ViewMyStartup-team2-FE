@@ -82,7 +82,7 @@ const CompanyInvestments = ({ investments }: CompanyInvestmentsProps) => {
       <TitleContainer>
         <TitleWrapper>
           <Typo className="text_B_24" color="#ffffff">
-            View My Startup에서 받은 투자
+            Review
           </Typo>
           <InvestButton onClick={handleModalOpen}>
             <Typo className="text_R_16" color="#ffffff">

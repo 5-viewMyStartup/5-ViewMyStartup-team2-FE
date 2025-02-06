@@ -8,11 +8,9 @@ import { Header } from "./Header";
 export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <Stack
-      sx={{
-        bgcolor: colorChips.black_400,
-        minHeight: "100vh",
-        alignItems: "center",
-      }}
+      justifyContent={"flex-start"} // 전체 높이가 콘텐츠보다 낮아지면 위에 header부분이 짤림 때문에 수정함
+      alignItems={"center"}
+      sx={{ bgcolor: colorChips.black_400, width: "100vw", height: "100vh" }}
     >
       <Header />
       <Box

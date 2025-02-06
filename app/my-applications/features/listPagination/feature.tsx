@@ -1,8 +1,24 @@
-import { colorChips } from "@/global/styles/colorChips";
-import { Typo } from "@/global/styles/Typo";
+import { CustomPagination } from "@/global/components/CustomPagination";
 import { Box } from "@mui/material";
 
-export default function ListPagination() {
+interface CustomPaginationProps {
+  page: number; // 현재 페이지
+  count: number; // 전체 페이지 수
+  onPageChange: (page: number) => void;
+}
+
+export default function ListPagination({
+  page = 1,
+  count = 1,
+  onPageChange,
+}: CustomPaginationProps) {
+  const handlePageClick = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ): void => {
+    onPageChange(value);
+  };
+
   return (
     <Box
       sx={{
@@ -13,10 +29,10 @@ export default function ListPagination() {
         alignItems: "center",
       }}
     >
-      <Typo
-        className="text_SB_20"
-        content="[페이지네이션 컴포넌트]"
-        color={colorChips.white}
+      <CustomPagination
+        page={page}
+        count={count}
+        handleChange={handlePageClick}
       />
     </Box>
   );

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Stats from "./Stats";
 import { Box, styled } from "@mui/material";
 import { colorChips } from "@/global/styles/colorChips";
@@ -13,9 +12,9 @@ interface HeaderProps {
   logo: string;
   category: string;
   stats: {
-    totalInvestment: number;
     monthlyRevenue: number;
     personnel: number;
+    applicants: number;
   };
 }
 
@@ -32,14 +31,7 @@ const Header = ({ name, logo, category, stats }: HeaderProps) => {
       <LogoContainer>
         <Logo>
           {!imageError ? (
-            <Image
-              src={logo}
-              alt={name}
-              width={80}
-              height={80}
-              onError={handleImageError}
-              style={{ objectFit: "cover" }}
-            />
+            <StyledImage src={logo} alt={name} onError={handleImageError} />
           ) : (
             <FallbackLogo>
               <Typo className="text_B_16" color="#ffffff">
@@ -110,6 +102,12 @@ const TextContainer = styled(Box)({
   display: "flex",
   flexDirection: "column",
   gap: "8px",
+});
+
+const StyledImage = styled("img")({
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
 });
 
 export default Header;

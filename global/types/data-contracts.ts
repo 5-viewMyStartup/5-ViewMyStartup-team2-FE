@@ -30,12 +30,35 @@ export interface CompanyDTO {
   applicantCnt: number;
 }
 
-export type ApplicationStatus = "PENDING" | "ACCEPTED" | "REJECTED";
+export type ApplicationStatus = "pending" | "accepted" | "rejected";
 
-export interface ApplicationsDTO
+export interface ApplicationListQuery {
+  page?: number;
+  filter?: ApplicationStatus | "all";
+}
+
+export interface ApplicationDTO
   extends Omit<CompanyDTO, "salesRevenue" | "employeeCnt"> {
+  /**
+   * 지원서 id
+   */
   id: string;
+  /**
+   * 지원 상태
+   */
   status: ApplicationStatus | string;
-  createdAt: Date;
-  updatedAt: Date;
+  /**
+   * 지원 날짜
+   */
+  createdAt: string;
+  /**
+   * 지원서 업데이트 날짜
+   */
+  updatedAt: string;
+}
+
+export interface ApplicationListResponse {
+  applications: ApplicationDTO[];
+  page: number;
+  totalPages: number;
 }

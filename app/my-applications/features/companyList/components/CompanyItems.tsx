@@ -1,62 +1,74 @@
 "use client";
 
-import {
-  dataBoxStyle,
-  descBoxStyle,
-  orderBoxStyle,
-} from "@/app/my-applications/single/ListLabel";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { ApplicationsDTO } from "@/global/types/data-contracts";
+import { ApplicationDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
+import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 import Image from "next/image";
-import { useCompanyImg } from "../core/useCompanyImg";
+import {
+  companyItemBoxStyle,
+  labelOrderBoxStyle,
+  itemNameBoxStyle,
+  labelDescBoxStyle,
+  companyDescTypoStyle,
+  labelDataBoxStyle,
+} from "@/global/styles/companyListStyles";
 
 interface CompanyItemsProps {
   order: number;
-  itemData: ApplicationsDTO;
+  itemData: ApplicationDTO;
 }
 
 export function CompanyItems({ order, itemData }: CompanyItemsProps) {
-  const { handleImgErr, imgSrc } = useCompanyImg(itemData.image);
-  const formatDate = (date: Date): string => {
+  const { imgSrc, handleImgErr } = useCompanyDefaultImg(itemData.image);
+  const formatDate = (dateStr: string): string => {
+    const date = new Date(dateStr);
     return date.toISOString().split("T")[0].replace(/-/g, ".");
   };
-  console.log(itemData.status);
-  console.log(itemData.status === "ACCEPTED");
+  const status =
+    itemData.status === "PENDING"
+      ? "지원 완료"
+      : itemData.status === "ACCEPTED"
+      ? "합격"
+      : "불합격";
   const statusColor =
-    itemData.status === "ACCEPTED" ? colorChips.blue : colorChips.brand_orange;
-  console.log(statusColor);
+    itemData.status === "ACCEPTED"
+      ? colorChips.brand_orange
+      : colorChips.gray_300;
 
   return (
     <Stack sx={companyItemBoxStyle}>
-      <Box sx={orderBoxStyle}>
+      <Box sx={labelOrderBoxStyle}>
         <Typo
           className="text_R_14"
-          content={`${order + 1}`}
+          content={`${order}`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={imgNameBoxStyle}>
+      <Box sx={itemNameBoxStyle}>
         <Image
           src={imgSrc}
+          alt="기업 대표 이미지"
           width={32}
           height={32}
-          alt="기업 대표 이미지"
-          style={{ borderRadius: "360px", alignContent: "center" }}
           onError={handleImgErr}
+          style={{ borderRadius: "50%" }}
         />
         <Typo
           className="text_M_14"
           content={itemData.name}
           color={colorChips.white}
-          customStyle={{ textAlign: "center" }}
+          customStyle={{
+            textAlign: "center",
+            overflow: "hidden",
+          }}
         />
       </Box>
       <Box
         sx={{
-          ...descBoxStyle,
+          ...labelDescBoxStyle,
           padding: "15px 16px",
         }}
       >
@@ -67,7 +79,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
           customStyle={companyDescTypoStyle}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={itemData.category[0].category}
@@ -75,16 +87,21 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
-          content={itemData.status}
-          // color={colorChips.gray_100}
-          color={statusColor}
-          customStyle={{ textAlign: "center" }}
+          content={status}
+          color={colorChips.white}
+          customStyle={{
+            textAlign: "center",
+            backgroundColor: statusColor,
+            padding: "4px 0",
+            borderRadius: "4px",
+            width: "78px",
+          }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={formatDate(itemData.createdAt)}
@@ -92,7 +109,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+      <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
           content={`${itemData.applicantCnt.toString()} 명`}
@@ -103,29 +120,3 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
     </Stack>
   );
 }
-
-const companyItemBoxStyle = {
-  flexDirection: "row",
-  height: "64px",
-  borderBottom: `1px solid ${colorChips.gray_300}`,
-  "&:last-child": {
-    borderBottom: "none",
-  },
-};
-
-const imgNameBoxStyle = {
-  display: "flex",
-  alignItems: "center",
-  gap: ["8px", "8px", "12px"],
-  pl: ["16px", "16px", "24px"],
-  width: ["150px", "150px", "216px"],
-};
-
-const companyDescTypoStyle = {
-  overflow: "hidden", //넘치는 내용 숨기기
-  display: "-webkit-box", //말줄임표
-  WebkitLineClamp: 2, //최대 2줄까지만 표시
-  WebkitBoxOrient: "vertical" as const, //세로 방향 줄바꿈 적용
-  whiteSpace: "normal",
-  wordBreak: "break-word" as const, //단어 단위로 줄바꿈
-};

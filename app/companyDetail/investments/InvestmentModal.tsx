@@ -2,7 +2,14 @@
 
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { Box, IconButton, Modal, TextField, styled } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Modal,
+  TextField,
+  FormHelperText,
+  styled,
+} from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -333,11 +340,10 @@ export const InvestmentModal = ({
                 value={formData.passwordConfirm}
                 onChange={handlePasswordConfirmChange}
                 error={!!errors.password}
-                helperText={errors.password}
-                FormHelperTextProps={{
-                  sx: { color: colorChips.brand_orange },
-                }}
               />
+              {errors.password && (
+                <StyledFormHelperText>{errors.password}</StyledFormHelperText>
+              )}
               <VisibilityButton onClick={handleTogglePasswordConfirm}>
                 <Image
                   src={
@@ -592,4 +598,11 @@ const SuccessButton = styled(Box)({
   "&:hover": {
     backgroundColor: "#FF3D00",
   },
+});
+
+const StyledFormHelperText = styled(FormHelperText)({
+  color: colorChips.brand_orange,
+  position: "absolute",
+  bottom: "-20px",
+  margin: 0,
 });
