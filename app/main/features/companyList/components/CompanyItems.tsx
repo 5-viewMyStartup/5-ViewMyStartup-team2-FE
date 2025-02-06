@@ -29,7 +29,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
       <Box sx={labelOrderBoxStyle}>
         <Typo
           className="text_R_14"
-          content={`${ranking + 1}위`}
+          content={`${ranking}위`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
@@ -82,7 +82,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
       <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
-          content={itemData.employeeCnt.toString()}
+          content={`${itemData.employeeCnt}명`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
@@ -90,7 +90,7 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
       <Box sx={labelDataBoxStyle}>
         <Typo
           className="text_R_14"
-          content={itemData.applicantCnt.toString()}
+          content={`${itemData.applicantCnt}명`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
