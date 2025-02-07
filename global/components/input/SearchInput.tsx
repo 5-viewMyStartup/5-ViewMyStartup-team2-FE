@@ -61,7 +61,7 @@ const SearchStyles: SxProps = {
   border: `1px solid ${colorChips.gray_200}`,
   fontFamily: "pretendard",
   color: colorChips.gray_100,
-  fontSize: ["14px", "14px", "13px"],
+  fontSize: ["13px", "14px", "14px"],
   fontStyle: "normal",
   fontWeight: 400,
   lineHeight: "16.71px",
