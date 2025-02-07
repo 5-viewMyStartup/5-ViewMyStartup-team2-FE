@@ -28,14 +28,16 @@ export const SearchInput: React.FC<SearchProps> = (props) => {
       endAdornment={
         props.variation === "right" && (
           <Box gap={"12px"} display="flex" alignItems={"center"}>
-            <Image
-              width={16}
-              height={16}
-              onClick={props.onClick}
-              src={"/assets/ic_delete_circle_small.svg"}
-              alt="search Icon"
-              style={{ cursor: "pointer" }}
-            />
+            {props.value !== "" && (
+              <Image
+                width={16}
+                height={16}
+                onClick={props.onClick}
+                src={"/assets/ic_delete_circle_small.svg"}
+                alt="delete Icon"
+                style={{ cursor: "pointer" }}
+              />
+            )}
             <Image
               width={24}
               height={24}
