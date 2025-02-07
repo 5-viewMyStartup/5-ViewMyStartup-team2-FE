@@ -3,7 +3,11 @@
 import { useState } from "react";
 import Header from "./header/Header";
 import Description from "./header/Description";
-import Investments from "./investments/Investments";
+import Comments from "./comments/Comments";
+
+interface CompanyDetailProps {
+  id: string;
+}
 
 const CompanyDetail = ({ id }: CompanyDetailProps) => {
   // id를 사용하여 API에서 데이터를 가져오는 로직이 추가될 예정
@@ -18,7 +22,7 @@ const CompanyDetail = ({ id }: CompanyDetailProps) => {
         stats={company.stats}
       />
       <Description description={company.description} />
-      <Investments investments={company.investments} />
+      <Comments comments={company.investments} />
     </div>
   );
 };
@@ -195,10 +199,6 @@ const MOCK_DATA = {
     },
   ],
 };
-
-interface CompanyDetailProps {
-  id: string;
-}
 
 export type { CompanyDetailProps };
 export default CompanyDetail;

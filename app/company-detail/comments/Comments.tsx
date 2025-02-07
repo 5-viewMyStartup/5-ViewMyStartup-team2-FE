@@ -4,21 +4,22 @@ import { useState } from "react";
 import Pagination from "../pagination/Pagination";
 import { Typo } from "@/global/styles/Typo";
 import Image from "next/image";
-import { InvestmentModal } from "./InvestmentModal";
+import { ApplicationModal } from "./ApplicationModal";
 
 // 타입 정의
 interface Comment {
   investor: string;
   round: number;
+  amount: number;
   comment: string;
 }
 
 interface CompanyCommentsProps {
-  investments: Comment[];
+  comments: Comment[];
 }
 
 // 컴포넌트 로직
-const CompanyComments = ({ investments }: CompanyCommentsProps) => {
+const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,13 +63,13 @@ const CompanyComments = ({ investments }: CompanyCommentsProps) => {
   };
 
   // 현재 페이지의 댓글 데이터만 필터링
-  const currentComments = investments.slice(
+  const currentComments = comments.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
   // 총 페이지 수 계산
-  const totalPages = Math.ceil(investments.length / itemsPerPage);
+  const totalPages = Math.ceil(comments.length / itemsPerPage);
 
   return (
     <>
@@ -77,15 +78,15 @@ const CompanyComments = ({ investments }: CompanyCommentsProps) => {
           <Typo className="text_B_24" color="#ffffff">
             Review
           </Typo>
-          <InvestButton onClick={handleModalOpen}>
+          <ApplicationButton onClick={handleModalOpen}>
             <Typo className="text_R_16" color="#ffffff">
               지원하기
             </Typo>
-          </InvestButton>
+          </ApplicationButton>
         </TitleWrapper>
       </TitleContainer>
 
-      <InvestmentCard>
+      <CommentCard>
         <TableContainer>
           <Table>
             <thead>
@@ -213,9 +214,9 @@ const CompanyComments = ({ investments }: CompanyCommentsProps) => {
             onPageChange={setCurrentPage}
           />
         </PaginationContainer>
-      </InvestmentCard>
+      </CommentCard>
 
-      <InvestmentModal
+      <ApplicationModal
         open={isModalOpen}
         onClose={handleModalClose}
         companyName="코드잇"
@@ -226,7 +227,7 @@ const CompanyComments = ({ investments }: CompanyCommentsProps) => {
 };
 
 // 스타일 컴포넌트
-const InvestmentCard = styled(Box)({
+const CommentCard = styled(Box)({
   backgroundColor: colorChips.black_300,
   borderRadius: "12px",
   padding: "24px",
@@ -267,16 +268,21 @@ const Table = styled("table")({
   "& td": {
     padding: "16px",
     borderBottom: `1px solid ${colorChips.gray_400}`,
-    "&:nth-of-type(1), &:nth-of-type(2), &:nth-of-type(3)": {
+    "&:nth-of-type(1)": {
+      width: "120px",
       whiteSpace: "nowrap",
     },
-    "&:nth-of-type(4)": {
-      minWidth: "200px",
-      maxWidth: "400px",
+    "&:nth-of-type(2)": {
+      width: "80px",
+      whiteSpace: "nowrap",
+    },
+    "&:nth-of-type(3)": {
+      width: "auto",
+      minWidth: "400px",
       whiteSpace: "normal",
       wordBreak: "break-all",
     },
-    "&:last-child": {
+    "&:nth-of-type(4)": {
       width: "48px",
       padding: "16px 24px 16px 16px",
       textAlign: "right",
@@ -306,7 +312,7 @@ const TitleWrapper = styled(Box)({
   alignItems: "center",
 });
 
-const InvestButton = styled(Box)({
+const ApplicationButton = styled(Box)({
   padding: "8px 24px",
   backgroundColor: colorChips.brand_orange,
   borderRadius: "50px",

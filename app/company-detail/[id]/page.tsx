@@ -1,4 +1,4 @@
-import CompanyDetail from "@/app/companyDetail/CompanyDetail";
+import CompanyDetail from "@/app/company-detail/CompanyDetail";
 
 interface CompanyDetailPageProps {
   params: {
