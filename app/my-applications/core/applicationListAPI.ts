@@ -5,7 +5,7 @@ import {
   ApplicationListQuery,
 } from "@/global/types/data-contracts";
 
-/** 상품 목록 조회
+/** 지원 내역 조회
  * @param {Object} params - 쿼리 정보
  * @param {int} params.page - 페이지 번호
  * @param {int} params.filter - 지원 상태 필터
