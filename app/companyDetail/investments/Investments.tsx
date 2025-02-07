@@ -1,28 +1,28 @@
-import { Box, styled, Menu, MenuItem, IconButton } from "@mui/material";
+import { Box, styled, IconButton, Menu, MenuItem } from "@mui/material";
 import { colorChips } from "@/global/styles/colorChips";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Pagination from "../pagination/Pagination";
 import { Typo } from "@/global/styles/Typo";
 import Image from "next/image";
 import { InvestmentModal } from "./InvestmentModal";
 
 // 타입 정의
-interface Investment {
+interface Comment {
   investor: string;
   round: number;
-  amount: number;
   comment: string;
 }
 
-interface CompanyInvestmentsProps {
-  investments: Investment[];
+interface CompanyCommentsProps {
+  investments: Comment[];
 }
 
 // 컴포넌트 로직
-const CompanyInvestments = ({ investments }: CompanyInvestmentsProps) => {
+const CompanyComments = ({ investments }: CompanyCommentsProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [comment, setComment] = useState("");
   const itemsPerPage = 5;
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -51,25 +51,18 @@ const CompanyInvestments = ({ investments }: CompanyInvestmentsProps) => {
     handleClose();
   };
 
-  // 투자 데이터를 금액 기준으로 정렬하고 순위 부여
-  const sortedInvestments = useMemo(() => {
-    return investments
-      .slice()
-      .sort((a, b) => b.amount - a.amount)
-      .map((investment, index) => ({
-        ...investment,
-        round: index + 1, // 금액 순으로 순위 재할당
-      }));
-  }, [investments]);
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value);
+  };
 
-  // 총 투자금액 계산
-  const totalInvestment = sortedInvestments.reduce(
-    (sum, investment) => sum + investment.amount,
-    0
-  );
+  const handleSubmit = () => {
+    // TODO: API 연동 시 댓글 등록 처리
+    console.log("Submit comment:", comment);
+    setComment("");
+  };
 
-  // 현재 페이지의 투자 데이터만 필터링
-  const currentInvestments = sortedInvestments.slice(
+  // 현재 페이지의 댓글 데이터만 필터링
+  const currentComments = investments.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -93,61 +86,44 @@ const CompanyInvestments = ({ investments }: CompanyInvestmentsProps) => {
       </TitleContainer>
 
       <InvestmentCard>
-        <Typo
-          className="text_B_20"
-          color="#ffffff"
-          sx={{ marginBottom: "24px" }}
-        >
-          총 {totalInvestment}억 원
-        </Typo>
         <TableContainer>
           <Table>
             <thead>
               <tr>
                 <th>
                   <Typo className="text_R_14" color={colorChips.white}>
-                    투자자 이름
+                    작성자
                   </Typo>
                 </th>
                 <th>
                   <Typo className="text_R_14" color={colorChips.white}>
-                    순위
+                    순번
                   </Typo>
                 </th>
                 <th>
                   <Typo className="text_R_14" color={colorChips.white}>
-                    투자 금액
-                  </Typo>
-                </th>
-                <th>
-                  <Typo className="text_R_14" color={colorChips.white}>
-                    투자 코멘트
+                    코멘트
                   </Typo>
                 </th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {currentInvestments.map((investment) => (
-                <tr key={investment.investor}>
+              {currentComments.map((comment) => (
+                <tr key={comment.investor}>
                   <td>
                     <Typo className="text_R_16" color={colorChips.gray_100}>
-                      {investment.investor}
+                      {comment.investor}
                     </Typo>
                   </td>
                   <td>
                     <Typo className="text_R_16" color={colorChips.gray_100}>
-                      {investment.round}위
+                      {comment.round}
                     </Typo>
                   </td>
                   <td>
                     <Typo className="text_R_16" color={colorChips.gray_100}>
-                      {investment.amount}억 원
-                    </Typo>
-                  </td>
-                  <td>
-                    <Typo className="text_R_16" color={colorChips.gray_100}>
-                      {investment.comment}
+                      {comment.comment}
                     </Typo>
                   </td>
                   <td style={{ textAlign: "right" }}>
@@ -165,6 +141,18 @@ const CompanyInvestments = ({ investments }: CompanyInvestmentsProps) => {
             </tbody>
           </Table>
         </TableContainer>
+        <CommentInputContainer>
+          <CommentTextArea
+            value={comment}
+            onChange={handleCommentChange}
+            placeholder="댓글을 입력해 주세요."
+          />
+          <CommentSubmitButton onClick={handleSubmit}>
+            <Typo className="text_R_16" color={colorChips.white}>
+              등록
+            </Typo>
+          </CommentSubmitButton>
+        </CommentInputContainer>
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -237,7 +225,7 @@ const CompanyInvestments = ({ investments }: CompanyInvestmentsProps) => {
   );
 };
 
-// 스타일 컴포넌트에서 타이포그래피 관련 속성 제거
+// 스타일 컴포넌트
 const InvestmentCard = styled(Box)({
   backgroundColor: colorChips.black_300,
   borderRadius: "12px",
@@ -269,7 +257,7 @@ const Table = styled("table")({
   width: "100%",
   borderCollapse: "separate",
   borderSpacing: 0,
-  minWidth: "743px", // 모바일에서 스크롤을 위한 최소 너비
+  minWidth: "743px",
   "& th": {
     padding: "16px",
     borderBottom: `1px solid ${colorChips.black_100}`,
@@ -283,10 +271,10 @@ const Table = styled("table")({
       whiteSpace: "nowrap",
     },
     "&:nth-of-type(4)": {
-      minWidth: "200px", // 코멘트 칼럼 최소 너비
-      maxWidth: "400px", // 코멘트 칼럼 최대 너비
-      whiteSpace: "normal", // 코멘트는 줄바꿈 허용
-      wordBreak: "break-all", // 긴 텍스트 처리
+      minWidth: "200px",
+      maxWidth: "400px",
+      whiteSpace: "normal",
+      wordBreak: "break-all",
     },
     "&:last-child": {
       width: "48px",
@@ -328,4 +316,46 @@ const InvestButton = styled(Box)({
   },
 });
 
-export default CompanyInvestments;
+const CommentInputContainer = styled(Box)({
+  display: "flex",
+  gap: "12px",
+  marginTop: "24px",
+  padding: "24px",
+  backgroundColor: colorChips.black_400,
+  borderRadius: "12px",
+});
+
+const CommentTextArea = styled("textarea")({
+  flex: 1,
+  minHeight: "48px",
+  padding: "12px 16px",
+  backgroundColor: "transparent",
+  border: `1px solid ${colorChips.gray_400}`,
+  borderRadius: "8px",
+  color: colorChips.white,
+  resize: "none",
+  fontFamily: "inherit",
+  fontSize: "16px",
+  "&::placeholder": {
+    color: colorChips.gray_200,
+  },
+  "&:focus": {
+    outline: "none",
+    borderColor: colorChips.brand_orange,
+  },
+});
+
+const CommentSubmitButton = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "0 24px",
+  backgroundColor: colorChips.brand_orange,
+  borderRadius: "8px",
+  cursor: "pointer",
+  "&:hover": {
+    backgroundColor: "#FF3D00",
+  },
+});
+
+export default CompanyComments;
