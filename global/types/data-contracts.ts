@@ -1,5 +1,13 @@
 export interface CompanyDTO {
   /**
+   * 기업 id
+   */
+  id: string;
+  /**
+   * 기업 idx
+   */
+  idx: string;
+  /**
    * 기업 명
    */
   name: string;
@@ -28,6 +36,31 @@ export interface CompanyDTO {
    * 지원자 수
    */
   applicantCnt: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+//FIXME: 백엔드 완성되면 맞게 수정하기
+export type mainCompanyFilter = "revenueDesc" | "revenueAsc";
+
+export interface CompanyListQuery {
+  page?: number;
+  keyword?: string;
+  filter?: mainCompanyFilter;
+}
+
+export interface CompanyListResponse {
+  companies: CompanyDTO[];
+  page: number;
+  totalPages: number;
+}
+
+export interface ApplicationDTO
+  extends Omit<CompanyDTO, "salesRevenue" | "employeeCnt"> {
+  /**
+   * 지원 상태
+   */
+  status: ApplicationStatus | string;
 }
 
 export type ApplicationStatus = "pending" | "accepted" | "rejected";
@@ -35,26 +68,6 @@ export type ApplicationStatus = "pending" | "accepted" | "rejected";
 export interface ApplicationListQuery {
   page?: number;
   filter?: ApplicationStatus | "all";
-}
-
-export interface ApplicationDTO
-  extends Omit<CompanyDTO, "salesRevenue" | "employeeCnt"> {
-  /**
-   * 지원서 id
-   */
-  id: string;
-  /**
-   * 지원 상태
-   */
-  status: ApplicationStatus | string;
-  /**
-   * 지원 날짜
-   */
-  createdAt: string;
-  /**
-   * 지원서 업데이트 날짜
-   */
-  updatedAt: string;
 }
 
 export interface ApplicationListResponse {
