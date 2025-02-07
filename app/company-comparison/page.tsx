@@ -6,14 +6,14 @@ import { Single } from "./single";
 export default function CompanyComparison() {
   return (
     <Stack sx={CompanyComparisonResultLayout}>
-      {/* 내가 선택한 기업 */}
+      {/* 내가 선택한 기업 (지원한 기업 중에 선택한 기업) */}
       <Features.ListTitle.Bookmark />
       <Box sx={bookmarkScrollWrapper}>
         <Box sx={bookmarkListWrapperStyle}>
           <Features.CompanyList.Bookmark />
         </Box>
       </Box>
-      {/* 비교 결과 확인하기 */}
+      {/* 비교 결과 확인하기 (내가 선택한 기업이랑 전체 기업 중에 선택한 기업 비교) */}
       <Features.ListTitle.Result />
       <Box sx={scrollWrapper}>
         <Box sx={listWrapperStyle}>
@@ -21,7 +21,7 @@ export default function CompanyComparison() {
           <Features.CompanyList.Result />
         </Box>
       </Box>
-      {/* 기업 순위 확인하기 */}
+      {/* 기업 순위 확인하기 ( 전체 기업 중에서 순위를 드롭 박스로 정렬 ) */}
       <Features.ListTitle.Ranking />
       <Box sx={scrollWrapper}>
         <Box sx={listWrapperStyle}>

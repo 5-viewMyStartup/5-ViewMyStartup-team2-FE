@@ -14,7 +14,7 @@ export default function ListPagination() {
     >
       <Typo
         className="text_SB_20"
-        content="[페이지네이션 컴포넌트]"
+        content="[페이지네이션 필요한가?]"
         color={colorChips.white}
       />
     </Box>

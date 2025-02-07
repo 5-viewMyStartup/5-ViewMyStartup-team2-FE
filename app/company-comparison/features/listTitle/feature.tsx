@@ -40,7 +40,7 @@ export const ListTitle = {
           <Box sx={sortBoxStyle}>
             <Typo
               className="text_SB_20"
-              content="정렬"
+              content="매출액 고용인원 지원인원 드롭박스"
               color={colorChips.white}
             />
           </Box>
@@ -61,7 +61,7 @@ export const ListTitle = {
           <Box sx={sortBoxStyle}>
             <Typo
               className="text_SB_20"
-              content="정렬"
+              content="매출액 고용인원 지원인원 드롭박스"
               color={colorChips.white}
             />
           </Box>

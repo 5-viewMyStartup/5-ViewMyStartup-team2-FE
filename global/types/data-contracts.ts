@@ -62,3 +62,40 @@ export interface ApplicationListResponse {
   page: number;
   totalPages: number;
 }
+
+// 비교 결과
+export interface ComparisonResults {
+  /**
+   * 기업 순위
+   */
+  ranking?: number;
+  /**
+   * 기업 명
+   */
+  name: string;
+  /**
+   * 기업 로고 이미지 url
+   */
+  image?: string;
+  /**
+   * 기업 소개 내용
+   */
+  content: string;
+  /**
+   * 카테고리
+   * @example ["에듀테크", "재테크"]
+   */
+  category: string[];
+  /**
+   * 매출액
+   */
+  salesRevenue: number;
+  /**
+   * 재직자 수
+   */
+  employeeCnt: number;
+  /**
+   * 지원자 수
+   */
+  applicantsCnt: number;
+}

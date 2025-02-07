@@ -4,6 +4,7 @@ import { CompanyItems } from "./components/CompanyItems";
 
 const mockData = [
   {
+    ranking: 1,
     name: "코드잇",
     image:
       "https://s3-alpha-sig.figma.com/img/14ea/2072/7d797dc61be213072dfdfe95dc9d2494?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=NDjzJ4~YCVsb5sToJq49pE63fuvnB6MksZU3tEKQhmRkJ3PZ6iOq-XL82aHpZ56F8TZwkzwjwjwGPt6Qe1yH~NEye~NRFF~o3yVNdG0Zg8oBkZAkmOM3oTVmoA5Xh8J-X3~6cTjYSLjNtP3ObTC7d-NwCaeQmkw12r5hH3rOmsVjk~~Crx6yMTqdQZRdSmaIW6e0pPek6U1kTdphUWYbfx2koA7DS02NtHR3oFBfeLqTl4du5gomP2XRk3-CYc8CwFO0VMk0p5f~CX478UzYf2Ogzsasj9~SZxFEt0pmlS3JsfFfrpsUdV-Xt94zKisHvRrkLbdw0r3nKGm5hrMsuA__",
