@@ -4,7 +4,6 @@ import {
   CompanyListQuery,
   CompanyListResponse,
 } from "@/global/types/data-contracts";
-import { ActionFlightResponse } from "next/dist/server/app-render/types";
 
 /** 기업 목록 조회
  * @param {Object} params - 쿼리 정보
@@ -20,7 +19,7 @@ export const getCompanyListAPI = async (
   try {
     //GET 요청을 보내서 기업 데이터 가져오기
     const response: AxiosResponse<CompanyListResponse> = await instance.get(
-      "/api/companies",
+      "/api/companies", //엔드포인트
       {
         params: { page, filter },
       }
