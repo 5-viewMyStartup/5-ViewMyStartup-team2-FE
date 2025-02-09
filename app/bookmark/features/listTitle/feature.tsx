@@ -6,14 +6,7 @@ import React from "react";
 export default function ListTitle(): React.ReactElement {
   return (
     <Stack sx={listHeaderContainerStyle}>
-      <Typo
-        className="text_B_20"
-        content="투자 현황"
-        color={colorChips.white}
-      />
-      <Box sx={sortBoxStyle}>
-        <Typo className="text_SB_20" content="정렬 카테고리" color={colorChips.white} />
-      </Box>
+      <Typo className="text_B_20" content="즐겨찾기" color={colorChips.white} />
     </Stack>
   );
 }
@@ -27,7 +20,6 @@ const listHeaderContainerStyle = {
   maxWidth: { sm: "696px", md: "1200px" },
   pl: { xs: "16px", sm: "0" },
 };
-
 
 const searchBoxStyle = {
   display: "flex",

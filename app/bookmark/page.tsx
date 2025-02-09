@@ -2,7 +2,7 @@ import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { Single } from "./single";
 
-export default function InvestmentPage() {
+export default function BookmarkPage() {
   return (
     <Stack sx={mainLayout}>
       <Features.ListTitle />
@@ -10,7 +10,7 @@ export default function InvestmentPage() {
       <Box sx={scrollWrapper}>
         <Box sx={listWrapperStyle}>
           <Single.ListLabel />
-          <Features.InvestmentList />
+          <Features.BookmarkList />
         </Box>
       </Box>
 

@@ -5,10 +5,10 @@ import { Box, Stack } from "@mui/material";
 export default function ListLabel() {
   return (
     <Stack sx={listLabelWrapperStyle}>
-      <Box sx={rankingBoxStyle}>
+      <Box sx={bookmarkBoxStyle}>
         <Typo
           className="text_M_14"
-          content="순위"
+          content="즐겨찾기"
           color={colorChips.white}
           customStyle={{ textAlign: "center" }}
         />
@@ -37,18 +37,11 @@ export default function ListLabel() {
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={dataBoxStyle}>
+
+      <Box sx={applyBoxStyle}>
         <Typo
           className="text_M_14"
-          content="View My Startup 투자 금액"
-          color={colorChips.white}
-          customStyle={{ textAlign: "center" }}
-        />
-      </Box>
-      <Box sx={dataBoxStyle}>
-        <Typo
-          className="text_M_14"
-          content="실제 누적 투자 금액"
+          content="지원하기"
           color={colorChips.white}
           customStyle={{ textAlign: "center" }}
         />
@@ -72,28 +65,27 @@ const baseLabelBoxStyle = {
   alignItems: "center",
 };
 
-export const rankingBoxStyle = {
+export const bookmarkBoxStyle = {
   ...baseLabelBoxStyle,
-  display: ["none", "none", "flex"],
-  width: ["50px", "50px", "68px"],
+  width: ["38px", "38px", "76.75px"],
 };
 
-const nameBoxStyle = {
+export const nameBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["150px", "150px", "216px"],
+  width: ["150px", "150px", "250.75px"],
 };
 
 export const descBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["180px", "180px", "304px"],
+  width: ["325px", "325px", "500px"],
 };
 
-export const categoryBoxStyle ={
+export const categoryBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["91.5px", "91.5px", "153.75px"],
-}
+  width: ["103px", "103px", "230.65px"],
+};
 
-export const dataBoxStyle = {
+export const applyBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["91.5px", "91.5px", "230.63px"],
+  width: ["80px", "80px", "141.85px"],
 };
