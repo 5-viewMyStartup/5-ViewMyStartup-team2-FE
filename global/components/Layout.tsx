@@ -1,3 +1,5 @@
+"use client";
+
 import { colorChips } from "@/global/styles/colorChips";
 import { Box, Stack } from "@mui/material";
 import { ReactNode } from "react";
@@ -11,7 +13,15 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       sx={{ bgcolor: colorChips.black_400, width: "100vw", height: "100vh" }}
     >
       <Header />
-      <Box maxWidth={"1200px"} height={"100%"}>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "0 24px",
+          flex: 1,
+        }}
+      >
         {children}
       </Box>
     </Stack>
