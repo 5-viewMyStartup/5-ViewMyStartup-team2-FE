@@ -5,8 +5,8 @@ import { Typo } from "../styles/Typo";
 import { OutlinedBtn } from "./button/OutlineBtn";
 
 interface CustomListItemProps {
-  listData: { image: string; name: string; cartegory: string };
-  hendleClick?: () => void;
+  listData: { image: string; name: string; category: string };
+  handleClick?: () => void;
   selected?: boolean;
   checked?: boolean;
 }
@@ -14,7 +14,7 @@ export const CustomListItem: React.FC<CustomListItemProps> = ({
   listData,
   selected,
   checked,
-  hendleClick,
+  handleClick,
 }) => {
   return (
     <Stack display={"flex"} direction={"row"} justifyContent={"space-between"}>
@@ -44,7 +44,7 @@ export const CustomListItem: React.FC<CustomListItemProps> = ({
           <Typo
             color={colorChips.gray_200}
             className="text_R_14"
-            content={listData.cartegory}
+            content={listData.category}
           />
         </Box>
       </Stack>
@@ -52,7 +52,7 @@ export const CustomListItem: React.FC<CustomListItemProps> = ({
       <OutlinedBtn
         selected={selected}
         checked={checked}
-        onClick={hendleClick}
+        onClick={handleClick}
       />
     </Stack>
   );
