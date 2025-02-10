@@ -8,11 +8,13 @@ import { CustomListItem } from "../CustomListItem";
 import { colorChips } from "@/global/styles/colorChips";
 
 interface CustomModalProps {
+  title: string;
   open: boolean;
   handleClose: () => void;
 }
 
 export const CustomModal: React.FC<CustomModalProps> = ({
+  title,
   open,
   handleClose,
 }) => {
@@ -57,11 +59,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
         sx={{ ...modalStyle }}
       >
         <Box display={"flex"} justifyContent={"space-between"}>
-          <Typo
-            color="input"
-            content="나의 기업 선택하기"
-            className="text_B_20"
-          />
+          <Typo color="input" content={title} className="text_B_20" />
           <Image
             width={32}
             height={32}
