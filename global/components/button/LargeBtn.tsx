@@ -8,22 +8,22 @@ interface LargeBtnProps {
   content: string;
   isDisabled?: boolean;
   onClickBtn?: () => void;
-  style?: string;
+  style?: "contained" | "text" | "outlined";
 }
 
 export const LargeBtn: React.FC<LargeBtnProps> = ({
   content,
-  isDisabled,
-  style,
+  isDisabled = true,
+  style = "contained",
   onClickBtn,
   ...props
 }) => {
   return (
     <>
-      {isDisabled ? (
+      {!isDisabled ? (
         <Button
           onClick={onClickBtn}
-          variant={style ? style : "contained"}
+          variant={style}
           {...props}
           sx={{
             width: props.width ? props.width : "183px",

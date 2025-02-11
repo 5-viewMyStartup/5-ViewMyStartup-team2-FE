@@ -7,6 +7,7 @@ import { useState } from "react";
 
 interface PasswordInputProps extends Omit<InputProps, "fullWidth"> {
   width?: string;
+  height?: string;
   error?: boolean;
   errorMsg?: string;
 }
@@ -20,6 +21,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   return (
     <Box width={"100%"}>
       <OutlinedInput
+        color="input"
         type={isVisibled ? "text" : "password"}
         fullWidth
         endAdornment={
@@ -38,9 +40,9 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         }
         sx={{
           width: props.width,
+          height: props.height,
           borderColor: error ? colorChips.red_error : colorChips.gray_200,
           ...passwordInputStyles,
-          ...props.sx,
         }}
         {...props}
       />
