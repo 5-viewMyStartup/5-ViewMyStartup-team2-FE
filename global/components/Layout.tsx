@@ -13,15 +13,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       sx={{ bgcolor: colorChips.black_400, width: "100vw", height: "100vh" }}
     >
       <Header />
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: "0 24px",
-          flex: 1,
-        }}
-      >
+      <Box maxWidth={"1200px"} width={"100%"} height={"100%"}>
         {children}
       </Box>
     </Stack>
