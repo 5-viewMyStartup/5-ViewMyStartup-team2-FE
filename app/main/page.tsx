@@ -52,7 +52,7 @@ const companies = [
 export default function Main() {
   const [params, setParams] = useState<CompanyListQuery>({
     page: 1, //기본 1페이지
-    keyword: "",
+    search: "",
     filter: "revenueDesc", //기본 정렬 기준: 매출액 높은 순
   });
 
@@ -73,7 +73,10 @@ export default function Main() {
 
   return (
     <Stack sx={listLayout}>
-      <Features.ListTitle onSearch={(keyword) => updateParams({ keyword })} />
+      <Features.ListTitle
+        onSearch={(search) => updateParams({ search })}
+        onSelect={(filter) => updateParams({ filter })}
+      />
 
       <Box sx={scrollWrapper}>
         <Box sx={listWrapperStyle}>

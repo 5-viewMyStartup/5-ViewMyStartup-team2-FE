@@ -28,7 +28,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
   };
   const status =
     itemData.status === "PENDING"
-      ? "지원 완료"
+      ? "지원완료"
       : itemData.status === "ACCEPTED"
       ? "합격"
       : "불합격";

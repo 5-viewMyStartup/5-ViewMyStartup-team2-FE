@@ -37,7 +37,7 @@ export default function Page() {
 
   return (
     <Stack sx={listLayout}>
-      <Features.ListTitle />
+      <Features.ListTitle onSelect={(filter) => updateParams({ filter })} />
 
       <Box sx={scrollWrapper}>
         <Box sx={listWrapperStyle}>

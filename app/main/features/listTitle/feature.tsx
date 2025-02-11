@@ -1,16 +1,29 @@
+import { CustomSelect } from "@/global/components/CustomSelect";
 import { SearchInput } from "@/global/components/input/SearchInput";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { Box, Stack } from "@mui/material";
-import React from "react";
+import { FilterOption, mainCompanyFilter } from "@/global/types/data-contracts";
+import { Box, SelectChangeEvent, Stack } from "@mui/material";
+import React, { useState } from "react";
 
 interface ListTitleProps {
-  onSearch: (keyword: string) => void;
+  onSearch: (search: string) => void;
+  onSelect: (filter: mainCompanyFilter) => void;
 }
+
+const mainFilterOptions: FilterOption[] = [
+  { value: "revenueDesc", name: "매출액 높은순" },
+  { value: "revenueAsc", name: "매출액 낮은순" },
+  { value: "employeeDesc", name: "사원 수 많은순" },
+  { value: "employeeAsc", name: "사원 수 적은순" },
+];
 
 export default function ListTitle({
   onSearch,
+  onSelect,
 }: ListTitleProps): React.ReactElement {
+  const [selectedFilter, setSelectedFilter] = useState<string>("revenueDesc");
+
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     const value = e.target.value.trim();
     onSearch(value);
@@ -22,6 +35,24 @@ export default function ListTitle({
     if (e.key === "Enter") {
       const value = target.value.trim();
       onSearch(value);
+    }
+  };
+
+  function isMainCompanyFilter(value: string): value is mainCompanyFilter {
+    return [
+      "revenueDesc",
+      "revenueAsc",
+      "employeeDesc",
+      "employeeAsc",
+    ].includes(value);
+  }
+
+  const handleFilterChange = (e: SelectChangeEvent) => {
+    const selectedValue = e.target.value;
+
+    if (isMainCompanyFilter(selectedValue)) {
+      setSelectedFilter(selectedValue);
+      onSelect(selectedValue);
     }
   };
 
@@ -42,10 +73,11 @@ export default function ListTitle({
           />
         </Box>
         <Box sx={sortBoxStyle}>
-          <Typo
-            className="text_SB_20"
-            content="정렬"
-            color={colorChips.white}
+          <CustomSelect
+            options={mainFilterOptions}
+            value={selectedFilter}
+            handleChange={handleFilterChange}
+            defaultValue="revenueDesc"
           />
         </Box>
       </Stack>
