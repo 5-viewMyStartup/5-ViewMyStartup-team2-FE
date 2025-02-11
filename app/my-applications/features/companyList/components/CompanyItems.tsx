@@ -14,6 +14,7 @@ import {
   companyDescTypoStyle,
   labelDataBoxStyle,
 } from "@/global/styles/companyListStyles";
+import { useRouter } from "next/navigation";
 
 interface CompanyItemsProps {
   order: number;
@@ -36,9 +37,16 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
     itemData.status === "ACCEPTED"
       ? colorChips.brand_orange
       : colorChips.gray_300;
+  const router = useRouter();
+
+  const companyId = itemData.id;
+
+  const handleClick = () => {
+    router.push(`/company-detail/${companyId}`);
+  };
 
   return (
-    <Stack sx={companyItemBoxStyle}>
+    <Stack sx={companyItemBoxStyle} onClick={handleClick}>
       <Box sx={labelOrderBoxStyle}>
         <Typo
           className="text_R_14"
