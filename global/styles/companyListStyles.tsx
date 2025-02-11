@@ -77,6 +77,7 @@ export const companyListWrapperStyle = {
 };
 
 export const companyItemBoxStyle = {
+  cursor: "pointer",
   flexDirection: "row",
   height: "64px",
   borderBottom: `1px solid ${colorChips.gray_300}`,
