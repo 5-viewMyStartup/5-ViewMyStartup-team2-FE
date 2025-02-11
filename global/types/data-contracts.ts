@@ -75,3 +75,13 @@ export interface ApplicationListResponse {
   page: number;
   totalPages: number;
 }
+
+export interface BookmarkDTO {
+  id: string;
+  idx: number;
+  userId: string;
+  companyId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
