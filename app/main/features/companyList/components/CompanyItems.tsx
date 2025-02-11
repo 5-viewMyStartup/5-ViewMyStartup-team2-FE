@@ -55,7 +55,10 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
           className="text_M_14"
           content={itemData.name}
           color={colorChips.white}
-          customStyle={{ textAlign: "center" }}
+          customStyle={{
+            textAlign: "center",
+            overflow: "hidden",
+          }}
         />
       </Box>
       <Box

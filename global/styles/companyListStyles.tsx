@@ -9,16 +9,16 @@ export const listLayout = {
 };
 
 export const scrollWrapper = {
-  width: "100vw",
+  width: "100%",
   overflow: "hidden",
   position: "relative",
+  pl: { xs: "16px", sm: "0" },
+  pr: { xs: "16px", sm: "0" },
 };
 
 // 실제 스크롤되는 컨텐츠
 export const listWrapperStyle = {
   width: "100%",
-  pl: { xs: "16px", sm: "0" },
-  pr: { xs: "16px", sm: "0" },
   display: "flex",
   flexDirection: "column",
   alignItems: { xs: "flex-start", sm: "center" },
