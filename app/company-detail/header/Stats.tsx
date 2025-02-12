@@ -19,7 +19,7 @@ const Stats = ({ stats }: StatsProps) => {
         <Typo className="text_R_16" color={colorChips.gray_100}>
           매출액
         </Typo>
-        <Typo className="text_SB_16" color="#ffffff">
+        <Typo className="text_SB_16" color={colorChips.white}>
           {stats.monthlyRevenue}억 원
         </Typo>
       </StatsItem>
@@ -27,7 +27,7 @@ const Stats = ({ stats }: StatsProps) => {
         <Typo className="text_R_16" color={colorChips.gray_100}>
           고용 인원
         </Typo>
-        <Typo className="text_SB_16" color="#ffffff">
+        <Typo className="text_SB_16" color={colorChips.white}>
           {stats.personnel}명
         </Typo>
       </StatsItem>
@@ -35,7 +35,7 @@ const Stats = ({ stats }: StatsProps) => {
         <Typo className="text_R_16" color={colorChips.gray_100}>
           지원 인원
         </Typo>
-        <Typo className="text_SB_16" color="#ffffff">
+        <Typo className="text_SB_16" color={colorChips.white}>
           {stats.applicants}명
         </Typo>
       </StatsItem>

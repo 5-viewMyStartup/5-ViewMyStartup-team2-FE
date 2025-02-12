@@ -34,14 +34,14 @@ const Header = ({ name, logo, category, stats }: HeaderProps) => {
             <StyledImage src={logo} alt={name} onError={handleImageError} />
           ) : (
             <FallbackLogo>
-              <Typo className="text_B_16" color="#ffffff">
+              <Typo className="text_B_16" color={colorChips.white}>
                 {name.charAt(0)}
               </Typo>
             </FallbackLogo>
           )}
         </Logo>
         <TextContainer>
-          <Typo className="text_B_24" color="#ffffff">
+          <Typo className="text_B_24" color={colorChips.white}>
             {name}
           </Typo>
           <Typo className="text_M_20" color={colorChips.gray_200}>

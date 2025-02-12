@@ -9,7 +9,11 @@ interface DescriptionProps {
 const Description = ({ description }: DescriptionProps) => {
   return (
     <Card>
-      <Typo className="text_B_20" color="#ffffff" sx={{ marginBottom: "16px" }}>
+      <Typo
+        className="text_B_20"
+        color={colorChips.white}
+        sx={{ marginBottom: "16px" }}
+      >
         기업 소개
       </Typo>
       <Typo

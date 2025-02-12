@@ -4,6 +4,7 @@ import { useState } from "react";
 import Header from "./header/Header";
 import Description from "./header/Description";
 import Comments from "./comments/Comments";
+import { styled, Box } from "@mui/material";
 
 interface CompanyDetailProps {
   id: string;
@@ -14,18 +15,28 @@ const CompanyDetail = ({ id }: CompanyDetailProps) => {
   const [company] = useState({ ...MOCK_DATA, id });
 
   return (
-    <div>
-      <Header
-        name={company.name}
-        category={company.category}
-        logo={company.logo}
-        stats={company.stats}
-      />
-      <Description description={company.description} />
-      <Comments comments={company.investments} />
-    </div>
+    <StyledWrapper>
+      <StyledContainer>
+        <Header
+          name={company.name}
+          category={company.category}
+          logo={company.logo}
+          stats={company.stats}
+        />
+        <Description description={company.description} />
+        <Comments comments={company.investments} />
+      </StyledContainer>
+    </StyledWrapper>
   );
 };
+
+const StyledWrapper = styled(Box)({
+  paddingBottom: "150px",
+});
+
+const StyledContainer = styled(Box)({
+  padding: "0 24px",
+});
 
 // 목업 데이터와 타입 정의
 const MOCK_DATA = {
