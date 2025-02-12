@@ -24,7 +24,7 @@ export const getCompanyListAPI = async (
         params: { page, search, filter },
       }
     );
-    console.log("getCompanyListAPI: ", response.data);
+    // console.log("getCompanyListAPI: ", response.data);
     return response.data;
   } catch (err) {
     throw err;
