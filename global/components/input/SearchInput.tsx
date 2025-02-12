@@ -4,8 +4,8 @@ import Image from "next/image";
 
 interface SearchProps extends Omit<InputProps, "fullWidth"> {
   variation: "left" | "right";
-  width?: string;
-  height?: string;
+  width?: string | string[];
+  height?: string | string[];
 }
 
 export const SearchInput: React.FC<SearchProps> = (props) => {
@@ -52,7 +52,7 @@ export const SearchInput: React.FC<SearchProps> = (props) => {
       sx={{
         ...SearchStyles,
         width: props.width,
-        height: props.height,
+        height: props.height ? props.height : ["40px", "48px", "48px"],
       }}
     />
   );
