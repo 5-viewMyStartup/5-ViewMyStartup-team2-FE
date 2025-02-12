@@ -2,7 +2,7 @@ import { CustomSelect } from "@/global/components/CustomSelect";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { applicationFilter, FilterOption } from "@/global/types/data-contracts";
-import { Box, SelectChangeEvent, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import React, { useState } from "react";
 
 interface ListTitleProps {
@@ -21,14 +21,12 @@ export default function ListTitle({
 }: ListTitleProps): React.ReactElement {
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
-  function isMainCompanyFilter(value: string): value is applicationFilter {
+  function isApplicationFilter(value: string): value is applicationFilter {
     return ["all", "pending", "accepted", "rejected"].includes(value);
   }
 
-  const handleFilterChange = (e: SelectChangeEvent) => {
-    const selectedValue = e.target.value;
-
-    if (isMainCompanyFilter(selectedValue)) {
+  const handleFilterChange = (selectedValue: string) => {
+    if (isApplicationFilter(selectedValue)) {
       setSelectedFilter(selectedValue);
       onSelect(selectedValue);
     }
@@ -63,7 +61,6 @@ const listHeaderContainerStyle = {
 const sortBoxStyle = {
   display: "flex",
   alignItems: "center",
-  width: ["241px", "264px"],
+  width: ["150px", "170px"],
   height: ["40px", "48px"],
-  border: `1px solid ${colorChips.white}`, //border는 컴포넌트 넣고 삭제
 };
