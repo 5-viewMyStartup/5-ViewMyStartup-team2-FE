@@ -1,8 +1,31 @@
 "use client";
 
-// theme.js
 import { createTheme } from "@mui/material/styles";
 
+declare module "@mui/material/styles" {
+  interface Palette {
+    button: Palette["primary"];
+    button_select: Palette["primary"];
+    input: Palette["primary"];
+  }
+
+  interface PaletteOptions {
+    button?: PaletteOptions["primary"];
+    button_select?: PaletteOptions["primary"];
+    input?: PaletteOptions["primary"];
+  }
+}
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    button: true;
+    button_select: true;
+  }
+}
+declare module "@mui/material/InputBase" {
+  interface InputBasePropsColorOverrides {
+    input: true;
+  }
+}
 const theme = createTheme({
   typography: {
     fontFamily: "var(--font-pretendard)",
@@ -18,7 +41,7 @@ const theme = createTheme({
       main: "#558FFF",
     },
     button: {
-      main: "#D8D8D8",
+      main: "#D8D8D8", // 직접 정의
     },
     button_select: {
       main: "#747474",
@@ -27,6 +50,7 @@ const theme = createTheme({
       main: "#ffffff",
     },
   },
+
   // // 추가로 커스터마이징이 필요하면 여기에 작성하세요.
   breakpoints: {
     values: {

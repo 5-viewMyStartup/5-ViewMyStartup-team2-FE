@@ -1,22 +1,27 @@
-import { InputProps, OutlinedInput, SxProps } from "@mui/material";
+import { InputProps, OutlinedInput, SxProps, Theme } from "@mui/material";
 import { colorChips } from "../../styles/colorChips";
 
-interface CommonInputProps extends Omit<InputProps, "fullWidth"> {}
+interface CommonInputProps extends Omit<InputProps, "fullWidth"> {
+  width?: string;
+  height?: string;
+}
 
-export const CommonInput: React.FC<CommonInputProps> = (props) => {
+export const CommonInput: React.FC<CommonInputProps> = ({ ...props }) => {
   return (
     <OutlinedInput
       fullWidth
+      color="input"
       {...props}
       sx={{
         ...CommonInputStyles,
-        ...props.sx,
+        width: props.width,
+        height: props.height,
       }}
     />
   );
 };
 
-const CommonInputStyles: SxProps = {
+const CommonInputStyles: SxProps<Theme> = {
   width: "100%",
   height: ["40px", "48px", "48px"],
   borderRadius: "10px",

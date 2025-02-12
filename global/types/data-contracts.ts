@@ -76,6 +76,16 @@ export interface ApplicationListResponse {
   totalPages: number;
 }
 
+export interface BookmarkDTO {
+  id: string;
+  idx: number;
+  userId: string;
+  companyId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
 // 비교 결과
 export interface ComparisonResults {
   /**
