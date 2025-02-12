@@ -1,0 +1,72 @@
+# 🚀 GitHub Actions 워크플로우: 포크된 저장소 자동 동기화
+# 이 워크플로우는 원본 저장소의 dev 브랜치 변경 사항을 포크된 저장소로 자동으로 동기화합니다.
+
+name: synchronization
+
+# ✅ 워크플로우 실행 조건
+on:
+  push:
+    branches:
+      - dev # dev 브랜치에 푸시될 때마다 자동으로 워크플로우 실행
+
+jobs:
+  sync:
+    name: Sync forked repo # 작업(Job) 이름
+    runs-on: ubuntu-latest # 최신 Ubuntu 환경에서 실행
+
+    timeout-minutes: 10 # ⏱️ 1. 타임아웃 설정: 10분 동안 실행되지 않으면 자동 종료 (무한 루프 방지)
+
+    steps:
+      # 📥 2. 현재 저장소의 dev 브랜치 체크아웃
+      - name: Checkout dev
+        uses: actions/checkout@v4 # GitHub에서 제공하는 공식 액션
+        with:
+          token: ${{ secrets.FORKED_REPO_TOKEN }} # 포크된 저장소에 접근하기 위한 인증 토큰
+          fetch-depth: 0 # 전체 Git 히스토리 가져오기 (히스토리 누락 방지)
+
+      # 🌐 3. 포크된 저장소를 원격 저장소로 추가하고 Git 설정
+      - name: Add remote for forked repo
+        run: |
+          # 포크된 저장소를 "forked-repo"라는 이름으로 추가
+          git remote add forked-repo https://${{ secrets.FORKED_REPO_TOKEN }}@github.com/Bear4243/5-ViewMyStartup-team2-FE.git
+
+          # Git 사용자 정보 설정 (커밋 메타데이터에 표시됨)
+          git config user.name "Bear4243"
+          git config user.email "ujm4243@naver.com"
+
+      # 🔍 4. 변경 사항 및 병합 충돌 확인
+      - name: Fetch forked repo and check for conflicts
+        run: |
+          # 포크된 저장소의 dev 브랜치 최신 내용 가져오기
+          git fetch forked-repo dev
+
+          # ✅ 변경 사항 확인: HEAD와 forked-repo/dev 비교
+          if git diff --quiet HEAD forked-repo/dev; then
+            echo "✅ No changes to sync. Exiting."  # 변경 사항이 없으면 종료
+            exit 0
+          fi
+
+          # ⚠️ 병합 충돌 사전 확인 (실제 병합 없이 시뮬레이션)
+          if ! git merge --no-commit --no-ff forked-repo/dev; then
+            echo "❌ Merge conflict detected. Aborting sync."  # 충돌 발생 시 메시지 출력
+            git merge --abort  # 병합 중단 및 이전 상태로 복원
+            exit 1  # 워크플로우 실패 처리
+          fi
+
+      # 🚀 5. 변경 사항 병합 및 푸시
+      - name: Merge and Push changes
+        run: |
+          set -e  # ❗ 에러 발생 시 즉시 스크립트 종료 (안전성 강화)
+
+          # 변경 사항 병합 (충돌이 없는 경우 자동 병합)
+          git merge forked-repo/dev --no-edit
+
+          # 포크된 저장소로 병합된 내용 푸시
+          git push forked-repo dev
+
+          echo "🚀 Sync successful."  # 성공 메시지 출력
+
+      # 🧹 6. 정리 작업 (원격 저장소 제거)
+      - name: Clean up
+        run: |
+          git remote remove forked-repo  # 사용한 원격 저장소 삭제 (보안 및 깔끔한 상태 유지)
