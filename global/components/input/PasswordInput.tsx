@@ -6,8 +6,8 @@ import Image from "next/image";
 import { useState } from "react";
 
 interface PasswordInputProps extends Omit<InputProps, "fullWidth"> {
-  width?: string;
-  height?: string;
+  width?: string | string[];
+  height?: string | string[];
   error?: boolean;
   errorMsg?: string;
 }
@@ -39,10 +39,10 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
           />
         }
         sx={{
-          width: props.width,
-          height: props.height,
           borderColor: error ? colorChips.red_error : colorChips.gray_200,
           ...passwordInputStyles,
+          width: props.width,
+          height: props.height ? props.height : ["40px", "48px", "48px"],
         }}
         {...props}
       />

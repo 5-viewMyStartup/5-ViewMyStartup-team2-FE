@@ -23,12 +23,15 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
       page={page}
       count={count}
       onChange={handleChange}
+      siblingCount={2}
+      boundaryCount={0}
       variant="outlined"
       shape="rounded"
       sx={{
         "& .MuiPaginationItem-root": {
           backgroundColor: colorChips.black_100, // 버튼 배경색
           color: colorChips.gray_200, // 버튼의 텍스트 색상
+          "&.MuiPaginationItem-ellipsis": { display: "none" },
           "&.Mui-selected": {
             backgroundColor: colorChips.brand_orange, // 선택된 버튼 배경색
             color: colorChips.white, // 선택된 버튼의 텍스트 색상
