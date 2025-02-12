@@ -53,6 +53,14 @@ export interface UsersDTO {
 // Companies 모델
 export interface CompanyDTO {
   /**
+   * 기업 id
+   */
+  id: string;
+  /**
+   * 기업 idx
+   */
+  idx: string;
+  /**
    * 기업 명
    */
   name: string;
@@ -81,6 +89,31 @@ export interface CompanyDTO {
    * 지원자 수
    */
   applicantCnt: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+//FIXME: 백엔드 완성되면 맞게 수정하기
+export type mainCompanyFilter = "revenueDesc" | "revenueAsc";
+
+export interface CompanyListQuery {
+  page?: number;
+  keyword?: string;
+  filter?: mainCompanyFilter;
+}
+
+export interface CompanyListResponse {
+  companies: CompanyDTO[];
+  page: number;
+  totalPages: number;
+}
+
+export interface ApplicationDTO
+  extends Omit<CompanyDTO, "salesRevenue" | "employeeCnt"> {
+  /**
+   * 지원 상태
+   */
+  status: ApplicationStatus | string;
 }
 
 // CompaniesComments 모델 추가
@@ -186,56 +219,8 @@ export interface ApplicationListQuery {
   filter?: ApplicationStatus | "all";
 }
 
-export interface ApplicationDTO
-  extends Omit<CompanyDTO, "salesRevenue" | "employeeCnt"> {
-  /**
-   * 지원서 id
-   */
-  id: string;
-  /**
-   * 지원 상태
-   */
-  status: ApplicationStatus | string;
-  /**
-   * 지원 날짜
-   */
-  createdAt: string;
-  /**
-   * 지원서 업데이트 날짜
-   */
-  updatedAt: string;
-}
-
 export interface ApplicationListResponse {
   applications: ApplicationDTO[];
   page: number;
   totalPages: number;
-}
-
-//서버에서 반환하는 기업목록 데이터의 구조
-export interface CompanyListQuery {
-  page?: number; // 페이지 번호 (기본값 1)
-  filter?: string | "all"; // 필터 (기본값 "all")
-}
-
-export interface CompanyListResponse {
-  companies: CompanyDTO[]; // 기업 목록
-  page: number; // 현재 페이지 번호
-  totalPages: number; // 전체 페이지 수
-}
-
-// Bookmark Request 인터페이스 추가
-export interface BookmarkListQuery {
-  page?: number;
-  // 사용자 ID (사용자가 북마크할 때)
-  userId: string;
-  // 기업 ID (사용자가 북마크할 기업)
-  companyId?: string;
-}
-
-// Bookmark Response 인터페이스 추가
-export interface BookmarkListResponse {
-  bookmarks: BookmarkDTO[]; // 북마크 데이터 배열
-  page: number; //현재 페이지 번호
-  totalPages: number; //
 }

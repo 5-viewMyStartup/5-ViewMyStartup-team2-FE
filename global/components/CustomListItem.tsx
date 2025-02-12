@@ -1,16 +1,21 @@
-"use client";
-import { Box, Stack } from "@mui/material";
 import Image from "next/image";
+import { Box, Stack } from "@mui/material";
 import { colorChips } from "../styles/colorChips";
 import { Typo } from "../styles/Typo";
-import { useState } from "react";
 import { OutlinedBtn } from "./button/OutlineBtn";
 
 interface CustomListItemProps {
-  listData: { image: string; name: string; cartegory: string };
+  listData: { image: string; name: string; category: string };
+  handleClick?: () => void;
+  selected?: boolean;
+  checked?: boolean;
 }
-export const CustomListItem: React.FC<CustomListItemProps> = ({ listData }) => {
-  const [isSelect, setIsSelect] = useState<boolean>(false);
+export const CustomListItem: React.FC<CustomListItemProps> = ({
+  listData,
+  selected,
+  checked,
+  handleClick,
+}) => {
   return (
     <Stack display={"flex"} direction={"row"} justifyContent={"space-between"}>
       <Stack
@@ -39,18 +44,16 @@ export const CustomListItem: React.FC<CustomListItemProps> = ({ listData }) => {
           <Typo
             color={colorChips.gray_200}
             className="text_R_14"
-            content={listData.cartegory}
+            content={listData.category}
           />
         </Box>
       </Stack>
 
       <OutlinedBtn
-        variant="outlined"
-        check={true}
-        onClick={() => setIsSelect(!isSelect)}
-      >
-        선택하기
-      </OutlinedBtn>
+        selected={selected}
+        checked={checked}
+        onClick={handleClick}
+      />
     </Stack>
   );
 };

@@ -3,6 +3,9 @@ import Typography, { TypographyProps } from "@mui/material/Typography";
 import { typographyStyles } from "./TypoStyles";
 
 export type TypoClassName =
+  | "text_B_24"
+  | "text_SB_24"
+  | "text_M_24"
   | "text_B_20"
   | "text_SB_20"
   | "text_M_20"

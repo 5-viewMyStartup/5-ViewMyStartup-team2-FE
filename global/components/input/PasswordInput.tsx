@@ -6,7 +6,8 @@ import Image from "next/image";
 import { useState } from "react";
 
 interface PasswordInputProps extends Omit<InputProps, "fullWidth"> {
-  width?: string;
+  width?: string | string[];
+  height?: string | string[];
   error?: boolean;
   errorMsg?: string;
 }
@@ -20,6 +21,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   return (
     <Box width={"100%"}>
       <OutlinedInput
+        color="input"
         type={isVisibled ? "text" : "password"}
         fullWidth
         endAdornment={
@@ -37,9 +39,10 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
           />
         }
         sx={{
+          borderColor: error ? colorChips.red_error : colorChips.gray_200,
           ...passwordInputStyles,
           width: props.width,
-          borderColor: error ? colorChips.red_error : colorChips.gray_200,
+          height: props.height ? props.height : ["40px", "48px", "48px"],
         }}
         {...props}
       />
@@ -62,7 +65,7 @@ const passwordInputStyles: SxProps = {
   border: `1px solid ${colorChips.gray_200}`,
   fontFamily: "pretendard",
   color: colorChips.white,
-  fontSize: "14px",
+  fontSize: ["14px", "14px", "13px"],
   fontStyle: "normal",
   fontWeight: 400,
   lineHeight: "16.71px",
