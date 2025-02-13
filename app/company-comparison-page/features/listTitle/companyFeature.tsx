@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Stack, Box } from "@mui/material";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import CompanySelectModal from "./components/CompanySelectModal"; // 기업 선택 모달 컴포넌트
+import { CompanySelectModal } from "./components/CompanySelectModal"; // 기업 선택 모달 컴포넌트
 import { CompanyDTO } from "@/global/types/data-contracts"; // 기업 데이터 타입
 import { useCompanyFetch } from "../../core/useCompanyFetchHook"; // `useCompanyFetch` 훅 import
 import { CompanyListQuery } from "@/global/types/data-contracts"; // 쿼리 파라미터 타입
-import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
+import { useRouter } from "next/navigation";
+// import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 
 const CompanyListTitle: React.FC = () => {
   const [selectedCompanies, setSelectedCompanies] = useState<CompanyDTO[]>([]); // 선택된 기업 목록
@@ -15,21 +16,24 @@ const CompanyListTitle: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
 
   const params: CompanyListQuery = {
-    page: 1, // 페이지 기본값 (필요한 값으로 설정)
+    page: currentPage,
   };
 
   // `useCompanyFetch` 훅을 사용하여 기업 목록 불러오기
-  const {
-    isLoading,
-    companies = [],
-    totalPages,
-  } = useCompanyFetch(params, modalOpen); // `companies`가 undefined일 경우 빈 배열로 설정
+  const { isLoading, companies = [], totalPages } = useCompanyFetch(params); // `companies`가 undefined일 경우 빈 배열로 설정
 
   useEffect(() => {
     if (!isLoading && companies.length > 0) {
       setLoading(false); // 로딩이 끝났으면 false
     }
   }, [isLoading, companies]); // isLoading과 companies 상태에 따라 effect 실행
+
+  // 페이지가 변경될 때마다 호출되는 useEffect
+  useEffect(() => {
+    if (currentPage > 0) {
+      setLoading(true); // 페이지 변경 시 로딩 상태 true로 설정
+    }
+  }, [currentPage]); // currentPage 값 변경될 때마다 호출
 
   // 모달 열기
   const handleOpenModal = () => setModalOpen(true);
@@ -39,6 +43,7 @@ const CompanyListTitle: React.FC = () => {
 
   // 기업 선택 처리
   const handleSelectCompany = (company: CompanyDTO) => {
+    console.log("📌✅ 기업 선택됨:", company);
     setSelectedCompanies((prev) => [...prev, company]); // 선택된 기업 추가
   };
 
@@ -47,6 +52,22 @@ const CompanyListTitle: React.FC = () => {
     setSelectedCompanies((prev) => prev.filter((c) => c.name !== company.name)); // 선택된 기업 삭제
   };
 
+  // ✅ 기본 이미지를 적용하는 함수
+  const defaultImage = "/assets/default-company-img.svg";
+  const formatSelectedCompanies = (companies: CompanyDTO[]) => {
+    return companies.map((company) => ({
+      ...company,
+      image: company.image || defaultImage, // ✅ 기본 이미지 적용
+      category: company.category || [],
+    }));
+  };
+
+  //페이지 이동
+  const router = useRouter();
+  // console.log("📌 선택된 기업 목록:", selectedCompanies);
+  // useEffect(() => {
+  //   console.log("📌 선택된 기업 목록 업데이트됨:", selectedCompanies);
+  // }, [selectedCompanies]);
   return (
     <Stack sx={{ width: "100%" }}>
       {/* 회사 목록 타이틀 */}
@@ -76,7 +97,7 @@ const CompanyListTitle: React.FC = () => {
       <Box
         sx={{
           backgroundColor: colorChips.black_300, // 배경색 지정
-          padding: "85px 543px", // 여백 추가
+          padding: "56px 253px", // 여백 추가
           borderRadius: "8px", // 모서리 둥글게
           display: "flex",
           justifyContent: "center",
@@ -87,7 +108,8 @@ const CompanyListTitle: React.FC = () => {
         {selectedCompanies.length === 0 ? (
           <Typo
             className="text_R_14"
-            content="아직 추가한 기업이 없어요, 버튼을 눌러 기업을 추가해보세요!"
+            content="아직 추가한 기업이 없어요, 
+            버튼을 눌러 기업을 추가해보세요!"
             color={colorChips.gray_200}
             customStyle={{
               textAlign: "center",
@@ -96,32 +118,75 @@ const CompanyListTitle: React.FC = () => {
           />
         ) : (
           // 선택된 기업들 표시
-          <Stack>
+          <Stack direction="row">
             {selectedCompanies.map((company, index) => (
-              <Box key={index} sx={{ padding: "8px", marginBottom: "8px" }}>
-                <img />
+              <Box
+                key={index}
+                sx={{
+                  display: "flex", // ✅ 전체를 flex 컨테이너로
+                  flexDirection: "column", // ✅ 이미지, 이름, 카테고리를 세로 배치
+                  alignItems: "center", // ✅ 가로 정렬 (중앙 정렬)
+                  padding: "8px",
+                  backgroundColor: colorChips.gray_400,
+                  borderRadius: "8px",
+                }}
+              >
+                <img
+                  src={company.image}
+                  alt={company.name}
+                  style={{ width: "80px", height: "80px", borderRadius: "50%" }}
+                />
                 <Typo
                   className="text_M_16"
                   content={company.name}
                   color={colorChips.white}
+                />
+                <Typo
+                  className="text_R_14"
+                  content={
+                    company.category && company.category.length > 0
+                      ? company.category.join(", ") // 직접 join() 사용
+                      : "기타"
+                  }
+                  color={colorChips.gray_200}
                 />
               </Box>
             ))}
           </Stack>
         )}
       </Box>
-
+      <Box
+        sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+      >
+        <button
+          onClick={() => router.push("/company-comparison")} // ✅ 이동할 경로 설정
+          disabled={selectedCompanies.length === 0} // ✅ 선택한 기업이 없으면 비활성화
+          style={{
+            backgroundColor:
+              selectedCompanies.length === 0
+                ? colorChips.gray_400 // 비활성화 시 색상
+                : colorChips.brand_orange,
+            color:
+              selectedCompanies.length === 0
+                ? colorChips.gray_200 // 비활성화 시 글씨색
+                : colorChips.white,
+            height: "40px",
+            border: "none",
+            padding: "8px 24px",
+            borderRadius: "50px",
+            cursor: "pointer",
+          }}
+        >
+          <Typo className="text_SB_16" content="기업 비교하기" />
+        </button>
+      </Box>
       {/* 모달 컴포넌트 */}
       <CompanySelectModal
         open={modalOpen}
-        onClose={handleCloseModal}
+        handleClose={handleCloseModal}
         onSelect={handleSelectCompany}
         onDeselect={handleDeselectCompany}
-        selectedCompanies={selectedCompanies}
-        companies={companies}
-        totalPages={totalPages}
-        isLoading={loading}
-        fetchCompanies={setCurrentPage} // 페이지네이션 처리 함수
+        selectedCompanies={formatSelectedCompanies(selectedCompanies)} // 기본 이미지가 포함된 데이터 전달
       />
     </Stack>
   );

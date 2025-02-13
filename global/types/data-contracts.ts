@@ -1,56 +1,3 @@
-// Users 모델 추가
-export interface UsersDTO {
-  /**
-   * 사용자 ID
-   */
-  id: string;
-  /**
-   * 사용자 인덱스 (자동 증가 값)
-   */
-  idx: number;
-  /**
-   * 사용자 이메일
-   */
-  email: string;
-  /**
-   * 사용자 비밀번호
-   */
-  password: string;
-  /**
-   * 사용자 이름
-   */
-  name: string;
-  /**
-   * 사용자 닉네임
-   */
-  nickname: string;
-  /**
-   * 사용자 생성 일시
-   */
-  createdAt: string;
-  /**
-   * 사용자 업데이트 일시
-   */
-  updatedAt: string;
-  /**
-   * 삭제된 일시 (삭제된 데이터에 대해서만 존재)
-   */
-  deletedAt?: string | null;
-  /**
-   * 사용자의 북마크 정보
-   */
-  Bookmark: BookmarkDTO[];
-  /**
-   * 사용자가 작성한 기업 댓글 정보
-   */
-  comments: CompaniesCommentsDTO[];
-  /**
-   * 사용자의 지원 내역
-   */
-  UserApplications: ApplicationDTO[];
-}
-
-// Companies 모델
 export interface CompanyDTO {
   /**
    * 기업 id
@@ -116,102 +63,6 @@ export interface ApplicationDTO
   status: ApplicationStatus | string;
 }
 
-// CompaniesComments 모델 추가
-export interface CompaniesCommentsDTO {
-  /**
-   * 댓글 ID
-   */
-  id: string;
-  /**
-   * 댓글 인덱스 (자동 증가 값)
-   */
-  idx: number;
-  /**
-   * 사용자 ID
-   */
-  userId: string;
-  /**
-   * 기업 ID
-   */
-  companyId: string;
-  /**
-   * 댓글 내용
-   */
-  content: string;
-  /**
-   * 댓글 생성 일시
-   */
-  createdAt: string;
-  /**
-   * 댓글 업데이트 일시
-   */
-  updatedAt: string;
-  /**
-   * 삭제된 일시 (삭제된 데이터에 대해서만 존재)
-   */
-  deletedAt?: string | null;
-  /**
-   * 관련된 기업 정보
-   */
-  company: CompanyDTO;
-  /**
-   * 관련된 사용자 정보
-   */
-  user: UsersDTO;
-}
-
-// Category 모델 추가
-export interface CategoryDTO {
-  /**
-   * 카테고리 ID
-   */
-  id: string;
-  /**
-   * 카테고리명
-   */
-  category: string;
-  /**
-   * 카테고리에 속한 기업 목록
-   */
-  company: CompanyDTO[];
-}
-
-// Bookmark 모델 추가
-export interface BookmarkDTO {
-  /**
-   * 북마크 ID
-   */
-  id: string;
-  /**
-   * 북마크 인덱스 (자동 증가 값)
-   */
-  idx: number;
-  /**
-   * 사용자 ID
-   */
-  userId: string;
-  /**
-   * 기업 ID
-   */
-  companyId: string;
-  /**
-   * 북마크 생성 일시
-   */
-  createdAt: string;
-  /**
-   * 북마크 업데이트 일시
-   */
-  updatedAt: string;
-  /**
-   * 삭제된 일시 (삭제된 데이터에 대해서만 존재)
-   */
-  deletedAt?: string | null;
-  /**
-   * 관련된 사용자 정보
-   */
-  user: UsersDTO;
-}
-
 export type ApplicationStatus = "pending" | "accepted" | "rejected";
 
 export interface ApplicationListQuery {
@@ -223,4 +74,54 @@ export interface ApplicationListResponse {
   applications: ApplicationDTO[];
   page: number;
   totalPages: number;
+}
+
+export interface BookmarkDTO {
+  id: string;
+  idx: number;
+  userId: string;
+  companyId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+//아래 4개는 나의 기업 비교 페이지를 위해 추가함
+export interface ComparisonPickQuery {
+  page?: number; // 페이지 번호
+  // 추가적으로 필터링 옵션이나 검색어 등이 필요하면 여기 추가
+}
+
+export interface ComparisonPickResponse {
+  success: boolean;
+  message: string;
+  data: {
+    companies: CompanyDTO[]; // 기업 목록
+    pagination: {
+      currentPage: number;
+      totalPages: number;
+      totalItems: number;
+      itemsPerPage: number;
+    }; // 페이지네이션 정보
+  };
+}
+
+export interface ComparisonSearchQuery {
+  page?: number; // 페이지 번호
+  keyword?: string; // 검색어
+  // 추가적으로 필터링 옵션이나 검색어 등이 필요하면 여기 추가
+}
+
+export interface ComparisonSearchResponse {
+  success: boolean;
+  message: string;
+  data: {
+    companies: CompanyDTO[]; // 기업 목록
+    pagination: {
+      currentPage: number;
+      totalPages: number;
+      totalItems: number;
+      itemsPerPage: number;
+    }; // 페이지네이션 정보
+  };
 }

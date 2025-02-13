@@ -1,194 +1,198 @@
-import React, { useState, useEffect } from "react";
-import { Stack, Box, Modal, IconButton, Button } from "@mui/material";
-import { Typo } from "@/global/styles/Typo";
-import { colorChips } from "@/global/styles/colorChips";
+import { useEffect, useState } from "react";
+import { CustomModal } from "@/global/components/modal/CustomModal";
 import { CompanyDTO } from "@/global/types/data-contracts";
-import { SearchInput } from "@/global/components/input/SearchInput";
-import ListPagination from "../../listPagination/feature";
+import { useCompanyFetch } from "../../../core/useCompanyFetchHook";
+import { useApplicationFetch } from "@/app/company-comparison-page/core/useApplicationFetchHook";
 
 interface CompanySelectModalProps {
-  open: boolean; // 모달 열기 상태
-  onClose: () => void; // 모달 닫기 함수
-  onSelect: (company: CompanyDTO) => void; // 기업 선택 시 호출될 함수
-  onDeselect: (company: CompanyDTO) => void; // 기업 선택 해제 시 호출될 함수
-  selectedCompanies: CompanyDTO[]; // 선택된 기업 목록
-  companies: CompanyDTO[]; // 기업 목록
-  totalPages: number; // 전체 페이지 수
-  totalItems: number;
-  isLoading: boolean; // 로딩 상태
-  fetchCompanies: (page: number) => void; // 페이지 변경 시 기업 목록을 가져오는 함수
+  open: boolean;
+  handleClose: () => void;
+  selectedCompanies: CompanyDTO[];
+  onSelect: (company: CompanyDTO) => void;
+  onDeselect: (company: CompanyDTO) => void;
 }
 
-const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
+export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
   open,
-  onClose,
+  handleClose,
+  selectedCompanies,
   onSelect,
   onDeselect,
-  selectedCompanies,
-  companies,
-  totalItems,
-  totalPages,
-  isLoading,
-  fetchCompanies,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+  // 🚀 기존 recentPage → pickPage로 변수명 변경
+  const [searchPage, setSearchPage] = useState(1); // 검색 결과 페이지 상태 관리
+  const [pickPage, setPickPage] = useState(1); // 🚀 최근 지원한 기업의 페이지 상태 관리
+  const [keyword, setKeyword] = useState(""); // 검색어 상태 관리
+
+  // API에서 검색된 기업 데이터 가져오기
+  const {
+    isLoading: isCompanyLoading,
+    companies,
+    totalPages: totalSearchPages,
+  } = useCompanyFetch({ page: searchPage, keyword });
+
+  // 🚀 최근 지원한 기업 데이터 가져오기 (변경된 변수명 반영)
+  const {
+    isLoading: isApplicationLoading,
+    companies: appliedCompanies,
+    totalPages: totalPickPages,
+  } = useApplicationFetch({ page: pickPage });
+
+  // 🚀 pickPage를 변경할 핸들러 함수 추가
+  const handleSearchPageChange = (newPage: number) => setSearchPage(newPage);
+  const handlePickPageChange = (newPage: number) => setPickPage(newPage); // 최근 지원한 기업의 페이지 변경
 
   useEffect(() => {
-    fetchCompanies(currentPage); // 페이지가 변경될 때마다 데이터를 불러옵니다.
-  }, [currentPage, fetchCompanies]);
-
-  // 기업이 선택되었는지 확인하는 함수
-  const isCompanySelected = (company: CompanyDTO) => {
-    return selectedCompanies.some(
-      (selectedCompany) => selectedCompany.name === company.name
-    );
-  };
-
-  // 한 번에 5개씩 페이지 표시하기 위한 함수
-  const getPaginationRange = (page: number) => {
-    const startPage = Math.floor((page - 1) / 5) * 5 + 1; // 시작 페이지 계산
-    const endPage = Math.min(startPage + 4, totalPages); // 종료 페이지 계산 (totalPages보다 큰 값 방지)
-    return { startPage, endPage };
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page); // 페이지가 변경되면 상태 업데이트
-  };
-
-  const { startPage, endPage } = getPaginationRange(currentPage); // 페이지 범위 계산
+    if (open) {
+      setSearchPage(1); // 모달이 열릴 때 검색 페이지 초기화
+      setPickPage(1); // 🚀 모달이 열릴 때 pickPage도 초기화
+    }
+  }, [open]);
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          padding: "24px",
-          backgroundColor: colorChips.black_300,
-          borderRadius: "16px",
-          width: "496px",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Typo
-            className="text_B_20"
-            content="비교할 기업 선택하기"
-            color={colorChips.white}
-          />
-          <IconButton onClick={onClose} sx={{ color: colorChips.white }}>
-            <img
-              src="/assets/ic_delete.svg"
-              alt="Close"
-              style={{ width: "24px", height: "24px" }}
-            />
-          </IconButton>
-        </Box>
-
-        {/* 검색창 추가 */}
-        <Box sx={{ marginTop: "16px" }}>
-          <SearchInput
-            variation="left"
-            width="100%"
-            placeholder="기업명 검색"
-          />
-        </Box>
-
-        {/* 로딩 중일 때 */}
-        {isLoading ? (
-          <Box
-            sx={{
-              textAlign: "center",
-              padding: "20px",
-              color: colorChips.white,
-            }}
-          >
-            <Typo
-              className="text_M_18"
-              content="로딩 중..."
-              color={colorChips.white}
-            />
-          </Box>
-        ) : (
-          <>
-            {/* 선택된 기업이 없을 때 */}
-            {companies.length === 0 ? (
-              <Box
-                sx={{
-                  textAlign: "center",
-                  padding: "20px",
-                  color: colorChips.white,
-                }}
-              >
-                <Typo
-                  className="text_M_18"
-                  content="기업 목록이 없습니다."
-                  color={colorChips.white}
-                />
-              </Box>
-            ) : (
-              <Stack sx={{ marginTop: "20px" }}>
-                {companies.map((company) => (
-                  <Box
-                    key={company.name}
-                    sx={{
-                      padding: "10px",
-                      marginBottom: "10px",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <Typo
-                      className="text_M_16"
-                      content={company.name}
-                      color="black"
-                    />
-                    <Button
-                      onClick={
-                        () =>
-                          isCompanySelected(company)
-                            ? onDeselect(company) // 이미 선택된 기업이라면 해제
-                            : onSelect(company) // 아직 선택되지 않은 기업이라면 선택
-                      }
-                      sx={{
-                        marginTop: "8px",
-                        backgroundColor: isCompanySelected(company)
-                          ? colorChips.brand_orange
-                          : colorChips.gray_400,
-                        color: colorChips.white,
-                      }}
-                    >
-                      {isCompanySelected(company) ? "선택완료" : "선택하기"}
-                    </Button>
-                  </Box>
-                ))}
-              </Stack>
-            )}
-          </>
-        )}
-
-        {/* 페이지네이션 추가 (모달에서만 사용) */}
-        {totalPages > 1 && (
-          <Box sx={{ textAlign: "center", marginTop: "16px" }}>
-            <ListPagination
-              page={currentPage} // 현재 페이지
-              count={totalPages} // 전체 페이지 수
-              onPageChange={handlePageChange} // 페이지 변경 시 호출될 함수
-              startPage={startPage} // 페이지 범위의 시작
-              endPage={endPage} // 페이지 범위의 끝
-            />
-          </Box>
-        )}
-      </Box>
-    </Modal>
+    <CustomModal
+      title="기업 선택"
+      open={open}
+      handleClose={handleClose}
+      companies={companies}
+      appliedCompanies={appliedCompanies}
+      selectedCompanies={selectedCompanies}
+      onSelect={onSelect}
+      onDeselect={onDeselect}
+      isLoading={isCompanyLoading || isApplicationLoading}
+      keyword={keyword}
+      setKeyword={setKeyword}
+      searchPage={searchPage}
+      totalSearchPages={totalSearchPages}
+      handleSearchPageChange={handleSearchPageChange}
+      pickPage={pickPage} // 🚀 props에 pickPage 추가
+      totalPickPages={totalPickPages} // 🚀 props에 totalPickPages 추가
+      handlePickPageChange={handlePickPageChange} // 🚀 props에 handlePickPageChange 추가
+    />
   );
 };
 
-export default CompanySelectModal;
+// import { useEffect, useState } from "react";
+// import { CustomModal } from "@/global/components/modal/CustomModal"; // CustomModal 컴포넌트 임포트
+// import { CompanyDTO } from "@/global/types/data-contracts"; // CompanyDTO 임포트
+// import { useCompanyFetch } from "../../../core/useCompanyFetchHook";
+// import { useApplicationFetch } from "@/app/company-comparison-page/core/useApplicationFetchHook";
+// import {
+//   ComparisonSearchQuery,
+//   ComparisonSearchResponse,
+// } from "@/global/types/data-contracts";
+// // import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
+
+// interface CompanySelectModalProps {
+//   open: boolean;
+//   handleClose: () => void;
+//   selectedCompanies: CompanyDTO[];
+//   onSelect: (company: CompanyDTO) => void;
+//   onDeselect: (company: CompanyDTO) => void;
+// }
+
+// export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
+//   open,
+//   handleClose,
+//   selectedCompanies,
+//   onSelect,
+//   onDeselect,
+// }) => {
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [keyword, setKeyword] = useState(""); // 검색어 관리
+
+//   // 1️⃣ 검색된 기업 데이터 가져오기
+//   const searchParams = { page: currentPage, keyword };
+//   const { isLoading: isCompanyLoading, companies } =
+//     useCompanyFetch(searchParams);
+
+//   // 2️⃣ 최근 지원한 기업 데이터 가져오기 (초기값 testData 사용)
+//   const testData: CompanyDTO[] = [
+//     {
+//       id: "1",
+//       idx: "101",
+//       name: "테스트 기업 1",
+//       image: "/assets/logo.svg",
+//       content: "이곳은 테스트 기업 1의 소개입니다.",
+//       category: [
+//         { id: "1", category: "에듀테크" },
+//         { id: "2", category: "재테크" },
+//       ],
+//       salesRevenue: "100억",
+//       employeeCnt: 50,
+//       applicantCnt: 200,
+//       createdAt: "2024-01-01T00:00:00Z",
+//       updatedAt: "2024-02-01T00:00:00Z",
+//     },
+//     {
+//       id: "2",
+//       idx: "102",
+//       name: "테스트 기업 2",
+//       image: "/assets/logo.svg",
+//       content: "이곳은 테스트 기업 2의 소개입니다.",
+//       category: [{ id: "3", category: "애드테크" }],
+//       salesRevenue: "200억",
+//       employeeCnt: 100,
+//       applicantCnt: 500,
+//       createdAt: "2024-01-02T00:00:00Z",
+//       updatedAt: "2024-02-02T00:00:00Z",
+//     },
+//   ];
+
+//   const { isLoading: isApplicationLoading, companies: appliedCompanies } =
+//     useApplicationFetch({ page: 1 });
+
+//   const [displayedAppliedCompanies, setDisplayedAppliedCompanies] =
+//     useState<CompanyDTO[]>(testData);
+
+//   useEffect(() => {
+//     if (
+//       appliedCompanies.length > 0 &&
+//       displayedAppliedCompanies !== appliedCompanies
+//     ) {
+//       setDisplayedAppliedCompanies(appliedCompanies);
+//     }
+//   }, [appliedCompanies, displayedAppliedCompanies]);
+
+//   // 3️⃣ `CustomModal`에 넘길 props 구성
+//   // ✅ 기본 이미지 적용 (훅 사용 없이 직접 처리)
+//   const defaultImage = "/assets/default-company-img.svg";
+
+//   const companyImages = companies.map((company) => ({
+//     ...company,
+//     image: company.image || defaultImage,
+//     category: company.category || [], // ✅ 원래 타입 유지
+//   }));
+
+//   const appliedCompanyImages = displayedAppliedCompanies.map((company) => ({
+//     ...company,
+//     image: company.image || defaultImage,
+//     category: company.category || [], // ✅ 원래 타입 유지
+//   }));
+
+//   useEffect(() => {
+//     if (open) {
+//       setCurrentPage(1);
+//     }
+//   }, [open]);
+//   console.log("📌 모달에 전달되는 기업 리스트:", companyImages);
+//   console.log(
+//     "📌 모달에 전달되는 최근 지원 기업 리스트:",
+//     appliedCompanyImages
+//   );
+//   return (
+//     <CustomModal
+//       title="기업 선택"
+//       open={open}
+//       handleClose={handleClose}
+//       companies={companyImages}
+//       appliedCompanies={appliedCompanyImages}
+//       selectedCompanies={selectedCompanies}
+//       onSelect={onSelect}
+//       onDeselect={onDeselect}
+//       isLoading={isCompanyLoading || isApplicationLoading}
+//       keyword={keyword}
+//       setKeyword={setKeyword}
+//     />
+//   );
+// };

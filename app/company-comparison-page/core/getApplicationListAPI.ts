@@ -1,14 +1,16 @@
 import { AxiosResponse } from "axios";
 import { instance } from "@/global/utils/axiosInstance";
-import {
-  ComparisonPickResponse,
-  ComparisonPickQuery,
-} from "@/global/types/data-contracts";
+import { ComparisonPickQuery, ComparisonPickResponse } from "@/global/types/data-contracts";
+// import {
+//   ComparisonPickResponse,
+//   ComparisonPickQuery,
+// } from "@/global/types/data-contracts";
 
 /** 상품 목록 조회
  * @param {Object} params - 쿼리 정보
  * @param {int} params.page - 페이지 번호
  */
+
 export const getApplicationListAPI = async (
   params: Partial<ComparisonPickQuery> = {}
 ): Promise<ComparisonPickResponse["data"]> => {
@@ -27,7 +29,7 @@ export const getApplicationListAPI = async (
         },
       }
     );
-    console.log("getApplicationList: ", response.data);
+    console.log("확인용 getApplicationList ", response.data);
     return response.data.data;
   } catch (err) {
     throw err;

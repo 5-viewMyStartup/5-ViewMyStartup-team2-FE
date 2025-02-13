@@ -1,8 +1,8 @@
 import { useEffect, useCallback, useState } from "react";
 import { getCompanyListAPI } from "./getCompanyListAPI";
 import {
-  CompanyListQuery,
-  CompanyListResponse,
+  ComparisonSearchQuery,
+  ComparisonSearchResponse,
   CompanyDTO,
 } from "@/global/types/data-contracts";
 
@@ -13,27 +13,36 @@ interface UseCompanyFetchOutput {
 }
 
 export const useCompanyFetch = (
-  params: CompanyListQuery
+  params: ComparisonSearchQuery
 ): UseCompanyFetchOutput => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<CompanyListResponse>({
+  const [data, setData] = useState<ComparisonSearchResponse["data"]>({
     companies: [],
-    page: 1,
-    totalPages: 1,
+    pagination: {
+      currentPage: 1,
+      totalPages: 1,
+      totalItems: 0,
+      itemsPerPage: 10,
+    },
   });
+
+  const { page, keyword } = params;
 
   // 기업 목록을 불러오는 함수
   const fetchCompanies = useCallback(async (): Promise<void> => {
+    console.log("fetchCompanies 호출됨");
     try {
       setIsLoading(true);
       const startTime = Date.now();
 
-      console.log("쿼리 파라미터: ", params);
-      const response: CompanyListResponse = await getCompanyListAPI(params);
+      console.log("쿼리 파라미터: ", { page, keyword });
+      const response: ComparisonSearchResponse = await getCompanyListAPI({
+        page,
+        keyword,
+      });
       setData({
-        companies: response.companies,
-        page: response.page,
-        totalPages: response.totalPages,
+        companies: response.data.companies, // response.data에 companies를 맞추어 설정
+        pagination: response.data.pagination, // pagination을 맞추어 설정
       });
 
       // 경과시간 계산
@@ -47,15 +56,24 @@ export const useCompanyFetch = (
     } finally {
       setIsLoading(false); // API 실행이 종료되면 섹션 로딩 상태 종료
     }
-  }, [params]);
+  }, [page, keyword]);
 
   useEffect(() => {
-    fetchCompanies();
+    console.log("useEffect 실행됨, 현재 page:", params.page);
+    console.log(
+      "data.pagination.currentPage 값 확인용:",
+      data.pagination.currentPage
+    ); // 현재 페이지 값 확인
+
+    if (page !== data.pagination.currentPage || keyword !== undefined) {
+      console.log("페이지 변경 또는 검색어 변경으로 fetchCompanies 실행");
+      fetchCompanies();
+    }
   }, [fetchCompanies]);
 
   return {
     isLoading,
     companies: data.companies,
-    totalPages: data.totalPages,
+    totalPages: data.pagination.totalPages,
   };
 };

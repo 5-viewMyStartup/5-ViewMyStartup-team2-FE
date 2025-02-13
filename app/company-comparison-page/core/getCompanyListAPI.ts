@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import { instance } from "@/global/utils/axiosInstance";
 import {
-  CompanyListQuery,
-  CompanyListResponse,
+  ComparisonSearchQuery,
+  ComparisonSearchResponse,
 } from "@/global/types/data-contracts";
 
 /** 기업 목록 조회
@@ -12,20 +12,26 @@ import {
  */
 
 export const getCompanyListAPI = async (
-  params: Partial<CompanyListQuery> = {}
-): Promise<CompanyListResponse> => {
-  const { page = 1, filter = "all" } = params;
+  params: Partial<ComparisonSearchQuery> = {}
+): Promise<ComparisonSearchResponse> => {
+  const { page = 1 } = params;
 
   try {
     //GET 요청을 보내서 기업 데이터 가져오기
-    const response: AxiosResponse<CompanyListResponse> = await instance.get(
-      "/api/companies", //엔드포인트
-      {
-        params: { page, filter },
-      }
-    );
-    console.log("getCompanyListAPI 확인용: response.data");
-    return response.data;
+    const response: AxiosResponse<ComparisonSearchResponse> =
+      await instance.get(
+        "/api/comparison/search", //엔드포인트
+        {
+          params: { page },
+        }
+      );
+
+    console.log("getCompanyListAPI response.data 확인용:", response.data);
+    return {
+      success: response.data.success, // success
+      message: response.data.message, // message
+      data: response.data.data, // data
+    };
   } catch (err) {
     throw err;
   }
