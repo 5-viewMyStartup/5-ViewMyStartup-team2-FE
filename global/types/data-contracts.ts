@@ -40,12 +40,17 @@ export interface CompanyDTO {
   updatedAt: string;
 }
 
-//FIXME: 백엔드 완성되면 맞게 수정하기
-export type mainCompanyFilter = "revenueDesc" | "revenueAsc";
+export type mainCompanyFilter =
+  | "revenueDesc"
+  | "revenueAsc"
+  | "employeeDesc"
+  | "employeeAsc";
+
+export type applicationFilter = "all" | "pending" | "accepted" | "rejected";
 
 export interface CompanyListQuery {
   page?: number;
-  keyword?: string;
+  search?: string;
   filter?: mainCompanyFilter;
 }
 
@@ -75,3 +80,15 @@ export interface ApplicationListResponse {
   page: number;
   totalPages: number;
 }
+
+export interface BookmarkDTO {
+  id: string;
+  idx: number;
+  userId: string;
+  companyId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+export type FilterOption = { value: string; name: string };
