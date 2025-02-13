@@ -36,6 +36,7 @@ interface Category {
 
 // 회사 데이터를 가져오는 함수
 async function getCompanyData(id: string) {
+  // 전체 회사 목록을 가져옴
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/companies`, {
     cache: "force-cache", // SSG를 위한 설정
   });
@@ -45,6 +46,8 @@ async function getCompanyData(id: string) {
   }
 
   const companies = await res.json();
+  // URL의 id 파라미터와 회사의 idx를 비교하여 해당하는 회사 찾기
+  // 예: /company-detail/128 -> idx가 128인 회사를 찾음
   const company = companies.find((c: Company) => c.idx.toString() === id);
 
   if (!company) {
@@ -71,6 +74,9 @@ async function getAllCompanies() {
 export const generateStaticParams = async () => {
   try {
     const companies = await getAllCompanies();
+    // 모든 회사의 idx를 URL 파라미터로 변환
+    // 예: idx: 128 -> { id: "128" }
+    // 이렇게 생성된 파라미터는 /company-detail/[id] 경로에서 사용됨
     return companies.map((company: Company) => ({
       id: company.idx.toString(),
     }));
@@ -84,7 +90,9 @@ export default async function CompanyDetailPage({
   params,
 }: CompanyDetailPageProps) {
   try {
+    // URL에서 id 파라미터 추출 (예: /company-detail/128 -> id: "128")
     const { id } = params;
+    // id와 일치하는 idx를 가진 회사 데이터 조회
     const companyData = await getCompanyData(id);
 
     if (!companyData) {
