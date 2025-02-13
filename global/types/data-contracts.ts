@@ -91,6 +91,8 @@ export interface BookmarkDTO {
   deletedAt: Date | null;
 }
 
+export type FilterOption = { value: string; name: string };
+
 //아래 4개는 나의 기업 비교 페이지를 위해 추가함
 export interface ComparisonPickQuery {
   page?: number; // 페이지 번호
