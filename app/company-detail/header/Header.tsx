@@ -9,7 +9,7 @@ import { useState } from "react";
 // 타입 정의
 interface HeaderProps {
   name: string;
-  logo: string;
+  logo: string | null;
   category: string;
   stats: {
     monthlyRevenue: number;
@@ -31,7 +31,11 @@ const Header = ({ name, logo, category, stats }: HeaderProps) => {
       <LogoContainer>
         <Logo>
           {!imageError ? (
-            <StyledImage src={logo} alt={name} onError={handleImageError} />
+            <StyledImage
+              src={logo || ""}
+              alt={name}
+              onError={handleImageError}
+            />
           ) : (
             <FallbackLogo>
               <Typo className="text_B_16" color={colorChips.white}>
