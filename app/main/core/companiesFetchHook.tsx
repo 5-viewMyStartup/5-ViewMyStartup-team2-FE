@@ -27,7 +27,7 @@ export const useCompanyListFetch = (
       setIsLoading(true);
       const startTime = Date.now();
 
-      console.log("쿼리 파라미터: ", params);
+      // console.log("쿼리 파라미터: ", params);
       const response: CompanyListResponse = await getCompanyListAPI(params);
       setData({
         companies: response.companies,
