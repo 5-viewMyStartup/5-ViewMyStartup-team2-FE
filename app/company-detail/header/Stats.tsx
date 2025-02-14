@@ -20,7 +20,7 @@ const Stats = ({ stats }: StatsProps) => {
           매출액
         </Typo>
         <Typo className="text_SB_16" color={colorChips.white}>
-          {stats.monthlyRevenue}억 원
+          {Math.floor(stats.monthlyRevenue / 100000000)}억 원
         </Typo>
       </StatsItem>
       <StatsItem>

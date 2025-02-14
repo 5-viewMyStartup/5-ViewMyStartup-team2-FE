@@ -91,8 +91,9 @@ export default async function CompanyDetailPage({
 }: CompanyDetailPageProps) {
   try {
     // URL에서 id 파라미터 추출 (예: /company-detail/128 -> id: "128")
-    const { id } = params;
     // id와 일치하는 idx를 가진 회사 데이터 조회
+    // params를 await으로 처리
+    const { id } = await Promise.resolve(params);
     const companyData = await getCompanyData(id);
 
     if (!companyData) {
