@@ -37,7 +37,14 @@ export default function ListLabel() {
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-
+      <Box sx={applyNumBoxStyle}>
+        <Typo
+          className="text_M_14"
+          content="지원자 수"
+          color={colorChips.white}
+          customStyle={{ textAlign: "center" }}
+        />
+      </Box>
       <Box sx={applyBoxStyle}>
         <Typo
           className="text_M_14"
@@ -67,7 +74,7 @@ const baseLabelBoxStyle = {
 
 export const bookmarkBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["38px", "38px", "76.75px"],
+  width: ["58px", "58px", "76.75px"],
 };
 
 export const nameBoxStyle = {
@@ -77,12 +84,17 @@ export const nameBoxStyle = {
 
 export const descBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["325px", "325px", "500px"],
+  width: ["215px", "215px", "358.15px"],
 };
 
 export const categoryBoxStyle = {
   ...baseLabelBoxStyle,
   width: ["103px", "103px", "230.65px"],
+};
+
+export const applyNumBoxStyle = {
+  ...baseLabelBoxStyle,
+  width: ["80px", "80px", "141.85px"],
 };
 
 export const applyBoxStyle = {
