@@ -87,13 +87,15 @@ export interface BookmarkDTO {
 }
 
 // 비교 결과
-export interface ComparisonResults {
+export interface ComparisonResultQuery {
+  page?: number;
+  keyword?: string;
+}
+
+export interface Company {
+  id: string;
   /**
-   * 기업 순위
-   */
-  ranking?: number;
-  /**
-   * 기업 명
+   * 기업 이름
    */
   name: string;
   /**
@@ -120,5 +122,33 @@ export interface ComparisonResults {
   /**
    * 지원자 수
    */
-  applicantsCnt: number;
+  applicantCount: number;
+  /**
+   * 지원자 랭킹
+   */
+  applicantRank: number;
+  /**
+   * 매출액 랭킹
+   */
+  salesRevenueRank: number;
+  /**
+   * 재직자 랭킹
+   */
+  employeeRank: number;
+}
+
+export interface Pagination {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+}
+
+export interface CompaniesResponse {
+  success: boolean;
+  message: string;
+  data: {
+    companies: Company[];
+    pagination: Pagination;
+  };
 }

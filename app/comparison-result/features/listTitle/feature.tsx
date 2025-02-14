@@ -1,11 +1,20 @@
+"use client";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { Box, Stack } from "@mui/material";
 import Link from "next/link";
 import React from "react";
+import { CustomSelect } from "@/global/components/CustomSelect";
+
+// 드롭다운 관련 props 타입 정의
+export interface ListTitleDropdownProps {
+  dropdownValue: string;
+  onDropdownChange: (value: string) => void;
+  dropdownOptions: { value: string; name: string }[]; // 반드시 배열이어야 함
+}
 
 export const ListTitle = {
-  Bookmark: function (): React.ReactElement {
+  Pick: function (): React.ReactElement {
     return (
       <Stack sx={listHeaderContainerStyle}>
         <Typo
@@ -28,7 +37,9 @@ export const ListTitle = {
       </Stack>
     );
   },
-  Result: function (): React.ReactElement {
+  Result: function (props: ListTitleDropdownProps): React.ReactElement {
+    // dropdownOptions가 undefined일 경우 빈 배열([])로 처리
+    const dropdownOptions = props.dropdownOptions || [];
     return (
       <Stack sx={listHeaderContainerStyle}>
         <Typo
@@ -38,18 +49,21 @@ export const ListTitle = {
         />
         <Box>
           <Box sx={sortBoxStyle}>
-            <Typo
-              className="text_SB_20"
-              content="매출액 고용인원 지원인원 드롭박스"
-              color={colorChips.white}
+            <CustomSelect
+              value={props.dropdownValue}
+              handleChange={props.onDropdownChange}
+              options={dropdownOptions}
+              defaultValue={
+                dropdownOptions.length > 0 ? dropdownOptions[0].value : ""
+              }
             />
           </Box>
         </Box>
       </Stack>
     );
   },
-
-  Ranking: function (): React.ReactElement {
+  Ranking: function (props: ListTitleDropdownProps): React.ReactElement {
+    const dropdownOptions = props.dropdownOptions || [];
     return (
       <Stack sx={listHeaderContainerStyle}>
         <Typo
@@ -59,10 +73,13 @@ export const ListTitle = {
         />
         <Box>
           <Box sx={sortBoxStyle}>
-            <Typo
-              className="text_SB_20"
-              content="매출액 고용인원 지원인원 드롭박스"
-              color={colorChips.white}
+            <CustomSelect
+              value={props.dropdownValue}
+              handleChange={props.onDropdownChange}
+              options={dropdownOptions}
+              defaultValue={
+                dropdownOptions.length > 0 ? dropdownOptions[0].value : ""
+              }
             />
           </Box>
         </Box>
@@ -72,7 +89,7 @@ export const ListTitle = {
 };
 
 const listHeaderContainerStyle = {
-  flexDirection: ["column", "row"] as const, // as const 고정 값
+  flexDirection: ["column", "row"] as const,
   justifyContent: "space-between",
   alignItems: ["flex-start", "center"],
   height: ["100%", "48px"],
@@ -97,5 +114,5 @@ const sortBoxStyle = {
   justifyContent: "center",
   width: ["146px", "168px"],
   height: ["40px", "48px"],
-  border: `1px solid ${colorChips.white}`, //border는 컴포넌트 넣고 삭제
+  border: `1px solid ${colorChips.white}`,
 };

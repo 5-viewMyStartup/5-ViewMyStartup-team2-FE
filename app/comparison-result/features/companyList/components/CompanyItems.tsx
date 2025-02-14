@@ -2,20 +2,20 @@ import {
   dataBoxStyle,
   descBoxStyle,
   rankingBoxStyle,
-} from "@/app/company-comparison/single/ListLabel";
+} from "@/app/comparison-result/single/ListLabel";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { ComparisonResults } from "@/global/types/data-contracts";
+import { Company } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
 import Image from "next/image";
 import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 
 interface CompanyItemsProps {
-  itemData: ComparisonResults;
+  itemData: Company;
 }
 
 export const CompanyItems = {
-  Bookmark: function ({ itemData }: CompanyItemsProps) {
+  Pick: function ({ itemData }: CompanyItemsProps) {
     const { handleImgErr, imgSrc } = useCompanyDefaultImg(itemData.image);
 
     return (
@@ -111,7 +111,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.applicantsCnt.toString()}
+            content={itemData.applicantRank.toString()}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -128,7 +128,7 @@ export const CompanyItems = {
         <Box sx={rankingBoxStyle}>
           <Typo
             className="text_R_14"
-            content={`${itemData.ranking ?? 0}위`} // null 또는 undefined인 경우 0으로 반환
+            content={`${itemData.applicantRank ?? 0}위`} // null 또는 undefined인 경우 0으로 반환
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -189,7 +189,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.applicantsCnt.toString()}
+            content={itemData.applicantRank.toString()}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -212,8 +212,10 @@ const imgNameBoxStyle = {
   display: "flex",
   alignItems: "center",
   gap: ["8px", "8px", "12px"],
-  justifyContent: "center",
+  justifyContent: "flex-start",
   width: ["150px", "150px", "216px"],
+  pl: "13px",
+  overflow: "hidden",
 };
 
 const companyDescTypoStyle = {
