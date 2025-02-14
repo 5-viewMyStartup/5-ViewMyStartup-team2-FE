@@ -23,7 +23,7 @@ export const getApplicationListAPI = async (
         params: { page, filter },
       }
     );
-    console.log("getApplicationList: ", response.data);
+    // console.log("getApplicationList: ", response.data);
     return response.data;
   } catch (err) {
     throw err;

@@ -9,16 +9,16 @@ export const listLayout = {
 };
 
 export const scrollWrapper = {
-  width: "100%",
+  width: "100vw",
   overflow: "hidden",
   position: "relative",
-  pl: { xs: "16px", sm: "0" },
-  pr: { xs: "16px", sm: "0" },
 };
 
 // 실제 스크롤되는 컨텐츠
 export const listWrapperStyle = {
   width: "100%",
+  pl: { xs: "16px", sm: "0" },
+  pr: { xs: "16px", sm: "0" },
   display: "flex",
   flexDirection: "column",
   alignItems: { xs: "flex-start", sm: "center" },
@@ -48,42 +48,30 @@ export const baseLabelBoxStyle = {
   alignItems: "center",
 };
 
-export const labelOrderBoxStyle = {
+export const bookmarkBoxStyle = {
+  ...baseLabelBoxStyle,
+  width: ["58px", "58px", "76.75px"],
+};
+
+export const descBoxStyle = {
   ...baseLabelBoxStyle,
   display: ["none", "none", "flex"],
-  width: ["50px", "50px", "68px"],
+  width: ["215px", "215px", "358.15px"],
 };
 
-export const labelNameBoxStyle = {
+export const categoryBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["150px", "150px", "216px"],
+  width: ["103px", "103px", "230.65px"],
 };
 
-export const labelDescBoxStyle = {
+export const applyNumBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["180px", "180px", "304px"],
+  width: ["80px", "80px", "141.85px"],
 };
 
-export const labelDataBoxStyle = {
+export const applyBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["91.5px", "91.5px", "153.75px"],
-};
-
-export const companyListWrapperStyle = {
-  width: { xs: "696px", sm: "696px", md: "1200px" },
-  borderRadius: "4px",
-  flexDirection: "column",
-  backgroundColor: colorChips.black_300,
-};
-
-export const companyItemBoxStyle = {
-  cursor: "pointer",
-  flexDirection: "row",
-  height: "64px",
-  borderBottom: `1px solid ${colorChips.gray_300}`,
-  "&:last-child": {
-    borderBottom: "none",
-  },
+  width: ["80px", "80px", "141.85px"],
 };
 
 export const itemNameBoxStyle = {
@@ -92,7 +80,7 @@ export const itemNameBoxStyle = {
   gap: ["8px", "8px", "12px"],
   pl: ["16px", "16px", "24px"],
   pr: ["6px", "6px", "24px"],
-  width: ["150px", "150px", "216px"],
+  width: ["150px", "150px", "250.75px"],
 };
 
 export const companyDescTypoStyle = {

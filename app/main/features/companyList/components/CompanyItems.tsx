@@ -15,6 +15,7 @@ import {
   labelDescBoxStyle,
   labelOrderBoxStyle,
 } from "@/global/styles/companyListStyles";
+import { useRouter } from "next/navigation";
 
 interface CompanyItemsProps {
   ranking: number;
@@ -23,9 +24,16 @@ interface CompanyItemsProps {
 
 export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
   const { imgSrc, handleImgErr } = useCompanyDefaultImg(itemData.image);
+  const router = useRouter();
+
+  const companyId = itemData.id;
+
+  const handleClick = () => {
+    router.push(`/company-detail/${companyId}`);
+  };
 
   return (
-    <Stack sx={companyItemBoxStyle}>
+    <Stack sx={companyItemBoxStyle} onClick={handleClick}>
       <Box sx={labelOrderBoxStyle}>
         <Typo
           className="text_R_14"
@@ -47,7 +55,10 @@ export function CompanyItems({ ranking, itemData }: CompanyItemsProps) {
           className="text_M_14"
           content={itemData.name}
           color={colorChips.white}
-          customStyle={{ textAlign: "center" }}
+          customStyle={{
+            textAlign: "center",
+            overflow: "hidden",
+          }}
         />
       </Box>
       <Box
