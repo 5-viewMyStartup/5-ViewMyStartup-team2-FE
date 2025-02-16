@@ -8,7 +8,6 @@ import {
 /** 기업 목록 조회
  * @param {Object} params - 쿼리 정보
  * @param {int} params.page - 페이지 번호
- * @param {string} params.filter - 필터 (예: 카테고리, 기업 상태 등)
  */
 
 export const getCompanyListAPI = async (
