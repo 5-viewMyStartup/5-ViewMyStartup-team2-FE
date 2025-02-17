@@ -2,7 +2,7 @@ import { CustomPagination } from "@/global/components/CustomPagination";
 import { Box } from "@mui/material";
 
 interface CustomPaginationProps {
-  page: number; // 현재 페이지
+  page: number | undefined; // 현재 페이지
   count: number; // 전체 페이지 수
   onPageChange: (page: number) => void;
 }

@@ -90,7 +90,7 @@ export interface BookmarkDTO {
   content: string; // 기업 소개 내용
   category: { id: string; category: string }[]; // 카테고리
   employeeCnt: number; // 사원 수
-  applicantCnt: number; // 지원자 수
+  applicants: number; // 지원자 수
   applied: boolean; // 해당 기업에 지원했는지 여부
   createdAt: string;
   updatedAt: string;
@@ -102,7 +102,7 @@ export interface BookmarkListQuery {
   userId: string; // 사용자 ID
   page?: number;
   limit?: number;
-  sort?: number; // 정렬 옵션 (0: 기본값, 1: 지원한 기업 우선, 2: 지원하지 않은 기업 우선, 3: 직원 수 적은 순, 4: 직원 수 많은 순)
+  sort?: string; // 정렬 옵션 (0: 기본값, 1: 지원한 기업 우선, 2: 지원하지 않은 기업 우선, 3: 직원 수 적은 순, 4: 직원 수 많은 순)
 }
 
 /** 북마크 목록 응답 타입 */

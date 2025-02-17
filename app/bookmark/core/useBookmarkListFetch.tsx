@@ -1,13 +1,11 @@
-"use client";
-
-import { useEffect, useCallback, useState } from "react";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { useCallback, useState } from "react";
 import { getBookmarksAPI } from "./bookmarkAPI";
 import {
   BookmarkListQuery,
   BookmarkListResponse,
   BookmarkDTO,
 } from "@/global/types/data-contracts";
-
 interface UseBookmarkFetchOutput {
   isLoading: boolean;
   bookmarks: BookmarkDTO[];
@@ -55,13 +53,13 @@ export const useBookmarkListFetch = (
     }
   }, [params]);
 
-  useEffect(() => {
-    fetchItems();
-  }, [fetchItems]);
-
   return {
     isLoading,
     bookmarks: data.companies,
     totalPages: data.totalPages,
   };
 };
+const apiUrl: AxiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+});
+

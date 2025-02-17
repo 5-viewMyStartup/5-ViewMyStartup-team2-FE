@@ -15,6 +15,7 @@ import { BookmarkDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
 import Image from "next/image";
 import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
+import { LargeBtn } from "@/global/components/button/LargeBtn";
 
 interface BookmarkItemsProps {
   itemData: BookmarkDTO;
@@ -60,12 +61,16 @@ export function BookmarkItems({ itemData }: BookmarkItemsProps) {
       <Box sx={applyNumBoxStyle}>
         <Typo
           className="text_R_14"
-          content={`${itemData.applicantCnt}명`}
+          content={`${itemData.applicants}명`}
           color={colorChips.gray_100}
           customStyle={{ textAlign: "center" }}
         />
       </Box>
-      <Box sx={applyBoxStyle}></Box>
+      <Box sx={applyBoxStyle}>
+        {!itemData.applied && (
+          <LargeBtn width="80px" isDisabled={false} content="지원하기" />
+        )}
+      </Box>
     </Stack>
   );
 }

@@ -7,6 +7,25 @@ import {
   DeleteBookmarkRequest,
 } from "@/global/types/data-contracts";
 
+interface Bookmarks {
+  [x: string]: Bookmarks[] | undefined;
+  company: [
+    {
+      id: string;
+      name: string;
+      content: string;
+      employeeCnt: number;
+      category: [
+        {
+          id: string;
+          category: string;
+        }
+      ];
+      applied: boolean;
+      applicants: number;
+    }
+  ];
+}
 /** 북마크 목록 조회
  * @param {BookmarkListQuery} params - 쿼리 정보
  * @returns {Promise<BookmarkListResponse>} 북마크 목록
@@ -15,11 +34,11 @@ import {
 // 사용자의 북마크 목록 조회 API
 export const getBookmarksAPI = async (
   params: BookmarkListQuery
-): Promise<BookmarkListResponse> => {
+): Promise<Bookmarks> => {
   const { userId, page = 1, limit = 10, sort = 0 } = params;
 
   try {
-    const response: AxiosResponse<BookmarkListResponse> = await instance.get(
+    const response: AxiosResponse<Bookmarks> = await instance.get(
       `/api/bookmarks/${userId}`,
       {
         params: { page, limit, sort },
