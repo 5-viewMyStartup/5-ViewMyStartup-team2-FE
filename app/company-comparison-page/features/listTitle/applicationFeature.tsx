@@ -22,4 +22,6 @@ const listHeaderContainerStyle = {
   height: ["40px", "48px"],
   width: "100%",
   maxWidth: { sm: "696px", md: "1200px" },
+  marginTop: "40px",
+  marginBottom: "16px",
 };

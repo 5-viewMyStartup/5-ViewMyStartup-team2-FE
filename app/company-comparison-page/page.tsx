@@ -61,11 +61,12 @@ export default function Page() {
       <Box
         sx={{
           backgroundColor: colorChips.black_300, // 배경색 지정
-          padding: "85px 543px", // 여백 추가
+          padding: "85px 8px", // 여백 추가
           borderRadius: "8px", // 모서리 둥글게
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          gap: "16px",
         }}
       >
         {/* 데이터가 없으면 "지원한 기업 없음"을 한 번만 출력 */}

@@ -143,7 +143,11 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           {/* ✅ Error Message 표시 부분 추가 */}
           {errorMessage && (
             <Box mt={2} display="flex" justifyContent="left">
-              <Typo color="red" className="text_R_14" content={errorMessage} />
+              <Typo
+                color={colorChips.red_error}
+                className="text_R_14"
+                content={errorMessage}
+              />
             </Box>
           )}
           <Box display="flex" justifyContent="center" mt={2}>
