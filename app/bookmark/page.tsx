@@ -16,7 +16,7 @@ import {
 
 export default function BookmarkPage() {
   // 사용자 ID를 실제 로그인된 사용자 정보에서 가져와야 함 (예시: "12345")
-  const userId = "your-user-id"; // TODO: 동적으로 설정 필요
+  const userId = "202a24bd-708a-4e75-b806-0d903e40c176"; // TODO: 동적으로 설정 필요
 
   const [params, setParams] = useState<BookmarkListQuery>({
     userId,
