@@ -7,13 +7,18 @@ import { CompanyDTO } from "@/global/types/data-contracts"; // 기업 데이터 
 import { useCompanyFetch } from "../../core/useCompanyFetchHook"; // `useCompanyFetch` 훅 import
 import { CompanyListQuery } from "@/global/types/data-contracts"; // 쿼리 파라미터 타입
 import { useRouter } from "next/navigation";
-// import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
+import { useCompanyStore } from "@/app/company-comparison-page/store/useCompanyStore"; //zustand 상태 가져오기
 
 const CompanyListTitle: React.FC = () => {
-  const [selectedCompanies, setSelectedCompanies] = useState<CompanyDTO[]>([]); // 선택된 기업 목록
+  // const [selectedCompanies, setSelectedCompanies] = useState<CompanyDTO[]>([]); // 선택된 기업 목록
   const [modalOpen, setModalOpen] = useState(false); // 모달 상태
   const [loading, setLoading] = useState(true); // 로딩 상태 관리
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+  const router = useRouter();
+
+  // ✅ zustand에서 상태 및 액션 가져오기
+  const { selectedCompanies, selectCompany, deselectCompany } =
+    useCompanyStore();
 
   const params: CompanyListQuery = {
     page: currentPage,
@@ -41,33 +46,27 @@ const CompanyListTitle: React.FC = () => {
   // 모달 닫기
   const handleCloseModal = () => setModalOpen(false);
 
-  // 기업 선택 처리
-  const handleSelectCompany = (company: CompanyDTO) => {
-    console.log("📌✅ 기업 선택됨:", company);
-    setSelectedCompanies((prev) => [...prev, company]); // 선택된 기업 추가
-  };
+  // // 기업 선택 처리
+  // const handleSelectCompany = (company: CompanyDTO) => {
+  //   console.log("📌✅ 기업 선택됨:", company);
+  //   setSelectedCompanies((prev) => [...prev, company]); // 선택된 기업 추가
+  // };
 
-  // 기업 선택 해제 처리
-  const handleDeselectCompany = (company: CompanyDTO) => {
-    setSelectedCompanies((prev) => prev.filter((c) => c.name !== company.name)); // 선택된 기업 삭제
-  };
+  // // 기업 선택 해제 처리
+  // const handleDeselectCompany = (company: CompanyDTO) => {
+  //   setSelectedCompanies((prev) => prev.filter((c) => c.name !== company.name)); // 선택된 기업 삭제
+  // };
 
   // ✅ 기본 이미지를 적용하는 함수
   const defaultImage = "/assets/default-company-img.svg";
   const formatSelectedCompanies = (companies: CompanyDTO[]) => {
     return companies.map((company) => ({
       ...company,
-      image: company.image || defaultImage, // ✅ 기본 이미지 적용
+      image: company.image || defaultImage, // 기본 이미지 적용
       category: company.category || [],
     }));
   };
 
-  //페이지 이동
-  const router = useRouter();
-  // console.log("📌 선택된 기업 목록:", selectedCompanies);
-  // useEffect(() => {
-  //   console.log("📌 선택된 기업 목록 업데이트됨:", selectedCompanies);
-  // }, [selectedCompanies]);
   return (
     <Stack sx={{ width: "100%" }}>
       {/* 회사 목록 타이틀 */}
@@ -184,9 +183,9 @@ const CompanyListTitle: React.FC = () => {
       <CompanySelectModal
         open={modalOpen}
         handleClose={handleCloseModal}
-        onSelect={handleSelectCompany}
-        onDeselect={handleDeselectCompany}
-        selectedCompanies={formatSelectedCompanies(selectedCompanies)} // 기본 이미지가 포함된 데이터 전달
+        // onSelect={selectCompany} //zustand 사용
+        // onDeselect={deselectCompany} //zustand 사용
+        // selectedCompanies={formatSelectedCompanies(selectedCompanies)} // 기본 이미지가 포함된 데이터 전달
       />
     </Stack>
   );
