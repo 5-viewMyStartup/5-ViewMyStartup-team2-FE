@@ -14,6 +14,7 @@ interface UseApplicationFetchOutput {
   isLoading: boolean;
   companies: CompanyDTO[];
   totalPages: number;
+  totalAppliedCompaniesCount: number;
 }
 
 export const useApplicationFetch = (
@@ -56,5 +57,6 @@ export const useApplicationFetch = (
     isLoading,
     companies: data.companies,
     totalPages: data.pagination.totalPages,
+    totalAppliedCompaniesCount: data.pagination.totalItems,
   };
 };

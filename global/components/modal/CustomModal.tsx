@@ -28,6 +28,8 @@ interface CustomModalProps {
   pickPage: number; // 🚀 새로운 prop 추가
   totalPickPages: number; // 🚀 새로운 prop 추가
   handlePickPageChange: (page: number) => void; // 🚀 새로운 prop 추가
+  totalCompaniesCount: number; // 전체 기업 수 (검색 결과 전체)
+  totalAppliedCompaniesCount: number; // 전체 지원한 기업 수
 }
 
 export const CustomModal: React.FC<CustomModalProps> = ({
@@ -48,6 +50,8 @@ export const CustomModal: React.FC<CustomModalProps> = ({
   pickPage, // 🚀 pickPage prop 사용
   totalPickPages, // 🚀 totalPickPages prop 사용
   handlePickPageChange, // 🚀 handlePickPageChange prop 사용
+  totalCompaniesCount, // 전체 기업 수
+  totalAppliedCompaniesCount, // 전체 지원한 기업 수
 }) => {
   const handleCompanyClick = (company: CompanyDTO) => {
     const isSelected = selectedCompanies.some((c) => c.id === company.id);
@@ -89,7 +93,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           <Typo
             color="input"
             className="text_B_18"
-            content={`최근 지원한 기업 (${appliedCompanies.length})`}
+            content={`최근 지원한 기업 (${totalAppliedCompaniesCount})`} //전체 기업 수
           />
           {appliedCompanies.map((company) => (
             <CustomListItem
@@ -116,7 +120,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           <Typo
             color="input"
             className="text_B_18"
-            content={`검색결과 (${companies.length})`}
+            content={`검색결과 (${totalCompaniesCount})`} // 전체 검색된 기업 수
           />
           {companies.map((company) => (
             <CustomListItem

@@ -10,6 +10,7 @@ interface UseCompanyFetchOutput {
   isLoading: boolean;
   companies: CompanyDTO[];
   totalPages: number;
+  totalCount: number; // 전체 기업 수 추가
 }
 
 export const useCompanyFetch = (
@@ -69,11 +70,12 @@ export const useCompanyFetch = (
       console.log("페이지 변경 또는 검색어 변경으로 fetchCompanies 실행");
       fetchCompanies();
     }
-  }, [fetchCompanies]);
+  }, [fetchCompanies, page, keyword, data.pagination.currentPage]); // page와 keyword가 변경될 때만 호출
 
   return {
     isLoading,
     companies: data.companies,
     totalPages: data.pagination.totalPages,
+    totalCount: data.pagination.totalItems, // totalCount 추가
   };
 };

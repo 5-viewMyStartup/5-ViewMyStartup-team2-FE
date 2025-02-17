@@ -24,7 +24,7 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
   const { selectedCompanies, selectCompany, deselectCompany } =
     useCompanyStore();
 
-  // 🚀 기존 recentPage → pickPage로 변수명 변경
+  // 검색 결과 및 최근 지원한 기업 상태 관리
   const [searchPage, setSearchPage] = useState(1); // 검색 결과 페이지 상태 관리
   const [pickPage, setPickPage] = useState(1); // 🚀 최근 지원한 기업의 페이지 상태 관리
   const [keyword, setKeyword] = useState(""); // 검색어 상태 관리
@@ -34,6 +34,7 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
     isLoading: isCompanyLoading,
     companies,
     totalPages: totalSearchPages,
+    totalCount: totalCompaniesCount, // 전체 검색된 기업 수
   } = useCompanyFetch({ page: searchPage, keyword });
 
   // 🚀 최근 지원한 기업 데이터 가져오기 (변경된 변수명 반영)
@@ -41,6 +42,7 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
     isLoading: isApplicationLoading,
     companies: appliedCompanies,
     totalPages: totalPickPages,
+    totalAppliedCompaniesCount, // 전체 지원한 기업 수
   } = useApplicationFetch({ page: pickPage });
 
   // 🚀 pickPage를 변경할 핸들러 함수 추가
@@ -69,10 +71,12 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
       setKeyword={setKeyword}
       searchPage={searchPage}
       totalSearchPages={totalSearchPages}
+      totalCompaniesCount={totalCompaniesCount} // 전체 검색된 기업 수 전달
       handleSearchPageChange={handleSearchPageChange}
       pickPage={pickPage} // 🚀 props에 pickPage 추가
       totalPickPages={totalPickPages} // 🚀 props에 totalPickPages 추가
       handlePickPageChange={handlePickPageChange} // 🚀 props에 handlePickPageChange 추가
+      totalAppliedCompaniesCount={totalAppliedCompaniesCount} // 전체 지원한 기업 수 전달
     />
   );
 };
