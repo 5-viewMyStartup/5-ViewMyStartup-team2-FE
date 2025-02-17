@@ -25,7 +25,7 @@ export const ListTitle = {
         />
         <Box>
           {/* 링크 클릭 시 "다른 기업 비교하기" 페이지로 이동 (필요에 따라 href 수정) */}
-          <Link href="">
+          <Link href="company-comparison-page">
             <Box sx={btnBoxStyle}>
               <Typo
                 className="text_SB_16"

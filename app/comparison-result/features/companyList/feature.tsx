@@ -1,65 +1,43 @@
-import { colorChips } from "@/global/styles/colorChips";
-import { Stack } from "@mui/material";
+import { ResultCompany } from "@/global/types/data-contracts";
 import { CompanyItems } from "./components/CompanyItems";
-import { Company } from "@/global/types/data-contracts";
 
 interface CompanyListProps {
-  companies: Company[];
+  companies: ResultCompany[];
+  dropdownValue?: keyof ResultCompany; // dropdownValue는 선택적 속성으로 변경
 }
 
 export const CompanyList = {
-  // 내가 선택한 기업 목록 컴포넌트
-  Pick: function Pick({ companies }: CompanyListProps) {
-    const data = companies;
-    {
-      console.log("흠 되나? : ", data);
-    }
+  Pick: function ({ companies }: { companies: ResultCompany[] }) {
     return (
-      <Stack sx={BookmarkListWrapperStyle}>
-        {data.map((item, idx) => (
-          <CompanyItems.Pick key={idx} itemData={item} />
+      <div>
+        {companies.map((company) => (
+          <CompanyItems.Pick key={company.id} itemData={company} />
         ))}
-      </Stack>
+      </div>
     );
   },
 
-  // 비교 결과용 기업 목록 컴포넌트
-  Result: function Result({ companies }: CompanyListProps) {
-    const data = companies;
+  Result: function ({ companies }: { companies: ResultCompany[] }) {
     return (
-      <Stack sx={companyListWrapperStyle}>
-        {data.map((item, idx) => (
-          <CompanyItems.Result key={idx} itemData={item} />
+      <div>
+        {companies.map((company) => (
+          <CompanyItems.Result key={company.id} itemData={company} />
         ))}
-      </Stack>
+      </div>
     );
   },
 
-  // 기업 순위용 목록 컴포넌트
-  Ranking: function Ranking({ companies }: CompanyListProps) {
-    const data = companies;
+  Ranking: function ({ companies, dropdownValue }: CompanyListProps) {
     return (
-      <Stack sx={companyListWrapperStyle}>
-        {data.map((item, idx) => (
-          <CompanyItems.Ranking key={idx} itemData={item} />
+      <div>
+        {companies.map((company) => (
+          <CompanyItems.Ranking
+            key={company.id}
+            itemData={company}
+            dropdownValue={dropdownValue!} // dropdownValue는 필수 속성으로 전달
+          />
         ))}
-      </Stack>
+      </div>
     );
   },
-};
-
-const companyListWrapperStyle = {
-  width: { xs: "696px", sm: "696px", md: "1200px" },
-  borderRadius: "4px",
-  flexDirection: "column",
-  backgroundColor: colorChips.black_300,
-};
-
-const BookmarkListWrapperStyle = {
-  width: { xs: "696px", sm: "696px", md: "1200px" },
-  flexDirection: "row",
-  backgroundColor: colorChips.black_300,
-  height: "100%",
-  alignItems: "center",
-  justifyContent: "center",
 };

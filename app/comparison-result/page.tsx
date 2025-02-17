@@ -2,41 +2,48 @@
 
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { Box, Stack } from "@mui/material";
-import { useCompanyStore } from "./core/comparisonResultStore";
+import { useCompanyStore } from "@/app/company-comparison-page/store/useCompanyStore";
 import { Features } from "./features";
 import { Single } from "./single";
 import { ResultSkeletonList, RankSkeletonList } from "./core/customSkeleton";
 import { ResultCompany } from "@/global/types/data-contracts";
 
 export default function CompanyComparison() {
-  const { companies, loading, error, fetchCompanies } = useCompanyStore();
+  const { selectedAppliedCompanies, selectedSearchCompanies } =
+    useCompanyStore();
 
-  const dropdownOptions = [
+  const dropdownOptions: { name: string; value: keyof ResultCompany }[] = [
     { name: "매출액", value: "salesRevenueRank" },
     { name: "사원 수", value: "employeeRank" },
     { name: "지원자 수", value: "applicantRank" },
   ];
 
-  const [resultDropdown, setResultDropdown] = useState(
+  const [resultDropdown, setResultDropdown] = useState<keyof ResultCompany>(
     dropdownOptions[0].value
   );
-  const [rankingDropdown, setRankingDropdown] = useState(
+  const [rankingDropdown, setRankingDropdown] = useState<keyof ResultCompany>(
     dropdownOptions[0].value
   );
-  const [page, setPage] = useState(1);
+  const [resultPage, setResultPage] = useState(1);
+  const [rankingPage, setRankingPage] = useState(1);
   const itemsPerPage = 5;
 
   useEffect(() => {
-    setPage(1);
-  }, [resultDropdown, rankingDropdown]);
+    setResultPage(1);
+  }, [resultDropdown]);
 
   useEffect(() => {
-    fetchCompanies();
-  }, [fetchCompanies]);
+    setRankingPage(1);
+  }, [rankingDropdown]);
 
   const companiesArray = useMemo(
-    () => companies?.data?.companies || [],
-    [companies]
+    () => selectedAppliedCompanies || [],
+    [selectedAppliedCompanies]
+  );
+
+  const combinedCompaniesArray = useMemo(
+    () => [...selectedAppliedCompanies, ...selectedSearchCompanies],
+    [selectedAppliedCompanies, selectedSearchCompanies]
   );
 
   // 정렬 함수 (메모이제이션 유지)
@@ -56,34 +63,26 @@ export default function CompanyComparison() {
 
   const sortedCompanies = useMemo(() => {
     return {
-      result: sortCompanies(
-        companiesArray,
-        resultDropdown as keyof ResultCompany
-      ),
-      ranking: sortCompanies(
-        companiesArray,
-        rankingDropdown as keyof ResultCompany
-      ),
+      result: sortCompanies(combinedCompaniesArray, resultDropdown),
+      ranking: sortCompanies(combinedCompaniesArray, rankingDropdown),
     };
-  }, [companiesArray, resultDropdown, rankingDropdown, sortCompanies]);
+  }, [combinedCompaniesArray, resultDropdown, rankingDropdown, sortCompanies]);
 
   const paginate = useCallback(
-    (data: ResultCompany[]) =>
+    (data: ResultCompany[], page: number) =>
       data.slice((page - 1) * itemsPerPage, page * itemsPerPage),
-    [page, itemsPerPage]
+    [itemsPerPage]
   );
 
   const paginatedCompanies = useMemo(() => {
     return {
       pick: companiesArray, // pick은 페이지네이션을 적용하지 않음
-      result: paginate(sortedCompanies.result),
-      ranking: paginate(sortedCompanies.ranking),
+      result: paginate(sortedCompanies.result, resultPage),
+      ranking: paginate(sortedCompanies.ranking, rankingPage),
     };
-  }, [companiesArray, sortedCompanies, paginate]);
+  }, [companiesArray, sortedCompanies, resultPage, rankingPage, paginate]);
 
-  if (error) return <div>{error}</div>;
-
-  if (loading || !companies) {
+  if (!selectedAppliedCompanies.length && !selectedSearchCompanies.length) {
     return (
       <Stack sx={companyComparisonLayout}>
         <Features.ListTitle.Pick />
@@ -91,7 +90,7 @@ export default function CompanyComparison() {
 
         <Features.ListTitle.Result
           value={resultDropdown}
-          onChange={setResultDropdown}
+          onChange={(value) => setResultDropdown(value as keyof ResultCompany)}
           options={dropdownOptions}
         />
         <Single.ListLabel.Result />
@@ -99,13 +98,22 @@ export default function CompanyComparison() {
 
         <Features.ListTitle.Ranking
           value={rankingDropdown}
-          onChange={setRankingDropdown}
+          onChange={(value) => setRankingDropdown(value as keyof ResultCompany)}
           options={dropdownOptions}
         />
         <Single.ListLabel.Ranking />
         <RankSkeletonList />
 
-        <Features.ListPagination page={page} count={0} onPageChange={setPage} />
+        <Features.ListPagination
+          page={resultPage}
+          count={0}
+          onPageChange={setResultPage}
+        />
+        <Features.ListPagination
+          page={rankingPage}
+          count={0}
+          onPageChange={setRankingPage}
+        />
       </Stack>
     );
   }
@@ -123,7 +131,7 @@ export default function CompanyComparison() {
       {/* 비교 결과 확인 섹션 */}
       <Features.ListTitle.Result
         value={resultDropdown}
-        onChange={setResultDropdown}
+        onChange={(value) => setResultDropdown(value as keyof ResultCompany)}
         options={dropdownOptions}
       />
       <Box sx={scrollWrapper}>
@@ -132,11 +140,16 @@ export default function CompanyComparison() {
           <Features.CompanyList.Result companies={paginatedCompanies.result} />
         </Box>
       </Box>
+      <Features.ListPagination
+        page={resultPage}
+        count={Math.ceil(sortedCompanies.result.length / itemsPerPage)}
+        onPageChange={setResultPage}
+      />
 
       {/* 기업 순위 확인 섹션 */}
       <Features.ListTitle.Ranking
         value={rankingDropdown}
-        onChange={setRankingDropdown}
+        onChange={(value) => setRankingDropdown(value as keyof ResultCompany)}
         options={dropdownOptions}
       />
       <Box sx={scrollWrapper}>
@@ -144,15 +157,14 @@ export default function CompanyComparison() {
           <Single.ListLabel.Ranking />
           <Features.CompanyList.Ranking
             companies={paginatedCompanies.ranking}
+            dropdownValue={rankingDropdown}
           />
         </Box>
       </Box>
-
-      {/* 페이지네이션 */}
       <Features.ListPagination
-        page={page}
-        count={Math.ceil(sortedCompanies.result.length / itemsPerPage)}
-        onPageChange={setPage}
+        page={rankingPage}
+        count={Math.ceil(sortedCompanies.ranking.length / itemsPerPage)}
+        onPageChange={setRankingPage}
       />
     </Stack>
   );

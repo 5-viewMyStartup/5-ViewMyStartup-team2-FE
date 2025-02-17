@@ -151,7 +151,7 @@ const CompanyListTitle: React.FC = () => {
         sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
         <button
-          onClick={() => router.push("/company-comparison")} // ✅ 이동할 경로 설정
+          onClick={() => router.push("/comparison-result")} // ✅ 이동할 경로 설정
           disabled={selectedSearchCompanies.length === 0} // ✅ 선택한 기업이 없으면 비활성화
           style={{
             backgroundColor:

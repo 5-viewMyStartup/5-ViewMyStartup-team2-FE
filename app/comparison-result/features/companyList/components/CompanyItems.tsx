@@ -15,6 +15,10 @@ interface CompanyItemsProps {
   itemData: ResultCompany;
 }
 
+interface CompanyItemsRankingProps extends CompanyItemsProps {
+  dropdownValue: keyof ResultCompany;
+}
+
 export const CompanyItems = {
   Pick: function ({ itemData }: CompanyItemsProps) {
     const { handleImgErr, imgSrc } = useCompanyDefaultImg(itemData.image);
@@ -42,7 +46,7 @@ export const CompanyItems = {
         <Box sx={pickBoxStyle}>
           <Typo
             className="text_M_18"
-            content={itemData.category[0]}
+            content={itemData.category[0]?.category || "N/A"}
             color={colorChips.gray_200}
             customStyle={{ textAlign: "center" }}
           />
@@ -80,7 +84,7 @@ export const CompanyItems = {
         >
           <Typo
             className="text_R_14"
-            content={itemData.content}
+            content={itemData.content || "N/A"}
             color={colorChips.gray_100}
             customStyle={companyDescTypoStyle}
           />
@@ -88,7 +92,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.category[0]}
+            content={itemData.category[0]?.category || "N/A"}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -104,7 +108,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.employeeCnt.toString()}
+            content={itemData.employeeCnt?.toString() || "0"}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -112,7 +116,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.applicantRank.toString()}
+            content={itemData.applicantRank?.toString() || "0"}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -121,7 +125,7 @@ export const CompanyItems = {
     );
   },
 
-  Ranking: function ({ itemData }: CompanyItemsProps) {
+  Ranking: function ({ itemData, dropdownValue }: CompanyItemsRankingProps) {
     const { handleImgErr, imgSrc } = useCompanyDefaultImg(itemData.image);
 
     return (
@@ -129,7 +133,7 @@ export const CompanyItems = {
         <Box sx={rankingBoxStyle}>
           <Typo
             className="text_R_14"
-            content={`${itemData.applicantRank ?? 0}위`} // null 또는 undefined인 경우 0으로 반환
+            content={`${itemData[dropdownValue] ?? 0}위`} // null 또는 undefined인 경우 0으로 반환
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -158,7 +162,7 @@ export const CompanyItems = {
         >
           <Typo
             className="text_R_14"
-            content={itemData.content}
+            content={itemData.content || "N/A"}
             color={colorChips.gray_100}
             customStyle={companyDescTypoStyle}
           />
@@ -166,7 +170,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.category[0]}
+            content={itemData.category[0]?.category || "N/A"}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -182,7 +186,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.employeeCnt.toString()}
+            content={itemData.employeeCnt?.toString() || "0"}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -190,7 +194,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.applicantRank.toString()}
+            content={itemData.applicantRank?.toString() || "0"}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />

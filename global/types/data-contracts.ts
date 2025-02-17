@@ -197,7 +197,7 @@ export interface ResultCompany {
    * 카테고리
    * @example ["에듀테크", "재테크"]
    */
-  category: string[];
+  category: { id: string; category: string }[];
   /**
    * 매출액
    */
@@ -209,7 +209,7 @@ export interface ResultCompany {
   /**
    * 지원자 수
    */
-  applicantCount: number;
+  applicantCnt: number;
   /**
    * 지원자 랭킹
    */
