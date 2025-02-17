@@ -3,12 +3,12 @@ import { getCompanyListAPI } from "./getCompanyListAPI";
 import {
   ComparisonSearchQuery,
   ComparisonSearchResponse,
-  CompanyDTO,
+  ComparisonCompanyDTO,
 } from "@/global/types/data-contracts";
 
 interface UseCompanyFetchOutput {
   isLoading: boolean;
-  companies: CompanyDTO[];
+  companies: ComparisonCompanyDTO[];
   totalPages: number;
   totalCount: number; // 전체 기업 수 추가
 }
