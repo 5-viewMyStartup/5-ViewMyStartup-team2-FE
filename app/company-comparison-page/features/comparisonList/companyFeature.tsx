@@ -1,10 +1,10 @@
 import { Stack } from "@mui/material";
 // import {} from "@/global/styles/companyListStyles"; //세정TODO: 스타일 가져와서 Stack에 넣기
 import { CompanyItems } from "./components/CompanyItems";
-import { CompanyDTO } from "@/global/types/data-contracts";
+import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 
 interface CompanyListProps {
-  applications: CompanyDTO[];
+  applications: ComparisonCompanyDTO[];
   page: number | undefined;
 }
 

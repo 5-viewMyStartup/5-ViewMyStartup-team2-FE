@@ -2,7 +2,7 @@
 
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { CompanyDTO } from "@/global/types/data-contracts";
+import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
 import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 import Image from "next/image";
@@ -17,7 +17,7 @@ import {
 
 interface ApplicationItemsProps {
   order: number;
-  itemData: CompanyDTO | null;
+  itemData: ComparisonCompanyDTO | null;
 }
 
 export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {

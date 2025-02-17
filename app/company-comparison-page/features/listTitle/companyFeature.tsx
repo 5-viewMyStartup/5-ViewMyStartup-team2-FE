@@ -3,7 +3,7 @@ import { Stack, Box } from "@mui/material";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { CompanySelectModal } from "./components/CompanySelectModal"; // 기업 선택 모달 컴포넌트
-import { CompanyDTO } from "@/global/types/data-contracts"; // 기업 데이터 타입
+import { ComparisonCompanyDTO } from "@/global/types/data-contracts"; // 기업 데이터 타입
 import { useCompanyFetch } from "../../core/useCompanyFetchHook"; // `useCompanyFetch` 훅 import
 import { CompanyListQuery } from "@/global/types/data-contracts"; // 쿼리 파라미터 타입
 import { useRouter } from "next/navigation";
@@ -17,11 +17,15 @@ const CompanyListTitle: React.FC = () => {
   const router = useRouter();
 
   // ✅ zustand에서 상태 및 액션 가져오기
-  const { selectedCompanies, selectCompany, deselectCompany } =
-    useCompanyStore();
+  const {
+    selectedAppliedCompanies, // 최근 지원한 기업 목록
+    selectedSearchCompanies, // 검색 결과에서 선택한 기업 목록
+    selectSearchCompany,
+    deselectSearchCompany,
+  } = useCompanyStore();
 
   const params: CompanyListQuery = {
-    page: currentPage,
+    page: currentPage, // 현재페이지를 기준으로 API 요청
   };
 
   // `useCompanyFetch` 훅을 사용하여 기업 목록 불러오기
@@ -46,20 +50,9 @@ const CompanyListTitle: React.FC = () => {
   // 모달 닫기
   const handleCloseModal = () => setModalOpen(false);
 
-  // // 기업 선택 처리
-  // const handleSelectCompany = (company: CompanyDTO) => {
-  //   console.log("📌✅ 기업 선택됨:", company);
-  //   setSelectedCompanies((prev) => [...prev, company]); // 선택된 기업 추가
-  // };
-
-  // // 기업 선택 해제 처리
-  // const handleDeselectCompany = (company: CompanyDTO) => {
-  //   setSelectedCompanies((prev) => prev.filter((c) => c.name !== company.name)); // 선택된 기업 삭제
-  // };
-
   // ✅ 기본 이미지를 적용하는 함수
   const defaultImage = "/assets/default-company-img.svg";
-  const formatSelectedCompanies = (companies: CompanyDTO[]) => {
+  const formatSelectedCompanies = (companies: ComparisonCompanyDTO[]) => {
     return companies.map((company) => ({
       ...company,
       image: company.image || defaultImage, // 기본 이미지 적용
@@ -104,7 +97,7 @@ const CompanyListTitle: React.FC = () => {
         }}
       >
         {/* 선택된 기업이 없을 때의 메시지 */}
-        {selectedCompanies.length === 0 ? (
+        {selectedSearchCompanies.length === 0 ? (
           <Typo
             className="text_R_14"
             content="아직 추가한 기업이 없어요, 
@@ -118,7 +111,7 @@ const CompanyListTitle: React.FC = () => {
         ) : (
           // 선택된 기업들 표시
           <Stack direction="row">
-            {selectedCompanies.map((company, index) => (
+            {selectedSearchCompanies.map((company, index) => (
               <Box
                 key={index}
                 sx={{
@@ -159,14 +152,14 @@ const CompanyListTitle: React.FC = () => {
       >
         <button
           onClick={() => router.push("/company-comparison")} // ✅ 이동할 경로 설정
-          disabled={selectedCompanies.length === 0} // ✅ 선택한 기업이 없으면 비활성화
+          disabled={selectedSearchCompanies.length === 0} // ✅ 선택한 기업이 없으면 비활성화
           style={{
             backgroundColor:
-              selectedCompanies.length === 0
+              selectedSearchCompanies.length === 0
                 ? colorChips.gray_400 // 비활성화 시 색상
                 : colorChips.brand_orange,
             color:
-              selectedCompanies.length === 0
+              selectedSearchCompanies.length === 0
                 ? colorChips.gray_200 // 비활성화 시 글씨색
                 : colorChips.white,
             height: "40px",

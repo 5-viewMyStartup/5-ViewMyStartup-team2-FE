@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from "react";
 import { getApplicationListAPI } from "./getApplicationListAPI";
 import {
-  CompanyDTO,
+  ComparisonCompanyDTO,
   ComparisonPickResponse,
   ComparisonPickQuery,
 } from "@/global/types/data-contracts";
@@ -12,8 +12,9 @@ import {
 
 interface UseApplicationFetchOutput {
   isLoading: boolean;
-  companies: CompanyDTO[];
+  companies: ComparisonCompanyDTO[];
   totalPages: number;
+  totalAppliedCompaniesCount: number;
 }
 
 export const useApplicationFetch = (
@@ -56,5 +57,6 @@ export const useApplicationFetch = (
     isLoading,
     companies: data.companies,
     totalPages: data.pagination.totalPages,
+    totalAppliedCompaniesCount: data.pagination.totalItems,
   };
 };
