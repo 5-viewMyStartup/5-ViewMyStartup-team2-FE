@@ -18,10 +18,12 @@ interface HeaderProps {
     personnel: number;
     applicants: number;
   };
+  id: string;
+  idx: number;
 }
 
 // 컴포넌트 로직
-const Header = ({ name, logo, category, stats }: HeaderProps) => {
+const Header = ({ name, logo, category, stats, id, idx }: HeaderProps) => {
   const [imageError, setImageError] = useState(false);
 
   const handleImageError = () => {
@@ -32,6 +34,8 @@ const Header = ({ name, logo, category, stats }: HeaderProps) => {
     image: logo || "/assets/logo.svg",
     name,
     category,
+    id,
+    idx,
   };
 
   return (

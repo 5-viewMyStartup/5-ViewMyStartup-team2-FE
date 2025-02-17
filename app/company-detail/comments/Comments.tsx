@@ -5,117 +5,81 @@ import Pagination from "../pagination/Pagination";
 import { Typo } from "@/global/styles/Typo";
 import Image from "next/image";
 import { CommentInput } from "@/global/components/input/CommentInput";
-import axios from "axios";
-
-// 타입 정의
-interface Comment {
-  id: string;
-  content: string;
-  createdAt: Date;
-  updatedAt: Date;
-  userId: string;
-  companyId: string;
-}
+import useCommentStore from "../store/commentStore";
 
 interface CompanyCommentsProps {
   companyId: string;
 }
 
-// 컴포넌트 로직
 const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const {
+    comments,
+    loading,
+    error,
+    currentPage,
+    itemsPerPage,
+    fetchComments,
+    addComment,
+    updateComment,
+    deleteComment,
+    setCurrentPage,
+  } = useCommentStore();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [comment, setComment] = useState("");
-  const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const itemsPerPage = 5;
-
-  // 댓글 목록 조회
-  const fetchComments = async () => {
-    try {
-      // const response = await axios.get(
-      //   `${process.env.NEXT_PUBLIC_API_URL}/api/comments/${companyId}`
-      // );
-      // setComments(response.data);
-    } catch (error) {
-      console.error("댓글 조회 실패:", error);
-      setError("댓글을 불러오는데 실패했습니다.");
-    }
-  };
+  const [selectedComment, setSelectedComment] = useState<{
+    id: string;
+    content: string;
+  } | null>(null);
 
   useEffect(() => {
-    // fetchComments();
-  }, [companyId]);
+    // fetchComments(companyId);
+  }, [companyId, fetchComments]);
 
-  // 댓글 작성
   const handleSubmit = async () => {
     if (!comment.trim()) return;
-    setIsLoading(true);
-    setError(null);
 
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/comments/${companyId}`,
-        {
-          content: comment,
-        }
-      );
+      await addComment(companyId, comment);
       setComment("");
-      fetchComments();
     } catch (error) {
       console.error("댓글 작성 실패:", error);
-      setError("댓글 작성에 실패했습니다.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  // 댓글 수정
   const handleEdit = async () => {
     if (!selectedComment) return;
     try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/comments/${selectedComment.id}`,
-        {
-          content: comment,
-        }
-      );
-      fetchComments();
+      await updateComment(selectedComment.id, comment);
       handleClose();
     } catch (error) {
       console.error("댓글 수정 실패:", error);
-      setError("댓글 수정에 실패했습니다.");
     }
   };
 
-  // 댓글 삭제
   const handleDelete = async () => {
     if (!selectedComment) return;
     try {
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/comments/${selectedComment.id}`
-      );
-      fetchComments();
+      await deleteComment(selectedComment.id);
       handleClose();
     } catch (error) {
       console.error("댓글 삭제 실패:", error);
-      setError("댓글 삭제에 실패했습니다.");
     }
   };
 
   const handleMenuClick = (
     event: React.MouseEvent<HTMLElement>,
-    comment: Comment
+    commentData: { id: string; content: string }
   ) => {
     setAnchorEl(event.currentTarget);
-    setSelectedComment(comment);
+    setSelectedComment(commentData);
+    setComment(commentData.content);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
     setSelectedComment(null);
+    setComment("");
   };
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -130,6 +94,10 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
 
   // 총 페이지 수 계산
   const totalPages = Math.ceil(comments.length / itemsPerPage);
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
 
   return (
     <>
@@ -184,7 +152,12 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
                   </td>
                   <td style={{ textAlign: "right" }}>
                     <IconButton
-                      onClick={(e) => handleMenuClick(e, comment)}
+                      onClick={(e) =>
+                        handleMenuClick(e, {
+                          id: comment.id,
+                          content: comment.content,
+                        })
+                      }
                       sx={{ padding: 0 }}
                     >
                       <Image
@@ -214,7 +187,6 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
             value={comment}
             onChange={handleCommentChange}
             onSubmit={handleSubmit}
-            disabled={isLoading}
           />
         </Box>
 

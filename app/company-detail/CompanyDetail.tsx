@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Header from "./header/Header";
 import Description from "./header/Description";
 import Comments from "./comments/Comments";
 import { styled, Box } from "@mui/material";
-import axios from "axios";
+import useCompanyStore from "./store/companyStore";
 
 interface CompanyDetailProps {
   id: string;
@@ -25,6 +25,7 @@ interface CompanyData {
   comments: CompanyComment[];
   category: Category[];
   applicantCount: number;
+  idx: number;
 }
 
 interface CompanyComment {
@@ -40,38 +41,16 @@ interface Category {
 }
 
 const CompanyDetail = ({ id, initialData }: CompanyDetailProps) => {
-  const [company, setCompany] = useState<CompanyData>(initialData);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { company, loading, error, setCompany, fetchCompany } =
+    useCompanyStore();
 
   useEffect(() => {
-    const fetchCompanyData = async () => {
-      if (!id) return;
-
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/company-detail/${id}`
-        );
-
-        if (!response.data) {
-          throw new Error("데이터가 없습니다.");
-        }
-
-        setCompany(response.data);
-        setError(null);
-      } catch {
-        setError("기업 정보를 불러오는데 실패했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // 초기 데이터가 있으면 API 호출 스킵
-    if (!initialData) {
-      fetchCompanyData();
+    if (initialData) {
+      setCompany(initialData);
+    } else if (id) {
+      fetchCompany(id);
     }
-  }, [id, initialData]);
+  }, [id, initialData, setCompany, fetchCompany]);
 
   if (loading) {
     return <div>로딩 중...</div>;
@@ -94,9 +73,10 @@ const CompanyDetail = ({ id, initialData }: CompanyDetailProps) => {
             applicants: company.applicantCount || 0,
           }}
           id={company.id}
+          idx={company.idx}
         />
         <Description description={company.content} />
-        <Comments comments={[]} />
+        <Comments companyId={company.id} />
       </StyledContainer>
     </StyledWrapper>
   );
