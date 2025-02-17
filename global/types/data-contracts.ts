@@ -81,16 +81,28 @@ export interface ApplicationListResponse {
   totalPages: number;
 }
 
+//backend 완성되면 맞추어 수정하기
 export interface BookmarkDTO {
-  id: string;
-  idx: number;
-  userId: string;
-  companyId: string;
+  id: string; //기업 id
+  idx: number; //기업 idx
+  name: string; //기업명
+  image?: string; //기업 로고 이미지 url
+  content: string; // 기업 소개 내용
+  category: { id: string; category: string }[]; //카테고리
+  applicantCnt: number; //지원자 수
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
 }
 
+export type AppliedCompanyFilter = {
+  applicationStatus: boolean;
+};
+export interface AppliedCompanyListQuery {
+  page?: number;
+  keyword?: string;
+  filter?: AppliedCompanyFilter;
+}
 export type FilterOption = { value: string; name: string };
 
 //아래 4개는 나의 기업 비교 페이지를 위해 추가함
