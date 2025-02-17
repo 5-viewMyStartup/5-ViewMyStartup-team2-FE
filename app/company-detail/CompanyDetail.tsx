@@ -24,6 +24,7 @@ interface CompanyData {
   deletedAt: Date | null;
   comments: CompanyComment[];
   category: Category[];
+  applicantCount: number;
 }
 
 interface CompanyComment {
@@ -50,7 +51,7 @@ const CompanyDetail = ({ id, initialData }: CompanyDetailProps) => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/companies/idx/${id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/company-detail/${id}`
         );
 
         if (!response.data) {
@@ -90,8 +91,9 @@ const CompanyDetail = ({ id, initialData }: CompanyDetailProps) => {
           stats={{
             monthlyRevenue: Number(company.salesRevenue),
             personnel: company.employeeCnt,
-            applicants: 0,
+            applicants: company.applicantCount || 0,
           }}
+          id={company.id}
         />
         <Description description={company.content} />
         <Comments comments={[]} />

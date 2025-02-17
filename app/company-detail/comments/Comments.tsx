@@ -1,69 +1,128 @@
+import { useState, useEffect } from "react";
 import { Box, styled, IconButton, Menu, MenuItem } from "@mui/material";
 import { colorChips } from "@/global/styles/colorChips";
-import { useState } from "react";
 import Pagination from "../pagination/Pagination";
 import { Typo } from "@/global/styles/Typo";
 import Image from "next/image";
-import { ApplyModal } from "@/global/components/modal/ApplyModal";
 import { CommentInput } from "@/global/components/input/CommentInput";
+import axios from "axios";
 
 // 타입 정의
 interface Comment {
-  investor: string;
-  round: number;
-  amount: number;
-  comment: string;
+  id: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  companyId: string;
 }
 
 interface CompanyCommentsProps {
-  comments: Comment[];
+  companyId: string;
 }
 
 // 컴포넌트 로직
-const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
+const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
+  const [comments, setComments] = useState<Comment[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [comment, setComment] = useState("");
+  const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const itemsPerPage = 5;
 
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+  // 댓글 목록 조회
+  const fetchComments = async () => {
+    try {
+      // const response = await axios.get(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/api/comments/${companyId}`
+      // );
+      // setComments(response.data);
+    } catch (error) {
+      console.error("댓글 조회 실패:", error);
+      setError("댓글을 불러오는데 실패했습니다.");
+    }
+  };
+
+  useEffect(() => {
+    // fetchComments();
+  }, [companyId]);
+
+  // 댓글 작성
+  const handleSubmit = async () => {
+    if (!comment.trim()) return;
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/comments/${companyId}`,
+        {
+          content: comment,
+        }
+      );
+      setComment("");
+      fetchComments();
+    } catch (error) {
+      console.error("댓글 작성 실패:", error);
+      setError("댓글 작성에 실패했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 댓글 수정
+  const handleEdit = async () => {
+    if (!selectedComment) return;
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/comments/${selectedComment.id}`,
+        {
+          content: comment,
+        }
+      );
+      fetchComments();
+      handleClose();
+    } catch (error) {
+      console.error("댓글 수정 실패:", error);
+      setError("댓글 수정에 실패했습니다.");
+    }
+  };
+
+  // 댓글 삭제
+  const handleDelete = async () => {
+    if (!selectedComment) return;
+    try {
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/comments/${selectedComment.id}`
+      );
+      fetchComments();
+      handleClose();
+    } catch (error) {
+      console.error("댓글 삭제 실패:", error);
+      setError("댓글 삭제에 실패했습니다.");
+    }
+  };
+
+  const handleMenuClick = (
+    event: React.MouseEvent<HTMLElement>,
+    comment: Comment
+  ) => {
     setAnchorEl(event.currentTarget);
+    setSelectedComment(comment);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleEdit = () => {
-    // 수정 로직 구현
-    handleClose();
-  };
-
-  const handleDelete = () => {
-    // 삭제 로직 구현
-    handleClose();
+    setSelectedComment(null);
   };
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
-  const handleSubmit = () => {
-    // TODO: API 연동 시 댓글 등록 처리
-    console.log("Submit comment:", comment);
-    setComment("");
-  };
-
-  // 현재 페이지의 댓글 데이터만 필터링
+  // 현재 페이지의 댓글만 필터링
   const currentComments = comments.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -79,11 +138,6 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
           <Typo className="text_B_24" color={colorChips.white}>
             Review
           </Typo>
-          <ApplicationButton onClick={handleModalOpen}>
-            <Typo className="text_R_16" color={colorChips.white}>
-              지원하기
-            </Typo>
-          </ApplicationButton>
         </TitleWrapper>
       </TitleContainer>
 
@@ -99,7 +153,7 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
                 </th>
                 <th>
                   <Typo className="text_R_14" color={colorChips.white}>
-                    순번
+                    작성일
                   </Typo>
                 </th>
                 <th>
@@ -112,24 +166,27 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
             </thead>
             <tbody>
               {currentComments.map((comment) => (
-                <tr key={comment.investor}>
+                <tr key={comment.id}>
                   <td>
                     <Typo className="text_R_16" color={colorChips.gray_100}>
-                      {comment.investor}
+                      {comment.userId}
                     </Typo>
                   </td>
                   <td>
                     <Typo className="text_R_16" color={colorChips.gray_100}>
-                      {comment.round}
+                      {new Date(comment.createdAt).toLocaleDateString()}
                     </Typo>
                   </td>
                   <td>
                     <Typo className="text_R_16" color={colorChips.gray_100}>
-                      {comment.comment}
+                      {comment.content}
                     </Typo>
                   </td>
                   <td style={{ textAlign: "right" }}>
-                    <IconButton onClick={handleMenuClick} sx={{ padding: 0 }}>
+                    <IconButton
+                      onClick={(e) => handleMenuClick(e, comment)}
+                      sx={{ padding: 0 }}
+                    >
                       <Image
                         src="/assets/ic_Menu.svg"
                         alt="menu"
@@ -143,13 +200,24 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
             </tbody>
           </Table>
         </TableContainer>
+
+        {error && (
+          <Box mt={2}>
+            <Typo className="text_R_14" color={colorChips.red_error}>
+              {error}
+            </Typo>
+          </Box>
+        )}
+
         <Box mt={3}>
           <CommentInput
             value={comment}
             onChange={handleCommentChange}
             onSubmit={handleSubmit}
+            disabled={isLoading}
           />
         </Box>
+
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -183,14 +251,7 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
                 backgroundColor: colorChips.black_200,
               },
             },
-            "& .MuiBackdrop-root": {
-              position: "fixed",
-            },
-            "& .MuiModal-root": {
-              position: "fixed",
-            },
           }}
-          disableScrollLock={true}
         >
           <MenuItem onClick={handleEdit}>
             <Typo className="text_R_16" color={colorChips.gray_100}>
@@ -203,6 +264,7 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
             </Typo>
           </MenuItem>
         </Menu>
+
         <PaginationContainer>
           <Pagination
             currentPage={currentPage}
@@ -211,16 +273,6 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
           />
         </PaginationContainer>
       </CommentCard>
-
-      <ApplyModal
-        open={isModalOpen}
-        handleClose={handleModalClose}
-        companyData={{
-          image: "/company-logo.png",
-          name: "코드잇",
-          category: "에듀테크",
-        }}
-      />
     </>
   );
 };
@@ -309,16 +361,6 @@ const TitleWrapper = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-});
-
-const ApplicationButton = styled(Box)({
-  padding: "8px 24px",
-  backgroundColor: colorChips.brand_orange,
-  borderRadius: "50px",
-  cursor: "pointer",
-  "&:hover": {
-    backgroundColor: "#FF3D00",
-  },
 });
 
 export default CompanyComments;
