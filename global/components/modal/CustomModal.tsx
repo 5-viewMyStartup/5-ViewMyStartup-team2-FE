@@ -6,47 +6,54 @@ import CustomInput from "../input";
 import { useState } from "react";
 import { CustomListItem } from "../CustomListItem";
 import { colorChips } from "@/global/styles/colorChips";
-
+import { CompanyDTO } from "@/global/types/data-contracts";
+import { CustomPagination } from "../CustomPagination";
+// import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
+//지금부터 수정!시작!!!
 interface CustomModalProps {
   title: string;
   open: boolean;
   handleClose: () => void;
+  companies: CompanyDTO[];
+  appliedCompanies: CompanyDTO[];
+  selectedCompanies: CompanyDTO[];
+  onSelect: (company: CompanyDTO) => void;
+  onDeselect: (company: CompanyDTO) => void;
+  isLoading: boolean;
+  keyword: string;
+  setKeyword: (value: string) => void;
+  searchPage: number;
+  totalSearchPages: number;
+  handleSearchPageChange: (page: number) => void;
+  pickPage: number; // 🚀 새로운 prop 추가
+  totalPickPages: number; // 🚀 새로운 prop 추가
+  handlePickPageChange: (page: number) => void; // 🚀 새로운 prop 추가
 }
 
 export const CustomModal: React.FC<CustomModalProps> = ({
   title,
   open,
   handleClose,
+  companies,
+  appliedCompanies,
+  selectedCompanies,
+  onSelect,
+  onDeselect,
+  isLoading,
+  keyword,
+  setKeyword,
+  searchPage,
+  totalSearchPages,
+  handleSearchPageChange,
+  pickPage, // 🚀 pickPage prop 사용
+  totalPickPages, // 🚀 totalPickPages prop 사용
+  handlePickPageChange, // 🚀 handlePickPageChange prop 사용
 }) => {
-  const [searchText, setSearchText] = useState("");
-  const [selectCompany, setSelectCompany] = useState<
-    {
-      image: string;
-      name: string;
-      category: string;
-    }[]
-  >([]);
-  const testData = [
-    { image: "/assets/logo.svg", name: "test1", category: "edu" },
-    { image: "/assets/logo.svg", name: "test2", category: "edu" },
-    { image: "/assets/logo.svg", name: "test3", category: "edu" },
-    { image: "/assets/logo.svg", name: "test4", category: "edu" },
-  ];
-
-  const testClick = (data: {
-    image: string;
-    name: string;
-    category: string;
-  }) => {
-    setSelectCompany((prev) => {
-      const isExist = prev.some((company) => company.name === data.name);
-      if (isExist) {
-        return prev.filter((company) => company.name !== data.name); // 삭제
-      } else {
-        return [...prev, data]; // 추가
-      }
-    });
+  const handleCompanyClick = (company: CompanyDTO) => {
+    const isSelected = selectedCompanies.some((c) => c.id === company.id);
+    isSelected ? onDeselect(company) : onSelect(company);
   };
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Stack
@@ -69,44 +76,67 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           />
         </Box>
         <CustomInput.SearchInput
-          value={searchText}
+          value={keyword}
           onChange={(e) => {
-            setSearchText(e.target.value);
+            setKeyword(e.target.value);
           }}
-          variation={searchText !== "" ? "right" : "left"}
+          variation={keyword !== "" ? "right" : "left"}
           onClick={() => {
-            setSearchText("");
+            setKeyword("");
           }}
         />
         <Stack gap={"12px"}>
           <Typo
             color="input"
             className="text_B_18"
-            content={`최근 지원한 기업 (${2})`}
+            content={`최근 지원한 기업 (${appliedCompanies.length})`}
           />
-          {testData.map((d, index) => (
+          {appliedCompanies.map((company) => (
             <CustomListItem
-              checked={selectCompany.some((company) => company.name === d.name)}
-              key={index}
-              listData={d}
-              handleClick={() => testClick(d)}
+              checked={selectedCompanies.some((c) => c.id === company.id)}
+              key={company.id}
+              listData={{
+                image: company.image ?? "/assets/default-logo.svg",
+                name: company.name,
+                category: company.category.map((c) => c.category).join(", "),
+              }}
+              handleClick={() => handleCompanyClick(company)}
             />
           ))}
+          <Box display="flex" justifyContent="center" mt={2}>
+            {/* 🚀 pickPage를 사용한 페이지네이션 추가 */}
+            <CustomPagination
+              page={pickPage}
+              count={totalPickPages}
+              handleChange={(e, value) => handlePickPageChange(value)}
+            />
+          </Box>
         </Stack>
         <Stack gap={"12px"} pt={"16px"}>
           <Typo
             color="input"
             className="text_B_18"
-            content={`검색결과 (${2})`}
+            content={`검색결과 (${companies.length})`}
           />
-          {testData.map((d, index) => (
+          {companies.map((company) => (
             <CustomListItem
-              checked={selectCompany.some((company) => company.name === d.name)}
-              key={index}
-              listData={d}
-              handleClick={() => testClick(d)}
+              checked={selectedCompanies.some((c) => c.id === company.id)}
+              key={company.id}
+              listData={{
+                image: company.image ?? "/assets/default-logo.svg",
+                name: company.name,
+                category: company.category.map((c) => c.category).join(", "),
+              }}
+              handleClick={() => handleCompanyClick(company)}
             />
           ))}
+          <Box display="flex" justifyContent="center" mt={2}>
+            <CustomPagination
+              page={searchPage}
+              count={totalSearchPages}
+              handleChange={(e, value) => handleSearchPageChange(value)}
+            />
+          </Box>
         </Stack>
       </Stack>
     </Modal>
