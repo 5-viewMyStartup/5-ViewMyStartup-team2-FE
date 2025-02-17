@@ -5,13 +5,14 @@ import {
 } from "@/app/comparison-result/single/ListLabel";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { Company } from "@/global/types/data-contracts";
+import { ResultCompany } from "@/global/types/data-contracts";
+import { formatRevenue } from "@/global/utils/formatRevenue";
 import { Box, Stack } from "@mui/material";
 import Image from "next/image";
 import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 
 interface CompanyItemsProps {
-  itemData: Company;
+  itemData: ResultCompany;
 }
 
 export const CompanyItems = {
@@ -95,7 +96,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.salesRevenue.toString()}
+            content={formatRevenue(itemData.salesRevenue)}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -173,7 +174,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.salesRevenue.toString()}
+            content={formatRevenue(itemData.salesRevenue)}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />

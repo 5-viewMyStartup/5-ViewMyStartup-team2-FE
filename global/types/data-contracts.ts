@@ -151,7 +151,7 @@ export interface ComparisonResultQuery {
   keyword?: string;
 }
 
-export interface Company {
+export interface ResultCompany {
   id: string;
   /**
    * 기업 이름
@@ -173,7 +173,7 @@ export interface Company {
   /**
    * 매출액
    */
-  salesRevenue: number;
+  salesRevenue: string;
   /**
    * 재직자 수
    */
@@ -207,7 +207,7 @@ export interface CompaniesResponse {
   success: boolean;
   message: string;
   data: {
-    companies: Company[];
+    companies: ResultCompany[];
     pagination: Pagination;
   };
 }

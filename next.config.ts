@@ -11,7 +11,6 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   // output: "export", // 정적 배포 하기 위해서
-  isr: true,
 };
 
 export default nextConfig;
