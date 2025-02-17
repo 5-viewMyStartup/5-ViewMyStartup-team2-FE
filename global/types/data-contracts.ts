@@ -104,3 +104,43 @@ export interface AppliedCompanyListQuery {
   filter?: AppliedCompanyFilter;
 }
 export type FilterOption = { value: string; name: string };
+
+//아래 4개는 나의 기업 비교 페이지를 위해 추가함
+export interface ComparisonPickQuery {
+  page?: number; // 페이지 번호
+  // 추가적으로 필터링 옵션이나 검색어 등이 필요하면 여기 추가
+}
+
+export interface ComparisonPickResponse {
+  success: boolean;
+  message: string;
+  data: {
+    companies: CompanyDTO[]; // 기업 목록
+    pagination: {
+      currentPage: number;
+      totalPages: number;
+      totalItems: number;
+      itemsPerPage: number;
+    }; // 페이지네이션 정보
+  };
+}
+
+export interface ComparisonSearchQuery {
+  page?: number; // 페이지 번호
+  keyword?: string; // 검색어
+  // 추가적으로 필터링 옵션이나 검색어 등이 필요하면 여기 추가
+}
+
+export interface ComparisonSearchResponse {
+  success: boolean;
+  message: string;
+  data: {
+    companies: CompanyDTO[]; // 기업 목록
+    pagination: {
+      currentPage: number;
+      totalPages: number;
+      totalItems: number;
+      itemsPerPage: number;
+    }; // 페이지네이션 정보
+  };
+}

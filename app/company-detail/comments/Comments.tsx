@@ -4,7 +4,8 @@ import { useState } from "react";
 import Pagination from "../pagination/Pagination";
 import { Typo } from "@/global/styles/Typo";
 import Image from "next/image";
-import { ApplicationModal } from "./ApplicationModal";
+import { ApplyModal } from "@/global/components/modal/ApplyModal";
+import { CommentInput } from "@/global/components/input/CommentInput";
 
 // 타입 정의
 interface Comment {
@@ -75,11 +76,11 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
     <>
       <TitleContainer>
         <TitleWrapper>
-          <Typo className="text_B_24" color="#ffffff">
+          <Typo className="text_B_24" color={colorChips.white}>
             Review
           </Typo>
           <ApplicationButton onClick={handleModalOpen}>
-            <Typo className="text_R_16" color="#ffffff">
+            <Typo className="text_R_16" color={colorChips.white}>
               지원하기
             </Typo>
           </ApplicationButton>
@@ -142,18 +143,13 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
             </tbody>
           </Table>
         </TableContainer>
-        <CommentInputContainer>
-          <CommentTextArea
+        <Box mt={3}>
+          <CommentInput
             value={comment}
             onChange={handleCommentChange}
-            placeholder="댓글을 입력해 주세요."
+            onSubmit={handleSubmit}
           />
-          <CommentSubmitButton onClick={handleSubmit}>
-            <Typo className="text_R_16" color={colorChips.white}>
-              등록
-            </Typo>
-          </CommentSubmitButton>
-        </CommentInputContainer>
+        </Box>
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -216,11 +212,14 @@ const CompanyComments = ({ comments = [] }: CompanyCommentsProps) => {
         </PaginationContainer>
       </CommentCard>
 
-      <ApplicationModal
+      <ApplyModal
         open={isModalOpen}
-        onClose={handleModalClose}
-        companyName="코드잇"
-        companyCategory="에듀테크"
+        handleClose={handleModalClose}
+        companyData={{
+          image: "/company-logo.png",
+          name: "코드잇",
+          category: "에듀테크",
+        }}
       />
     </>
   );
@@ -316,48 +315,6 @@ const ApplicationButton = styled(Box)({
   padding: "8px 24px",
   backgroundColor: colorChips.brand_orange,
   borderRadius: "50px",
-  cursor: "pointer",
-  "&:hover": {
-    backgroundColor: "#FF3D00",
-  },
-});
-
-const CommentInputContainer = styled(Box)({
-  display: "flex",
-  gap: "12px",
-  marginTop: "24px",
-  padding: "24px",
-  backgroundColor: colorChips.black_400,
-  borderRadius: "12px",
-});
-
-const CommentTextArea = styled("textarea")({
-  flex: 1,
-  minHeight: "48px",
-  padding: "12px 16px",
-  backgroundColor: "transparent",
-  border: `1px solid ${colorChips.gray_400}`,
-  borderRadius: "8px",
-  color: colorChips.white,
-  resize: "none",
-  fontFamily: "inherit",
-  fontSize: "16px",
-  "&::placeholder": {
-    color: colorChips.gray_200,
-  },
-  "&:focus": {
-    outline: "none",
-    borderColor: colorChips.brand_orange,
-  },
-});
-
-const CommentSubmitButton = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: "0 24px",
-  backgroundColor: colorChips.brand_orange,
-  borderRadius: "8px",
   cursor: "pointer",
   "&:hover": {
     backgroundColor: "#FF3D00",
