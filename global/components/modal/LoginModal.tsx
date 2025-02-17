@@ -12,6 +12,7 @@ interface LoginModalProps {
   id: { id: string; setId: Dispatch<SetStateAction<string>> };
   pw: { pw: string; setPw: Dispatch<SetStateAction<string>> };
   handleClose: () => void;
+  hadleLogin: () => void;
 }
 
 export const LoginModal: React.FC<LoginModalProps> = ({
@@ -20,15 +21,17 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   id,
   pw,
   handleClose,
+  hadleLogin,
 }) => {
   return (
     <Modal open={open}>
       <Stack sx={{ ...modalStyle }}>
         {title}
         <Box gap={"8px"} sx={{ ...boxStyle }}>
-          <Typo p={1} className="text_B_16" content="ID" />
+          <Typo p={1} className="text_B_16" content="Email" />
           <CustomInput.CommonInput
             value={id.id}
+            type="email"
             onChange={(e) => id.setId(e.target.value)}
           />
         </Box>
@@ -45,7 +48,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             content="취소"
             style="outlined"
           />
-          <LargeBtn isDisabled={false} content="로그인" />
+          <LargeBtn
+            isDisabled={false}
+            content="로그인"
+            onClickBtn={hadleLogin}
+          />
         </Box>
         <Link>회원가입</Link>
       </Stack>
