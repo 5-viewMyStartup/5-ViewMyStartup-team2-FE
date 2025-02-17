@@ -6,7 +6,7 @@ import CustomInput from "../input";
 import { useState } from "react";
 import { CustomListItem } from "../CustomListItem";
 import { colorChips } from "@/global/styles/colorChips";
-import { CompanyDTO } from "@/global/types/data-contracts";
+import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 import { CustomPagination } from "../CustomPagination";
 // import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 //지금부터 수정!시작!!!
@@ -14,20 +14,20 @@ interface CustomModalProps {
   title: string;
   open: boolean;
   handleClose: () => void;
-  companies: CompanyDTO[];
-  appliedCompanies: CompanyDTO[];
-  selectedCompanies: CompanyDTO[];
-  onSelect: (company: CompanyDTO) => void;
-  onDeselect: (company: CompanyDTO) => void;
+  companies: ComparisonCompanyDTO[];
+  appliedCompanies: ComparisonCompanyDTO[];
+  selectedCompanies: ComparisonCompanyDTO[];
+  onSelect: (company: ComparisonCompanyDTO) => void;
+  onDeselect: (company: ComparisonCompanyDTO) => void;
   isLoading: boolean;
   keyword: string;
   setKeyword: (value: string) => void;
   searchPage: number;
   totalSearchPages: number;
   handleSearchPageChange: (page: number) => void;
-  pickPage: number; // 🚀 새로운 prop 추가
-  totalPickPages: number; // 🚀 새로운 prop 추가
-  handlePickPageChange: (page: number) => void; // 🚀 새로운 prop 추가
+  pickPage: number;
+  totalPickPages: number;
+  handlePickPageChange: (page: number) => void;
   totalCompaniesCount: number; // 전체 기업 수 (검색 결과 전체)
   totalAppliedCompaniesCount: number; // 전체 지원한 기업 수
 }
@@ -53,7 +53,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
   totalCompaniesCount, // 전체 기업 수
   totalAppliedCompaniesCount, // 전체 지원한 기업 수
 }) => {
-  const handleCompanyClick = (company: CompanyDTO) => {
+  const handleCompanyClick = (company: ComparisonCompanyDTO) => {
     const isSelected = selectedCompanies.some((c) => c.id === company.id);
     isSelected ? onDeselect(company) : onSelect(company);
   };
@@ -97,14 +97,14 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           />
           {appliedCompanies.map((company) => (
             <CustomListItem
-              checked={selectedCompanies.some((c) => c.id === company.id)}
+              checked={true} // ✅ 항상 선택된 상태 유지
               key={company.id}
               listData={{
                 image: company.image ?? "/assets/default-logo.svg",
                 name: company.name,
                 category: company.category.map((c) => c.category).join(", "),
               }}
-              handleClick={() => handleCompanyClick(company)}
+              handleClick={undefined}
             />
           ))}
           <Box display="flex" justifyContent="center" mt={2}>
