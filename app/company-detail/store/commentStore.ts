@@ -8,6 +8,7 @@ interface Comment {
   updatedAt: Date;
   userId: string;
   companyId: string;
+  user: { name: string; nickname: string; email: string };
 }
 
 interface CommentStore {
@@ -17,7 +18,11 @@ interface CommentStore {
   currentPage: number;
   itemsPerPage: number;
   fetchComments: (companyId: string) => Promise<void>;
-  addComment: (companyId: string, content: string) => Promise<void>;
+  addComment: (
+    userId: string,
+    companyId: string,
+    content: string
+  ) => Promise<void>;
   updateComment: (commentId: string, content: string) => Promise<void>;
   deleteComment: (commentId: string) => Promise<void>;
   setCurrentPage: (page: number) => void;
@@ -45,12 +50,12 @@ const useCommentStore = create<CommentStore>((set, get) => ({
     }
   },
 
-  addComment: async (companyId: string, content: string) => {
+  addComment: async (userId: string, companyId: string, content: string) => {
     try {
       set({ loading: true });
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/comments/${companyId}`,
-        { content }
+        `${process.env.NEXT_PUBLIC_API_URL}/api/comments`,
+        { userId, companyId, content }
       );
       set((state) => ({
         comments: [...state.comments, response.data],

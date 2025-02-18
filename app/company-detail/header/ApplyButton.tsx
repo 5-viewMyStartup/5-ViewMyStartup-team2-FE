@@ -7,7 +7,7 @@ interface ApplyButtonProps {
   companyData: {
     image: string;
     name: string;
-    category: string;
+    // category: string;
     id: string;
     idx: number;
   };

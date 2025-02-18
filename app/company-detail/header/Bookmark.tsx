@@ -1,31 +1,40 @@
-import { Button, styled } from "@mui/material";
-import { colorChips } from "@/global/styles/colorChips";
-import { useState } from "react";
+import React from "react";
+import Image from "next/image";
+import { createBookMark, deleteBookMark } from "../store/bookMark";
+import Cookies from "js-cookie";
+import { getCompanyDetail } from "../store/companyApi";
 
-const Bookmark = () => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+interface BookmarkProps {
+  isBookmarked: boolean;
+  companyId: string;
+}
 
+const Bookmark: React.FC<BookmarkProps> = ({ isBookmarked, companyId }) => {
   const handleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    // TODO: 북마크 API 연동
+    const userId = Cookies.get("id");
+    if (!userId) {
+      console.log("user id error");
+      return;
+    }
+
+    if (!isBookmarked) {
+      createBookMark(userId, companyId);
+      getCompanyDetail(companyId, userId);
+    } else {
+      deleteBookMark(userId, companyId);
+    }
   };
 
   return (
-    <BookmarkButton onClick={handleBookmark} variant="outlined">
-      {isBookmarked ? "즐겨찾기 제거" : "즐겨찾기 추가"}
-    </BookmarkButton>
+    <Image
+      width={48}
+      height={48}
+      src={isBookmarked ? "/assets/on_star.svg" : "/assets/off_star.svg"}
+      alt="즐겨찾기이미지"
+      onClick={handleBookmark}
+      style={{ cursor: "pointer" }}
+    />
   );
 };
-
-const BookmarkButton = styled(Button)({
-  color: colorChips.white,
-  borderColor: colorChips.white,
-  padding: "12px 24px",
-  borderRadius: "8px",
-  "&:hover": {
-    borderColor: colorChips.white,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-  },
-});
 
 export default Bookmark;

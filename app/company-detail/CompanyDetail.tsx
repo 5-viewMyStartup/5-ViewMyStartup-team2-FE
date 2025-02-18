@@ -1,77 +1,38 @@
 "use client";
 
-import { useEffect } from "react";
 import Header from "./header/Header";
 import Description from "./header/Description";
 import Comments from "./comments/Comments";
 import { styled, Box } from "@mui/material";
-import useCompanyStore from "./store/companyStore";
-
-interface CompanyDetailProps {
+interface Company {
   id: string;
-  initialData: CompanyData;
-}
-
-interface CompanyData {
-  id: string;
-  name: string;
-  image: string | null;
-  content: string;
-  employeeCnt: number;
-  salesRevenue: bigint;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
-  comments: CompanyComment[];
-  category: Category[];
-  applicantCount: number;
   idx: number;
+  name: string;
+  image: string;
+  content: string;
+  salesRevenue: string;
+  employeeCnt: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
   isBookmarked: boolean;
 }
-
-interface CompanyComment {
-  id: string;
-  content: string;
-  createdAt: Date;
-  updatedAt: Date;
+interface CompanyDetailProps {
+  company: Company;
 }
 
-interface Category {
-  id: string;
-  name: string;
-}
-
-const CompanyDetail = ({ id, initialData }: CompanyDetailProps) => {
-  const { company, loading, error, setCompany, fetchCompany } =
-    useCompanyStore();
-
-  useEffect(() => {
-    if (initialData) {
-      setCompany(initialData);
-    } else if (id) {
-      fetchCompany(id);
-    }
-  }, [id, initialData, setCompany, fetchCompany]);
-
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (error || !company) {
-    return <div>{error}</div>;
-  }
-
+const CompanyDetail: React.FC<CompanyDetailProps> = ({ company }) => {
   return (
     <StyledWrapper>
       <StyledContainer>
         <Header
           name={company.name}
-          category={company.category?.map((c) => c.name).join(", ") || ""}
+          isBookmarked={company.isBookmarked}
           logo={company.image}
           stats={{
             monthlyRevenue: Number(company.salesRevenue),
             personnel: company.employeeCnt,
-            applicants: company.applicantCount || 0,
+            applicants: 0,
           }}
           id={company.id}
           idx={company.idx}
