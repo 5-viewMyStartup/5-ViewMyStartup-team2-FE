@@ -81,28 +81,60 @@ export interface ApplicationListResponse {
   totalPages: number;
 }
 
-//backend 완성되면 맞추어 수정하기
+//북마크 백엔드 맞추어서 수정
+/** 북마크 DTO */
 export interface BookmarkDTO {
-  id: string; //기업 id
-  idx: number; //기업 idx
-  name: string; //기업명
-  image?: string; //기업 로고 이미지 url
+  id: string; // 기업 id
+  name: string; // 기업명
+  image?: string; // 기업 로고 이미지 url
   content: string; // 기업 소개 내용
-  category: { id: string; category: string }[]; //카테고리
-  applicantCnt: number; //지원자 수
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
+  category: { id: string; category: string }[]; // 카테고리
+  employeeCnt: number; // 사원 수
+  applicants: number; // 지원자 수
+  applied: boolean; // 해당 기업에 지원했는지 여부
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: string | null; // 삭제 여부 (soft delete)
 }
 
+/** 북마크 목록 조회 API 요청 타입 */
+export interface BookmarkListQuery {
+  userId: string; // 사용자 ID
+  page?: number;
+  limit?: number;
+  sort?: string; // 정렬 옵션 (0: 기본값, 1: 지원한 기업 우선, 2: 지원하지 않은 기업 우선, 3: 직원 수 적은 순, 4: 직원 수 많은 순)
+}
+
+/** 북마크 목록 응답 타입 */
+export interface BookmarkListResponse {
+  companies: BookmarkDTO[];
+  currentPage: number;
+  totalPages: number;
+}
+
+/** 북마크 추가 API 요청 타입 */
+export interface CreateBookmarkRequest {
+  userId: string;
+  companyId: string;
+}
+
+/** 북마크 삭제 API 요청 타입 */
+export interface DeleteBookmarkRequest {
+  userId: string;
+  companyId: string;
+}
+
+/** 적용된 기업 필터 */
 export type AppliedCompanyFilter = {
-  applicationStatus: boolean;
+  sort?: number; // 기존 `applicationStatus` 대신 sort 정렬 사용
 };
+
 export interface AppliedCompanyListQuery {
   page?: number;
   keyword?: string;
   filter?: AppliedCompanyFilter;
 }
+
 export type FilterOption = { value: string; name: string };
 
 //아래 5개는 나의 기업 비교 페이지를 위해 추가함 ✨

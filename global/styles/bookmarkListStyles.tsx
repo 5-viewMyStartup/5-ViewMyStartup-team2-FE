@@ -55,8 +55,7 @@ export const bookmarkBoxStyle = {
 
 export const descBoxStyle = {
   ...baseLabelBoxStyle,
-  display: ["none", "none", "flex"],
-  width: ["215px", "215px", "358.15px"],
+  width: ["223px", "223px", "384.9px"],
 };
 
 export const categoryBoxStyle = {
@@ -80,7 +79,7 @@ export const itemNameBoxStyle = {
   gap: ["8px", "8px", "12px"],
   pl: ["16px", "16px", "24px"],
   pr: ["6px", "6px", "24px"],
-  width: ["150px", "150px", "250.75px"],
+  width: ["200px", "200px", "300.75px"],
 };
 
 export const companyDescTypoStyle = {
