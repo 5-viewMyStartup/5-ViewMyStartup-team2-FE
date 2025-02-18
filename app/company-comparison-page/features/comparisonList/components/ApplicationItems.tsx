@@ -43,7 +43,14 @@ export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {
   return (
     <Stack>
       {/* 세정TODO 스타일 어떻게 넣을지 고민 sx={companyItemBoxStyle}*/}
-      <Box>
+      <Box
+        sx={{
+          width: "126px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         {/* 세정TODO 스타일 어떻게 넣을지 고민 sx={itemNameBoxStyle}*/}
         {/* 기업 이미지와 이름을 표시하는 Box */}
         <img
@@ -52,14 +59,15 @@ export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {
           width={80}
           height={80}
           onError={handleImgErr}
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: "50%", marginBottom: "10px" }}
         />
         <Typo
-          className="text_M_16"
+          className="text_SB_16"
           content={itemData.name}
           color={colorChips.white}
           customStyle={{
             textAlign: "center",
+            marginBottom: "4px",
           }}
         />
         <Typo

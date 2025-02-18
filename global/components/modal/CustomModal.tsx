@@ -30,6 +30,7 @@ interface CustomModalProps {
   handlePickPageChange: (page: number) => void;
   totalCompaniesCount: number; // 전체 기업 수 (검색 결과 전체)
   totalAppliedCompaniesCount: number; // 전체 지원한 기업 수
+  errorMessage?: string;
 }
 
 export const CustomModal: React.FC<CustomModalProps> = ({
@@ -52,9 +53,14 @@ export const CustomModal: React.FC<CustomModalProps> = ({
   handlePickPageChange, // 🚀 handlePickPageChange prop 사용
   totalCompaniesCount, // 전체 기업 수
   totalAppliedCompaniesCount, // 전체 지원한 기업 수
+  errorMessage,
 }) => {
   const handleCompanyClick = (company: ComparisonCompanyDTO) => {
     const isSelected = selectedCompanies.some((c) => c.id === company.id);
+    // 선택된 기업이 5개 이상이면 더 이상 선택할 수 없도록 막음
+    if (selectedCompanies.length > 5 && !isSelected) {
+      return;
+    }
     isSelected ? onDeselect(company) : onSelect(company);
   };
 
@@ -134,6 +140,16 @@ export const CustomModal: React.FC<CustomModalProps> = ({
               handleClick={() => handleCompanyClick(company)}
             />
           ))}
+          {/* ✅ Error Message 표시 부분 추가 */}
+          {errorMessage && (
+            <Box mt={2} display="flex" justifyContent="left">
+              <Typo
+                color={colorChips.red_error}
+                className="text_R_14"
+                content={errorMessage}
+              />
+            </Box>
+          )}
           <Box display="flex" justifyContent="center" mt={2}>
             <CustomPagination
               page={searchPage}
