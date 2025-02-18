@@ -24,6 +24,8 @@ export const CommentInput = ({
         placeholder={placeholder}
         multiline
         minRows={2}
+        maxRows={2}
+        height="70px"
       />
       <StyledLargeBtn
         content="등록"
@@ -42,6 +44,7 @@ const Container = styled(Box)({
   padding: "24px",
   backgroundColor: colorChips.black_400,
   borderRadius: "12px",
+  alignItems: "center",
 });
 
 const StyledCommonInput = styled(CommonInput)({
