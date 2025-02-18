@@ -1,5 +1,8 @@
 import { ResultCompany } from "@/global/types/data-contracts";
 import { CompanyItems } from "./components/CompanyItems";
+import { companyListWrapperStyle } from "@/global/styles/companyListStyles";
+import Stack from "@mui/material/Stack";
+import { colorChips } from "@/global/styles/colorChips";
 
 interface CompanyListProps {
   companies: ResultCompany[];
@@ -9,27 +12,27 @@ interface CompanyListProps {
 export const CompanyList = {
   Pick: function ({ companies }: { companies: ResultCompany[] }) {
     return (
-      <div style={{ display: "flex" }}>
+      <Stack sx={pickListWrapperStyle}>
         {companies.map((company) => (
           <CompanyItems.Pick key={company.id} itemData={company} />
         ))}
-      </div>
+      </Stack>
     );
   },
 
   Result: function ({ companies }: { companies: ResultCompany[] }) {
     return (
-      <div>
+      <Stack sx={companyListWrapperStyle}>
         {companies.map((company) => (
           <CompanyItems.Result key={company.id} itemData={company} />
         ))}
-      </div>
+      </Stack>
     );
   },
 
   Ranking: function ({ companies, dropdownValue }: CompanyListProps) {
     return (
-      <div>
+      <Stack sx={companyListWrapperStyle}>
         {companies.map((company) => (
           <CompanyItems.Ranking
             key={company.id}
@@ -37,7 +40,17 @@ export const CompanyList = {
             dropdownValue={dropdownValue!} // dropdownValue는 필수 속성으로 전달
           />
         ))}
-      </div>
+      </Stack>
     );
   },
+};
+
+const pickListWrapperStyle = {
+  width: { xs: "696px", sm: "696px", md: "1200px" },
+  height: "300px",
+  borderRadius: "4px",
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: colorChips.black_300,
 };
