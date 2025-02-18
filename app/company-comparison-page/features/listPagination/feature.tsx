@@ -13,7 +13,6 @@ export default function ListPagination({
   page = 1,
   count = 1,
   onPageChange,
-  startPage,
   endPage,
 }: ListPaginationProps) {
   // 페이지 번호 범위

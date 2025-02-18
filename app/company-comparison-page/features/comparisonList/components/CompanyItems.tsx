@@ -4,21 +4,13 @@ import { ComparisonCompanyDTO } from "@/global/types/data-contracts"; // Applica
 import { Box, Stack } from "@mui/material"; // MUI의 Box와 Stack 컴포넌트 임포트
 import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 import Image from "next/image";
-import {
-  companyItemBoxStyle,
-  labelOrderBoxStyle,
-  itemNameBoxStyle,
-  labelDescBoxStyle,
-  companyDescTypoStyle,
-  labelDataBoxStyle,
-} from "@/global/styles/companyListStyles"; // 다양한 스타일 객체 임포트
 
 interface CompanyItemsProps {
   order: number;
   itemData: ComparisonCompanyDTO;
 }
 
-export function CompanyItems({ order, itemData }: CompanyItemsProps) {
+export function CompanyItems({ itemData }: CompanyItemsProps) {
   const { imgSrc, handleImgErr } = useCompanyDefaultImg(itemData.image); // 이미지 처리 훅
   return (
     <Stack>

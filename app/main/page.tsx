@@ -29,8 +29,6 @@ export default function Main() {
     setParams((prev) => ({ ...prev, ...newParams }));
   }, []);
 
-  // console.log("params 업데이트 테스트: ", params);
-
   //api호출
   const { companies, totalPages, isLoading } = useCompanyListFetch(params);
 

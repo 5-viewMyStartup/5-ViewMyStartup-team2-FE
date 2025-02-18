@@ -6,22 +6,14 @@ import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
 import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 import Image from "next/image";
-import {
-  companyItemBoxStyle,
-  labelOrderBoxStyle,
-  itemNameBoxStyle,
-  labelDescBoxStyle,
-  companyDescTypoStyle,
-  labelDataBoxStyle,
-} from "@/global/styles/companyListStyles";
 
 interface ApplicationItemsProps {
   order: number;
   itemData: ComparisonCompanyDTO | null;
 }
 
-export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {
-  // console.log("itemData 확인용: ", itemData); // itemData 확인
+export function ApplicationItems({ itemData }: ApplicationItemsProps) {
+  const { imgSrc, handleImgErr } = useCompanyDefaultImg(itemData?.image); // 기업 이미지 처리 훅+nullish 체크 추가
   // itemData가 없다면 "지원한 기업 없음"을 출력
   if (!itemData || !itemData.name) {
     return (
@@ -38,8 +30,6 @@ export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {
     );
   }
 
-  const { imgSrc, handleImgErr } = useCompanyDefaultImg(itemData.image); // 기업 이미지 처리 훅+nullish 체크 추가
-
   return (
     <Stack>
       <Box
@@ -51,7 +41,7 @@ export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {
         }}
       >
         {/* 기업 이미지와 이름,카테고리 표시하는 Box */}
-        <img
+        <Image
           src={imgSrc}
           alt="기업 대표 이미지"
           width={80}

@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  bookmarkBoxStyle,
   descBoxStyle,
   categoryBoxStyle,
   applyNumBoxStyle,

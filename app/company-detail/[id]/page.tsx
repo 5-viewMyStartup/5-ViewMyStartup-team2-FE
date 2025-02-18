@@ -38,7 +38,7 @@ interface Category {
 // 회사 데이터를 가져오는 함수
 async function getCompanyData(id: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/company-detail/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/companies/${id}`,
     {
       cache: "force-cache", // SSG를 위한 설정
     }
@@ -49,25 +49,14 @@ async function getCompanyData(id: string) {
   }
 
   const company = await res.json();
-
-  // 데이터 확인을 위한 로그
-  console.log("Company data:", {
-    id: company.id,
-    name: company.name,
-    applicantCount: company.applicantCount,
-  });
-
   return company;
 }
 
 // 모든 회사 목록을 가져오는 함수
 async function getAllCompanies() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/company-detail`,
-    {
-      cache: "force-cache",
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/companies`, {
+    cache: "force-cache",
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch companies");
@@ -99,6 +88,7 @@ export default async function CompanyDetailPage({
     // id와 일치하는 id를 가진 회사 데이터 조회
     // params를 await으로 처리
     const { id } = await Promise.resolve(params);
+
     const companyData = await getCompanyData(id);
 
     if (!companyData) {

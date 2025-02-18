@@ -13,9 +13,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PATH } from "../types/Path";
 import { LoginModal } from "./modal/LoginModal";
-import { loginAPI } from "./modal/store/LoginApi";
+import { loginAPI, userProfile } from "./modal/store/LoginApi";
 import Cookies from "js-cookie";
 import { useAuthStore, useUserStore } from "./modal/store/authStore";
+import { useUserNameStore } from "./modal/store/userStore";
 import { Typo } from "../styles/Typo";
 
 export const Header = () => {
@@ -33,12 +34,14 @@ export const Header = () => {
   const handleLogoClick = () => {
     route.push(PATH.HOME);
   };
+
   const handleNavigation = (path: string) => {
     route.push(path);
   };
 
   const { removeToken } = useAuthStore();
   const { clearUserInfo } = useUserStore();
+  const { user, clearUserName } = useUserNameStore();
 
   const hadleLogin = async () => {
     try {
@@ -46,12 +49,18 @@ export const Header = () => {
       alert("로그인 성공!");
       setLoginOpen(false);
       setIsLogin(true);
+      const userId = Cookies.get("id");
+      if (userId) {
+        userProfile(userId);
+      }
     } catch (e) {
       alert("로그인 실패: " + e);
     }
   };
+
   const handleLogout = async () => {
     clearUserInfo();
+    clearUserName();
     removeToken();
     setIsLogin(false);
   };
@@ -65,22 +74,32 @@ export const Header = () => {
 
   useEffect(() => {
     setValue(pathname);
+    const accessToken = Cookies.get("accessToken");
+    const refreshToken = Cookies.get("refreshToken");
+    if (!pathname) {
+      return;
+    }
+    if (!accessToken) {
+      route.replace(PATH.HOME);
+      alert(" 로그인 필요");
+    }
   }, [pathname]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const accessToken = Cookies.get("accessToken");
       const refreshToken = Cookies.get("refreshToken");
-
-      // 브라우저에서만 렌더링되는 코드
+      const userId = Cookies.get("id");
+      if (userId) {
+        userProfile(userId);
+      }
       if (accessToken) {
         setIsLogin(true);
       } else {
         setIsLogin(false);
       }
     }
-  }, []); // 빈 배열을 두어 페이지 로드 시 한번만 실행
-
+  }, []);
   return (
     <Stack
       width={"100%"}
@@ -93,11 +112,11 @@ export const Header = () => {
         width={"100%"}
         spacing={["40px", "24px", "16px"]}
         direction={"row"}
-        pl={["16px", "24px", "16px"]}
+        px={["16px", "24px", "16px"]}
         justifyContent={"space-between"}
         alignItems={"center"}
       >
-        <Box display={"flex"}>
+        <Box display={"flex"} gap={"8px"}>
           <Button sx={{ padding: 0 }} onClick={handleLogoClick}>
             <Image
               src={"/assets/logo.svg"}
@@ -119,13 +138,14 @@ export const Header = () => {
           >
             <BottomNavigationAction
               onClick={() => handleNavigation(PATH.COMPANY_COMPARISON)}
-              value={"company-comparison"}
+              value={"company-comparison-page"}
               label="나의 기업 비교"
               {...BottomNavigationActionStyle}
             />
             <BottomNavigationAction
-              value={"compareStatus"}
-              label="비교 현황"
+              onClick={() => handleNavigation(PATH.MY_APPLICATIONS)}
+              value={"my-applications"}
+              label="지원 현황"
               {...BottomNavigationActionStyle}
             />
             <BottomNavigationAction
@@ -136,16 +156,29 @@ export const Header = () => {
             />
           </BottomNavigation>
         </Box>
-
-        <Button
-          variant="contained"
-          sx={{ height: "48px", borderRadius: "10px" }}
-          onClick={() => {
-            isLogin ? handleLogout() : setLoginOpen(true);
-          }}
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          gap={"4px"}
+          whiteSpace={"nowrap"}
         >
-          {isLogin ? "로그아웃" : "로그인"}
-        </Button>
+          {user && (
+            <Typo
+              className="text_R_16"
+              color={colorChips.white}
+              content={user?.nickname ?? undefined}
+            />
+          )}
+          <Button
+            variant="contained"
+            sx={{ height: "48px", borderRadius: "10px" }}
+            onClick={() => {
+              isLogin ? handleLogout() : setLoginOpen(true);
+            }}
+          >
+            {isLogin ? "로그아웃" : "로그인"}
+          </Button>
+        </Box>
       </Stack>
 
       <LoginModal
