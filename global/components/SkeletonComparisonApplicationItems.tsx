@@ -53,9 +53,10 @@ export function SkeletonApplicationList() {
       sx={{
         width: "100%", // ✅ 부모 컨테이너의 너비를 충분히 확보
         maxWidth: "600px", // ✅ 한 줄에 5개가 들어갈 수 있도록 조정
-        justifyContent: "space-between", // ✅ 균등한 간격 배치
-        flexWrap: "wrap", // ✅ 화면이 작을 경우 자동 줄바꿈
+        justifyContent: "center", // ✅ 균등한 간격 배치
+        flexWrap: "nowrap", // ✅ 줄바꿈 방지
         margin: "0 auto", // ✅ 중앙 정렬
+        gap: "16px",
       }}
     >
       {Array.from({ length: 5 }).map((_, idx) => (
