@@ -22,13 +22,30 @@ export default function Page() {
       {/* 첫 번째 박스: 지원한 기업 목록 */}
       <Box
         sx={{
-          backgroundColor: colorChips.black_300, // 배경색 지정
-          padding: "85px 8px", // 여백 추가
-          borderRadius: "8px", // 모서리 둥글게
+          backgroundColor: colorChips.black_300,
+          padding: "85px 8px",
+          borderRadius: "8px",
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "16px",
+          flexWrap: "wrap", // 자동 줄바꿈
+          justifyContent: "center", // 항목들을 가운데 정렬
+          gap: "16px", // 항목 간 간격
+          "@media (max-width: 743px)": {
+            // 743px 이하에서 3개-2개 배치 되도록 설정
+            width: "100%",
+            "& > :nth-of-type(3n+1)": {
+              marginLeft: "0", // 첫 번째 줄과 두 번째 줄 간의 간격을 맞추기 위해
+            },
+            "& > :nth-of-type(n+4)": {
+              marginLeft: "calc(16px / 2)", // 두 번째 줄이 가운데로 오도록 margin을 추가
+            },
+            // 각 항목 너비를 지정해서 3개씩 2개 줄로 배치되도록 조정
+            "& > :nth-of-type(1), & > :nth-of-type(2), & > :nth-of-type(3)": {
+              width: "calc(33.33% - 10px)", // 첫 번째 줄 3개: 33.33% 너비로 설정
+            },
+            "& > :nth-of-type(4), & > :nth-of-type(5)": {
+              width: "calc(50% - 10px)", // 두 번째 줄 2개: 50% 너비로 설정
+            },
+          },
         }}
       >
         {/* 데이터가 없으면 "지원한 기업 없음"을 한 번만 출력 */}
