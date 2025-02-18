@@ -60,7 +60,7 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
 
   return (
     <CustomModal
-      title="기업 선택"
+      title="비교할 기업 선택하기"
       open={open}
       handleClose={handleClose}
       companies={companies}

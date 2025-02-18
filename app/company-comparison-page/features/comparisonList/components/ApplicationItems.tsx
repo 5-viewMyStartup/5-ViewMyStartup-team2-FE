@@ -31,46 +31,45 @@ export function ApplicationItems({ itemData }: ApplicationItemsProps) {
   }
 
   return (
-    <Stack>
-      <Box
-        sx={{
-          width: "126px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+    <Box sx={boxStyle}>
+      <Image
+        src={imgSrc}
+        alt="기업 대표 이미지"
+        width={80}
+        height={80}
+        onError={handleImgErr}
+        style={{ borderRadius: "50%", marginBottom: "10px" }}
+      />
+      <Typo
+        className="text_SB_16"
+        content={itemData.name}
+        color={colorChips.white}
+        customStyle={{
+          textAlign: "center",
+          marginBottom: "4px",
         }}
-      >
-        {/* 기업 이미지와 이름,카테고리 표시하는 Box */}
-        <Image
-          src={imgSrc}
-          alt="기업 대표 이미지"
-          width={80}
-          height={80}
-          onError={handleImgErr}
-          style={{ borderRadius: "50%", marginBottom: "10px" }}
-        />
-        <Typo
-          className="text_SB_16"
-          content={itemData.name}
-          color={colorChips.white}
-          customStyle={{
-            textAlign: "center",
-            marginBottom: "4px",
-          }}
-        />
-        <Typo
-          className="text_M_14"
-          content={
-            itemData.category && itemData.category.length > 0
-              ? itemData.category.join(", ") // categories 배열이 있다면 카테고리들 이어서 출력
-              : "카테고리 없음"
-          } // 없으면 기본 메시지 출력
-          color={colorChips.gray_200}
-          customStyle={{
-            textAlign: "center",
-          }}
-        />
-      </Box>
-    </Stack>
+      />
+      <Typo
+        className="text_M_14"
+        content={
+          itemData.category && itemData.category.length > 0
+            ? itemData.category.join(", ")
+            : "카테고리 없음"
+        }
+        color={colorChips.gray_200}
+        customStyle={{
+          textAlign: "center",
+        }}
+      />
+    </Box>
   );
 }
+
+const boxStyle = {
+  maxWidth: "126px",
+  minWidth: "126px", // ✅ 최소 크기 제한
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+};

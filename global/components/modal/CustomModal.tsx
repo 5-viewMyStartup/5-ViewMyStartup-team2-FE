@@ -8,8 +8,7 @@ import { CustomListItem } from "../CustomListItem";
 import { colorChips } from "@/global/styles/colorChips";
 import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 import { CustomPagination } from "../CustomPagination";
-// import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
-//지금부터 수정!시작!!!
+
 interface CustomModalProps {
   title: string;
   open: boolean;
@@ -66,15 +65,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Stack
-        padding={"24px"}
-        bgcolor={colorChips.black_300}
-        maxWidth={496}
-        width={"100%"}
-        gap={"24px"}
-        borderRadius={"10px"}
-        sx={{ ...modalStyle }}
-      >
+      <Stack sx={modalStyle}>
         <Box display={"flex"} justifyContent={"space-between"}>
           <Typo color="input" content={title} className="text_B_20" />
           <Image
@@ -156,8 +147,38 @@ export const CustomModal: React.FC<CustomModalProps> = ({
   );
 };
 const modalStyle = {
+  padding: { xs: "16px", sm: "24px", md: "24px" },
+  backgroundColor: colorChips.black_300,
+
+  gap: "24px",
+  borderRadius: "16px",
+
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+  width: { xs: "343px", sm: "496px", md: "496px" },
+  height: { xs: "813px", sm: "931px", md: "931px" },
+  overflowY: "auto",
+  "&::-webkit-scrollbar": {
+    // 스크롤바 자체를 숨기기
+    display: "none",
+  },
+  // 기업명이 길어질 경우 줄바꿈 및 버튼 영역 침범 방지
+  "& .MuiListItem-root": {
+    display: "flex", // 기업명과 선택 버튼을 가로로 배치
+    flexDirection: "row", // 가로 방향으로 배치
+    alignItems: "center", // 세로 중앙 정렬
+    justifyContent: "space-between", // 기업명과 버튼 사이에 여백을 두기
+    gap: "8px", // 기업명과 버튼 사이의 간격을 설정
+  },
+  "& .MuiListItemText-root": {
+    flexGrow: 1, // 텍스트가 남은 공간을 차지하도록 설정
+    overflow: "hidden", // 넘치는 텍스트 숨기기
+    wordWrap: "break-word", // 텍스트가 길어지면 줄바꿈
+    whiteSpace: "normal", // 텍스트가 여러 줄로 표시되도록 설정
+  },
+  "& .MuiButton-root": {
+    flexShrink: 0, // 버튼이 축소되지 않도록 설정
+  },
 };
