@@ -20,20 +20,31 @@ interface HeaderProps {
   isBookmarked: boolean;
   id: string;
   idx: number;
+  category: string;
 }
 
 // 컴포넌트 로직
-const Header = ({ name, logo, stats, id, idx, isBookmarked }: HeaderProps) => {
+const Header = ({
+  name,
+  logo,
+  stats,
+  id,
+  idx,
+  isBookmarked,
+  category,
+}: HeaderProps) => {
   const [imageError, setImageError] = useState(false);
 
   const handleImageError = () => {
     setImageError(true);
   };
+
   const companyData = {
     image: logo,
     name,
     id,
     idx,
+    category,
   };
 
   return (
@@ -60,7 +71,7 @@ const Header = ({ name, logo, stats, id, idx, isBookmarked }: HeaderProps) => {
               {name}
             </Typo>
             <Typo className="text_M_20" color={colorChips.gray_200}>
-              {}
+              {category}
             </Typo>
           </TextContainer>
         </LogoContainer>

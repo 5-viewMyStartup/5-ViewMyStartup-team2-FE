@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { Single } from "./single";
@@ -14,6 +14,7 @@ import {
   listWrapperStyle,
   scrollWrapper,
 } from "@/global/styles/companyListStyles";
+import { applyCompany } from "../company-detail/store/applyApi";
 
 export default function BookmarkPage() {
   const {
@@ -27,7 +28,30 @@ export default function BookmarkPage() {
     applyModalData,
     toggleApplyModal,
   } = useBookmarkStore();
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [content, setContent] = useState("");
 
+  const onAplly = async () => {
+    try {
+      if (!applyModalData) {
+        return console.log("error");
+      }
+      await applyCompany(
+        applyModalData.companyId ? applyModalData.companyId : "",
+        name,
+        role,
+        content
+      );
+      setContent("");
+      setName("");
+      setRole("");
+      toggleApplyModal(false);
+      fetchBookMarks();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     // 필요하다면 여기에서 userId를 확인할 수 있음
     if (!Cookies.get("id")) {
@@ -40,7 +64,7 @@ export default function BookmarkPage() {
   const handleModalClose = () => {
     toggleApplyModal(false);
   };
-
+  console.log();
   return (
     <Stack sx={listLayout}>
       {/* Sorting 컴포넌트 */}
@@ -60,6 +84,7 @@ export default function BookmarkPage() {
                   image: companyData.image ?? "",
                   name: companyData.name,
                   category: companyData.category, // 배열로 저장됨; 모달에서 렌더링할 때 변환 예정
+                  companyId: companyData.id,
                 })
               }
             />
@@ -77,11 +102,16 @@ export default function BookmarkPage() {
         <ApplyModal
           open={isApplyModalOpen}
           handleClose={handleModalClose}
+          onAplly={onAplly}
+          onNameChange={(e) => setName(e.target.value)}
+          onContentChange={(e) => setContent(e.target.value)}
+          onRoleChange={(e) => setRole(e.target.value)}
+          values={{ name, role, content }}
           companyData={{
             image: applyModalData.image,
             name: applyModalData.name,
             // 카테고리 배열을 문자열로 변환하여 표시함
-            // category: applyModalData.category.map((c) => c.category).join(", "),
+            category: applyModalData.category.map((c) => c.category).join(", "),
           }}
         />
       )}
