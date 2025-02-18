@@ -98,9 +98,9 @@ const CompanyListTitle: React.FC = () => {
       {/* 선택된 기업을 보여주는 두 번째 박스 */}
       <Box
         sx={{
-          height: "300px",
+          minHeight: "300px",
           backgroundColor: colorChips.black_300, // 배경색 지정
-          padding: "56px 253px", // 여백 추가
+          padding: "8px", // 여백 추가
           borderRadius: "8px", // 모서리 둥글게
           display: "flex",
           justifyContent: "center",
@@ -122,7 +122,19 @@ const CompanyListTitle: React.FC = () => {
           />
         ) : (
           // 선택된 기업들 CompanyCard로 표시
-          <Stack direction="row" spacing={2}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{
+              flexWrap: "nowrap",
+              justifyContent: "center",
+              gap: "16px",
+              width: "100%",
+              "@media (max-width: 743px)": {
+                flexWrap: "wrap",
+              },
+            }}
+          >
             {selectedSearchCompanies.map((company, index) => (
               <CompanyCard
                 key={index}
@@ -136,6 +148,7 @@ const CompanyListTitle: React.FC = () => {
                       : "기타",
                 }}
                 onRemove={() => deselectSearchCompany(company)} // ✅ 기업 삭제 기능 추가
+                sx={companyCardStyles}
               />
             ))}
           </Stack>
@@ -189,6 +202,16 @@ const listHeaderContainerStyle = {
   maxWidth: "100%",
   marginTop: "40px",
   marginBottom: "16px",
+};
+
+const companyCardStyles = {
+  width: "calc(25% - 8px)", // 기본적으로 4개씩 가로 배치 (너비는 25%로 설정)
+  maxWidth: "126px", // 카드의 최대 너비
+  minWidth: "126px", // 카드의 최소 너비
+  marginBottom: "16px", // 아래쪽 간격
+  "@media (max-width: 743px)": {
+    width: "calc(50% - 8px)", // 모바일 화면에서는 2개씩 배치
+  },
 };
 
 export default CompanyListTitle;
