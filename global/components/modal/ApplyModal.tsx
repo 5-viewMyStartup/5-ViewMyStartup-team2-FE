@@ -8,7 +8,7 @@ import { CommonInput } from "../input/CommonInput";
 interface ApplyModalProps {
   open: boolean;
   handleClose: () => void;
-  companyData: { image: string; name: string; category: string };
+  companyData: { image: string; name: string };
 }
 
 export const ApplyModal: React.FC<ApplyModalProps> = ({
@@ -67,7 +67,11 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({
               <Image
                 width={40}
                 height={40}
-                src={companyData.image}
+                src={
+                  companyData
+                    ? companyData.image
+                    : "/assets/default-company-img.svg"
+                }
                 alt="logo"
                 style={{ objectFit: "cover" }}
               />

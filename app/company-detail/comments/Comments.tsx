@@ -6,7 +6,17 @@ import { Typo } from "@/global/styles/Typo";
 import Image from "next/image";
 import { CommentInput } from "@/global/components/input/CommentInput";
 import useCommentStore from "../store/commentStore";
+import Cookies from "js-cookie";
 
+interface Comment {
+  id: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  companyId: string;
+  user: { name: string; nickname: string; email: string };
+}
 interface CompanyCommentsProps {
   companyId: string;
 }
@@ -27,21 +37,24 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [comment, setComment] = useState("");
+  const [commentList, setCommentList] = useState<Comment[]>([]);
   const [selectedComment, setSelectedComment] = useState<{
     id: string;
     content: string;
   } | null>(null);
 
   useEffect(() => {
-    // fetchComments(companyId);
+    fetchComments(companyId);
   }, [companyId, fetchComments]);
 
   const handleSubmit = async () => {
-    if (!comment.trim()) return;
+    const userId = Cookies.get("id");
+    if (!userId || !comment.trim()) return;
 
     try {
-      await addComment(companyId, comment);
+      await addComment(userId, companyId, comment);
       setComment("");
+      console.log(comments);
     } catch (error) {
       console.error("댓글 작성 실패:", error);
     }
@@ -87,7 +100,11 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
   };
 
   // 현재 페이지의 댓글만 필터링
-  const currentComments = comments.slice(
+  useEffect(() => {
+    setCommentList(comments);
+  }, [comments]);
+
+  const currentComments = commentList.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -137,7 +154,7 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
                 <tr key={comment.id}>
                   <td>
                     <Typo className="text_R_16" color={colorChips.gray_100}>
-                      {comment.userId}
+                      {comment.user.nickname}
                     </Typo>
                   </td>
                   <td>
