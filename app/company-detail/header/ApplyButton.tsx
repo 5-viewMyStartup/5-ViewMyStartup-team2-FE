@@ -31,11 +31,11 @@ const ApplyButton = ({ companyData }: ApplyButtonProps) => {
         open={isModalOpen}
         handleClose={handleModalClose}
         companyData={companyData}
-        onSubmit={() => {}}
-        isSuccessModalOpen={false}
-        handleSuccessModalClose={() => {}}
-        isLoading={false}
-        errorMessage={null}
+        // onSubmit={() => {}}
+        // isSuccessModalOpen={false}
+        // handleSuccessModalClose={() => {}}
+        // isLoading={false}
+        // errorMessage={null}
       />
     </>
   );
