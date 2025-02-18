@@ -55,7 +55,7 @@ export default function Page() {
   // };
 
   return (
-    <Stack sx={{ width: "100%" }}>
+    <Stack sx={pageContainerStyle}>
       <Features.applicationListTitle />
       {/* 첫 번째 박스: 지원한 기업 목록 */}
       <Box
@@ -104,3 +104,11 @@ export default function Page() {
     </Stack>
   );
 }
+
+const pageContainerStyle = {
+  width: "100%",
+  marginTop: { xs: "24px", sm: "40px", md: "40px" },
+  marginRight: { xs: "16px", sm: "24px", md: "360px" },
+  marginBottom: { xs: "512px", sm: "330px", md: "156px" },
+  // marginLeft: { xs: "16px", sm: "24px", md: "360px" },
+};
