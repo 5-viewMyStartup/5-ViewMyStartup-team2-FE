@@ -4,7 +4,7 @@ import { CompanyItems } from "./components/CompanyItems";
 import { ApplicationDTO } from "@/global/types/data-contracts";
 
 interface CompanyListProps {
-  applications: ApplicationDTO[];
+  applications: (ApplicationDTO & { companyId: string })[];
   page: number | undefined;
 }
 

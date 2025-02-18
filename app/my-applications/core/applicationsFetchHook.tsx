@@ -8,7 +8,7 @@ import {
 
 interface UseItemsFetchOutput {
   isLoading: boolean;
-  applications: ApplicationDTO[];
+  applications: (ApplicationDTO & { companyId: string })[];
   totalPages: number;
 }
 

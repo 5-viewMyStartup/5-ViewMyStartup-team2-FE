@@ -4,6 +4,7 @@ import {
   ApplicationListResponse,
   ApplicationListQuery,
 } from "@/global/types/data-contracts";
+import Cookies from "js-cookie";
 
 /** 지원 내역 조회
  * @param {Object} params - 쿼리 정보
@@ -15,10 +16,10 @@ export const getApplicationListAPI = async (
 ): Promise<ApplicationListResponse> => {
   //쿼리 기본값
   const { page = 1, filter = "all" } = params;
-
+  const userId = Cookies.get("id");
   try {
     const response: AxiosResponse<ApplicationListResponse> = await instance.get(
-      "/api/applications",
+      `/api/applications/${userId}`,
       {
         params: { page, filter },
       }
