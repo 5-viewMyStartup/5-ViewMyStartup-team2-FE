@@ -25,8 +25,6 @@ export const getCompanyListAPI = async (
           params: { page, keyword },
         }
       );
-
-    // console.log("getCompanyListAPI response.data 확인용:", response.data);
     return {
       success: response.data.success, // success
       message: response.data.message, // message

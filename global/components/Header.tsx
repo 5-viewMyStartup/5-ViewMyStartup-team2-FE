@@ -138,7 +138,7 @@ export const Header = () => {
           >
             <BottomNavigationAction
               onClick={() => handleNavigation(PATH.COMPANY_COMPARISON)}
-              value={"company-comparison"}
+              value={"company-comparison-page"}
               label="나의 기업 비교"
               {...BottomNavigationActionStyle}
             />
