@@ -16,7 +16,6 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
 }) => {
   // ✅ zustand에서 상태 및 액션 가져오기
   const {
-    selectedAppliedCompanies,
     selectedSearchCompanies,
     setAppliedCompanies,
     selectSearchCompany,
@@ -25,7 +24,6 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
 
   // 검색 결과 및 최근 지원한 기업 상태 관리
   const [searchPage, setSearchPage] = useState(1); // 검색 결과 페이지 상태 관리
-  // const [pickPage, setPickPage] = useState(1); // 🚀 최근 지원한 기업의 페이지 상태 관리
   const [keyword, setKeyword] = useState(""); // 검색어 상태 관리
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
@@ -41,17 +39,11 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
 
   // ✅ 최근 지원한 기업 데이터 가져오기 (1페이지만)
   const { isLoading: isApplicationLoading, companies: appliedCompanies } =
-    useApplicationFetch({ page: 1 });
-
-  // // 🚀 pickPage를 변경할 핸들러 함수 추가
-  // const handleSearchPageChange = (newPage: number) => setSearchPage(newPage);
-  // const handlePickPageChange = (newPage: number) => setPickPage(newPage); // 최근 지원한 기업의 페이지 변경
+    useApplicationFetch();
 
   useEffect(() => {
     if (open) {
-      setSearchPage(1); // 모달이 열릴 때 검색 페이지 초기화
-      // setPickPage(1); // 🚀 모달이 열릴 때 pickPage도 초기화
-      // ✅ 모달이 열릴 때 최근 지원한 기업 목록을 zustand에 저장
+      setSearchPage(1);
       setAppliedCompanies(appliedCompanies);
       setErrorMessage(undefined);
     }
@@ -83,10 +75,6 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
       totalSearchPages={totalSearchPages}
       totalCompaniesCount={totalCompaniesCount} // 전체 검색된 기업 수 전달
       handleSearchPageChange={setSearchPage}
-      // pickPage={pickPage}
-      // totalPickPages={totalPickPages}
-      // handlePickPageChange={setPickPage}
-      // totalAppliedCompaniesCount={totalAppliedCompaniesCount} // 전체 지원한 기업 수 전달
       errorMessage={errorMessage} // 🚀 에러 메시지 전달
     />
   );

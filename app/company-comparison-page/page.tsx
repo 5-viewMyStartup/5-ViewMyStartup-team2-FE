@@ -2,20 +2,12 @@
 
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo"; // 텍스트 스타일을 위한 컴포넌트 임포트
-import { Box, Skeleton, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { SkeletonApplicationList } from "@/global/components/SkeletonComparisonApplicationItems";
-import { useCallback, useState } from "react";
-import { ComparisonPickQuery } from "@/global/types/data-contracts";
 import { useApplicationFetch } from "./core/useApplicationFetchHook";
-// import {
-//   listLayout,
-//   listWrapperStyle,
-//   scrollWrapper,
-// } from "@/global/styles/companyListStyles";
 import { ApplicationItems } from "./features/comparisonList/components/ApplicationItems";
 import { companyListWrapperStyle } from "@/global/styles/companyListStyles";
-// import { CustomPagination } from "@/global/components/CustomPagination";
 
 export default function Page() {
   const { companies, isLoading } = useApplicationFetch();

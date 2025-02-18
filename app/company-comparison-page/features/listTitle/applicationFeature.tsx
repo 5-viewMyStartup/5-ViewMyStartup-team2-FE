@@ -1,6 +1,6 @@
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import React from "react";
 
 export default function applicationListTitle(): React.ReactElement {

@@ -34,24 +34,50 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({
             content={"기업에 지원하기"}
             className="text_B_20"
           />
-          <Image
-            width={32}
-            height={32}
-            src={"/assets/ic_delete.svg"}
-            alt="close"
-            onClick={handleClose}
-          />
+          <Box
+            sx={{
+              cursor: "pointer",
+              "&:hover": {
+                opacity: 0.8,
+              },
+            }}
+          >
+            <Image
+              width={32}
+              height={32}
+              src={"/assets/ic_delete.svg"}
+              alt="close"
+              onClick={handleClose}
+            />
+          </Box>
         </Box>
         <Box gap={"16px"} display={"flex"} flexDirection={"column"}>
           <Typo className="text_B_18" content="지원 기업 정보" />
           <Box gap={"12px"} display={"flex"}>
-            <Image width={40} height={40} src={companyData.image} alt="logo" />
+            <Box
+              width="40px"
+              height="40px"
+              borderRadius="4px"
+              overflow="hidden"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              bgcolor={colorChips.black_400}
+            >
+              <Image
+                width={40}
+                height={40}
+                src={companyData.image}
+                alt="logo"
+                style={{ objectFit: "cover" }}
+              />
+            </Box>
             <Box display={"flex"} gap={"8px"}>
               <Typo className="text_M_16" content={companyData.name} />
-              <Typo
+              {/* <Typo
                 className="text_R_12"
                 content={companyData.category[0].category}
-              />
+              /> */}
             </Box>
           </Box>
         </Box>
@@ -68,7 +94,9 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({
           <CommonInput
             multiline
             minRows={2}
+            maxRows={3}
             placeholder="자신에 대한 코멘트를 입력해 주세요"
+            height="100px"
           />
         </Box>
         <Stack direction={"row"} justifyContent={"space-around"}>

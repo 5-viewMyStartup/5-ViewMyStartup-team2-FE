@@ -5,35 +5,14 @@ import { BookmarkDTO } from "@/global/types/data-contracts";
 
 interface BookmarkListProps {
   companies: BookmarkDTO[];
-  page: number | undefined;
+  onApply: (companyData: BookmarkDTO) => void;
 }
 
-// const mockData = [
-//   {
-//     id: "000",
-//     idx: 0o0,
-//     userId: "111",
-//     companyId: "211",
-//     createdAt: new Date(),
-//     updatedAt: new Date(),
-//     deletedAt: null,
-//   },
-//   {
-//     id: "001",
-//     idx: 0o1,
-//     userId: "112",
-//     companyId: "212",
-//     createdAt: new Date(),
-//     updatedAt: new Date(),
-//     deletedAt: null,
-//   },
-// ];
-
-export default function BookmarkList({ companies, page = 1 }: BookmarkListProps) {
+export default function BookmarkList({ companies, onApply }: BookmarkListProps) {
   return (
     <Stack sx={bookmarkListWrapperStyle}>
-      {companies.map((item, idx) => (
-        <BookmarkItems key={idx} itemData={item} />
+      {companies.map((item) => (
+        <BookmarkItems key={item.id} itemData={item} onApply={onApply} />
       ))}
     </Stack>
   );

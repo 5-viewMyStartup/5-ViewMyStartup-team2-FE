@@ -1,9 +1,9 @@
+"use client";
 import { useEffect, useCallback, useState } from "react";
 import { getApplicationListAPI } from "./getApplicationListAPI";
 import {
   ComparisonCompanyDTO,
   ComparisonPickResponse,
-  ComparisonPickQuery,
 } from "@/global/types/data-contracts";
 
 /** 상품 목록 조회
@@ -17,9 +17,7 @@ interface UseApplicationFetchOutput {
   totalAppliedCompaniesCount: number;
 }
 
-export const useApplicationFetch = (
-  params: ComparisonPickQuery = { page: 1 }
-): UseApplicationFetchOutput => {
+export const useApplicationFetch = (): UseApplicationFetchOutput => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<ComparisonPickResponse["data"]>({
     companies: [],
@@ -35,7 +33,6 @@ export const useApplicationFetch = (
     try {
       setIsLoading(true);
       const startTime = Date.now();
-
       const response = await getApplicationListAPI(); // params없이 API 호출
       setData(response);
 
@@ -51,7 +48,7 @@ export const useApplicationFetch = (
 
   useEffect(() => {
     fetchApplications();
-  }, []); // 처음 한번만 실행
+  }, [fetchApplications]); // 처음 한번만 실행
 
   return {
     isLoading,

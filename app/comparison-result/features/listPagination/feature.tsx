@@ -2,12 +2,12 @@ import { CustomPagination } from "@/global/components/CustomPagination";
 import { Box } from "@mui/material";
 
 interface CustomPaginationProps {
-  page: number | undefined; // 현재 페이지
+  page: number; // 현재 페이지
   count: number; // 전체 페이지 수
   onPageChange: (page: number) => void;
 }
 
-export function ListPagination({
+export default function ListPagination({
   page = 1,
   count = 1,
   onPageChange,
