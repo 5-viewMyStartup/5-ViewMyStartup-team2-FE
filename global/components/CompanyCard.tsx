@@ -2,10 +2,12 @@ import { Box, BoxProps } from "@mui/material";
 import Image from "next/image";
 import { Typo } from "../styles/Typo";
 import { colorChips } from "../styles/colorChips";
+import { SxProps, Theme } from "@mui/material";
 
 interface CompanyCardProps {
   company: { image: string; name: string; category: string };
   onRemove: () => void;
+  sx?: SxProps<Theme>;
 }
 
 export const CompanyCard: React.FC<CompanyCardProps> = ({
