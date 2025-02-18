@@ -130,6 +130,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           />
           {companies.map((company) => (
             <CustomListItem
+              selected={selectedCompanies.some((c) => c.id === company.id)}
               checked={selectedCompanies.some((c) => c.id === company.id)}
               key={company.id}
               listData={{
