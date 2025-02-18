@@ -2,8 +2,6 @@ import { colorChips } from "@/global/styles/colorChips"; // 색상 관련 상수
 import { Typo } from "@/global/styles/Typo"; // 텍스트 스타일을 위한 컴포넌트 임포트
 import { Stack } from "@mui/material";
 import { companyListWrapperStyle } from "@/global/styles/companyListStyles";
-
-// import {} from "@/global/styles/companyListStyles"; //세정TODO: 스타일 가져와서 Stack에 넣기
 import { ApplicationItems } from "./components/ApplicationItems";
 import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 

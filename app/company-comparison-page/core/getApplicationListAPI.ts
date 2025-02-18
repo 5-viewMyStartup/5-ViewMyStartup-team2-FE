@@ -20,13 +20,13 @@ export const getApplicationListAPI = async (
     const response: AxiosResponse<ComparisonPickResponse> = await instance.get(
       "/api/comparison/pick",
       {
-        params: { page },
+        params: { page: 1 }, // 항상 1페이지 요청
         // headers: {
         //   Authorization: `Bearer ${userId}`, // userId를 Authorization 헤더에 포함 X → 세정FIX: 유저 로그인 구현되면 추가하기
         // },
       }
     );
-    console.log("확인용 getApplicationList ", response.data);
+    // console.log("확인용 getApplicationList ", response.data);
     return response.data.data;
   } catch (err) {
     throw err;

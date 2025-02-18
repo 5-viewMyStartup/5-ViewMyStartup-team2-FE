@@ -1,5 +1,4 @@
 import { Stack } from "@mui/material";
-// import {} from "@/global/styles/companyListStyles"; //세정TODO: 스타일 가져와서 Stack에 넣기
 import { CompanyItems } from "./components/CompanyItems";
 import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 

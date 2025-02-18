@@ -42,7 +42,6 @@ export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {
 
   return (
     <Stack>
-      {/* 세정TODO 스타일 어떻게 넣을지 고민 sx={companyItemBoxStyle}*/}
       <Box
         sx={{
           width: "126px",
@@ -51,8 +50,7 @@ export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {
           alignItems: "center",
         }}
       >
-        {/* 세정TODO 스타일 어떻게 넣을지 고민 sx={itemNameBoxStyle}*/}
-        {/* 기업 이미지와 이름을 표시하는 Box */}
+        {/* 기업 이미지와 이름,카테고리 표시하는 Box */}
         <img
           src={imgSrc}
           alt="기업 대표 이미지"
