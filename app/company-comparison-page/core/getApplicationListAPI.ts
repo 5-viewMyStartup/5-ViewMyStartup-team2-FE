@@ -26,7 +26,7 @@ export const getApplicationListAPI = async (
         // },
       }
     );
-    console.log("확인용 getApplicationList ", response.data);
+    // console.log("확인용 getApplicationList ", response.data);
     return response.data.data;
   } catch (err) {
     throw err;
