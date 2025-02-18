@@ -2,7 +2,7 @@
 
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
-import { CompanyDTO } from "@/global/types/data-contracts";
+import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 import { Box, Stack } from "@mui/material";
 import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 import Image from "next/image";
@@ -17,7 +17,7 @@ import {
 
 interface ApplicationItemsProps {
   order: number;
-  itemData: CompanyDTO | null;
+  itemData: ComparisonCompanyDTO | null;
 }
 
 export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {
@@ -42,24 +42,30 @@ export function ApplicationItems({ order, itemData }: ApplicationItemsProps) {
 
   return (
     <Stack>
-      {/* 세정TODO 스타일 어떻게 넣을지 고민 sx={companyItemBoxStyle}*/}
-      <Box>
-        {/* 세정TODO 스타일 어떻게 넣을지 고민 sx={itemNameBoxStyle}*/}
-        {/* 기업 이미지와 이름을 표시하는 Box */}
+      <Box
+        sx={{
+          width: "126px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        {/* 기업 이미지와 이름,카테고리 표시하는 Box */}
         <img
           src={imgSrc}
           alt="기업 대표 이미지"
           width={80}
           height={80}
           onError={handleImgErr}
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: "50%", marginBottom: "10px" }}
         />
         <Typo
-          className="text_M_16"
+          className="text_SB_16"
           content={itemData.name}
           color={colorChips.white}
           customStyle={{
             textAlign: "center",
+            marginBottom: "4px",
           }}
         />
         <Typo

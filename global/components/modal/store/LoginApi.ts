@@ -12,7 +12,8 @@ const apiUrl: AxiosInstance = axios.create({
 
 export const loginAPI = async (email: string, password: string) => {
   try {
-    const response: AxiosResponse = await apiUrl.post("/api/users/login", {
+    const response: AxiosResponse = await apiUrl.post("/api/users/login",
+       {
       email,
       password,
     });

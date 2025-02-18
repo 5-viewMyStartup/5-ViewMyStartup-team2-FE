@@ -1,6 +1,6 @@
 import { colorChips } from "@/global/styles/colorChips"; // 색상 관련 상수 임포트
 import { Typo } from "@/global/styles/Typo"; // 텍스트 스타일을 위한 컴포넌트 임포트
-import { CompanyDTO } from "@/global/types/data-contracts"; // ApplicationDTO 타입 임포트
+import { ComparisonCompanyDTO } from "@/global/types/data-contracts"; // ApplicationDTO 타입 임포트
 import { Box, Stack } from "@mui/material"; // MUI의 Box와 Stack 컴포넌트 임포트
 import { useCompanyDefaultImg } from "@/global/hooks/useCompanyImg";
 import Image from "next/image";
@@ -15,18 +15,15 @@ import {
 
 interface CompanyItemsProps {
   order: number;
-  itemData: CompanyDTO;
+  itemData: ComparisonCompanyDTO;
 }
 
 export function CompanyItems({ order, itemData }: CompanyItemsProps) {
   const { imgSrc, handleImgErr } = useCompanyDefaultImg(itemData.image); // 이미지 처리 훅
   return (
     <Stack>
-      {/* 세정TODO 스타일 어떻게 넣을지 고민 sx={companyItemBoxStyle}*/}
       <Box>
-        {" "}
-        {/* 세정TODO 스타일 어떻게 넣을지 고민 sx={itemNameBoxStyle}*/}
-        {/* 기업 로고 및 이름 표시 */}
+        {/* 기업 로고 및 이름, 카테고리 표시 */}
         <Image
           src={imgSrc} // 이미지 URL (커스텀 훅에서 처리)
           alt="기업 대표 이미지"
@@ -46,9 +43,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
         />
       </Box>
       <Box>
-        {" "}
         {/* 카테고리 표시 */}
-        {/* 세정TODO 스타일 어떻게 넣을지 고민 sx={labelDataBoxStyle}*/}
         <Typo
           className="text_R_14"
           content={itemData.category.map((cat) => cat.category).join(", ")} // 카테고리 배열을 문자열로 합쳐서 표시

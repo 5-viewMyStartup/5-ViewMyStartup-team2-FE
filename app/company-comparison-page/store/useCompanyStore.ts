@@ -1,10 +1,14 @@
 import { create } from "zustand";
-import { CompanyDTO } from "@/global/types/data-contracts";
+import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 
 interface CompanyStore {
-  selectedCompanies: CompanyDTO[]; // 선택한 기업 목록
-  selectCompany: (company: CompanyDTO) => void; // 기업 선택 함수
-  deselectCompany: (company: CompanyDTO) => void; // 기업 선택 해제 함수
+  selectedAppliedCompanies: ComparisonCompanyDTO[]; // 최근 지원한 기업에서 선택한 목록
+  selectedSearchCompanies: ComparisonCompanyDTO[]; // 검색 결과에서 선택한 목록
+
+  setAppliedCompanies: (companies: ComparisonCompanyDTO[]) => void;
+  selectSearchCompany: (company: ComparisonCompanyDTO) => void;
+  deselectSearchCompany: (company: ComparisonCompanyDTO) => void;
+
   resetCompanies: () => void; // 선택한 기업 초기화 함수
 }
 
@@ -13,28 +17,38 @@ const defaultImage = "/assets/default-company-img.svg";
 
 // Zustand 상태 관리 생성
 export const useCompanyStore = create<CompanyStore>((set) => ({
-  selectedCompanies: [], // 초기값: 선택된 기업 없음
+  selectedAppliedCompanies: [],
+  selectedSearchCompanies: [],
 
-  // 기업 선택 함수: 선택한 기업을 배열에 추가
-  selectCompany: (company) =>
+  // ✅ 모달이 열릴 때 최근 지원한 기업 목록을 저장
+  setAppliedCompanies: (companies) =>
+    set({
+      selectedAppliedCompanies: companies.map((company) => ({
+        ...company,
+        image: company.image || defaultImage,
+      })),
+    }),
+
+  // ✅ 검색 결과에서 선택한 기업 추가
+  selectSearchCompany: (company) =>
     set((state) => ({
-      selectedCompanies: [
-        ...state.selectedCompanies,
-        {
-          ...company, // 기존 기업 속성
-          image: company.image || defaultImage, // 이미지가 없으면 기본 이미지 설정
-        },
+      selectedSearchCompanies: [
+        ...state.selectedSearchCompanies,
+        { ...company, image: company.image || defaultImage },
       ],
     })),
 
-  // 기업 선택 해제 함수: 해당 기업을 배열에서 제거
-  deselectCompany: (company) =>
+  // ✅ 검색 결과에서 선택한 기업 제거
+  deselectSearchCompany: (company) =>
     set((state) => ({
-      selectedCompanies: state.selectedCompanies.filter(
+      selectedSearchCompanies: state.selectedSearchCompanies.filter(
         (c) => c.id !== company.id
       ),
     })),
 
-  // 선택한 기업 초기화 함수: 모든 선택 기업 제거
-  resetCompanies: () => set({ selectedCompanies: [] }),
+  // ✅ 모든 선택된 기업 초기화 (최근 지원한 기업은 유지)
+  resetCompanies: () =>
+    set({
+      selectedSearchCompanies: [],
+    }),
 }));

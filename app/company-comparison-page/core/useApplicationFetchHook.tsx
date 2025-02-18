@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from "react";
 import { getApplicationListAPI } from "./getApplicationListAPI";
 import {
-  CompanyDTO,
+  ComparisonCompanyDTO,
   ComparisonPickResponse,
   ComparisonPickQuery,
 } from "@/global/types/data-contracts";
@@ -12,12 +12,13 @@ import {
 
 interface UseApplicationFetchOutput {
   isLoading: boolean;
-  companies: CompanyDTO[];
+  companies: ComparisonCompanyDTO[];
   totalPages: number;
+  totalAppliedCompaniesCount: number;
 }
 
 export const useApplicationFetch = (
-  params: ComparisonPickQuery
+  params: ComparisonPickQuery = { page: 1 }
 ): UseApplicationFetchOutput => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<ComparisonPickResponse["data"]>({
@@ -35,7 +36,7 @@ export const useApplicationFetch = (
       setIsLoading(true);
       const startTime = Date.now();
 
-      const response = await getApplicationListAPI(params); // API 호출
+      const response = await getApplicationListAPI(); // params없이 API 호출
       setData(response);
 
       const elTime: number = Date.now() - startTime;
@@ -46,15 +47,16 @@ export const useApplicationFetch = (
     } finally {
       setIsLoading(false);
     }
-  }, [params]);
+  }, []);
 
   useEffect(() => {
     fetchApplications();
-  }, [JSON.stringify(params)]); // ✅ fetchApplications가 변경될 때만 실행
+  }, []); // 처음 한번만 실행
 
   return {
     isLoading,
     companies: data.companies,
-    totalPages: data.pagination.totalPages,
+    totalPages: 1, // 항상 1페이지
+    totalAppliedCompaniesCount: data.pagination.totalItems,
   };
 };

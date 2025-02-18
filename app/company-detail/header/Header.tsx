@@ -5,6 +5,8 @@ import { Box, styled } from "@mui/material";
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { useState } from "react";
+import Bookmark from "./Bookmark";
+import ApplyButton from "./ApplyButton";
 
 // 타입 정의
 interface HeaderProps {
@@ -16,43 +18,59 @@ interface HeaderProps {
     personnel: number;
     applicants: number;
   };
+  id: string;
+  idx: number;
 }
 
 // 컴포넌트 로직
-const Header = ({ name, logo, category, stats }: HeaderProps) => {
+const Header = ({ name, logo, category, stats, id, idx }: HeaderProps) => {
   const [imageError, setImageError] = useState(false);
 
   const handleImageError = () => {
     setImageError(true);
   };
 
+  const companyData = {
+    image: logo || "/assets/logo.svg",
+    name,
+    category,
+    id,
+    idx,
+  };
+
   return (
     <HeaderCard>
-      <LogoContainer>
-        <Logo>
-          {!imageError ? (
-            <StyledImage
-              src={logo || ""}
-              alt={name}
-              onError={handleImageError}
-            />
-          ) : (
-            <FallbackLogo>
-              <Typo className="text_B_16" color={colorChips.white}>
-                {name.charAt(0)}
-              </Typo>
-            </FallbackLogo>
-          )}
-        </Logo>
-        <TextContainer>
-          <Typo className="text_B_24" color={colorChips.white}>
-            {name}
-          </Typo>
-          <Typo className="text_M_20" color={colorChips.gray_200}>
-            {category}
-          </Typo>
-        </TextContainer>
-      </LogoContainer>
+      <TopContainer>
+        <LogoContainer>
+          <Logo>
+            {!imageError ? (
+              <StyledImage
+                src={logo || ""}
+                alt={name}
+                onError={handleImageError}
+              />
+            ) : (
+              <FallbackLogo>
+                <Typo className="text_B_16" color={colorChips.white}>
+                  {name.charAt(0)}
+                </Typo>
+              </FallbackLogo>
+            )}
+          </Logo>
+          <TextContainer>
+            <Typo className="text_B_24" color={colorChips.white}>
+              {name}
+            </Typo>
+            <Typo className="text_M_20" color={colorChips.gray_200}>
+              {category}
+            </Typo>
+          </TextContainer>
+        </LogoContainer>
+        <ButtonContainer>
+          <Bookmark />
+          <ApplyButton companyData={companyData} />
+        </ButtonContainer>
+      </TopContainer>
       <Stats stats={stats} />
     </HeaderCard>
   );
@@ -69,6 +87,13 @@ const HeaderCard = styled(Box)(({ theme }) => ({
   },
 }));
 
+const TopContainer = styled(Box)({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
+  marginBottom: "24px",
+});
+
 const LogoContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -77,6 +102,12 @@ const LogoContainer = styled(Box)(({ theme }) => ({
     gap: "12px",
   },
 }));
+
+const ButtonContainer = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "12px",
+});
 
 const Logo = styled(Box)(({ theme }) => ({
   width: "80px",

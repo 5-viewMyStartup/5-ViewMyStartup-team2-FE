@@ -6,7 +6,6 @@ interface UseInvestmentImgReturn {
   isLoading: boolean;
 }
 
-//TODO: 이미지 애니메이션 효과 추가하는면 로딩중이라는 표시 더 잘 보일듯듯
 export function useInvestmentImg(
   src: string | undefined
 ): UseInvestmentImgReturn {

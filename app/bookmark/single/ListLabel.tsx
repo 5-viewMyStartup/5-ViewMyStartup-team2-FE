@@ -5,14 +5,6 @@ import { Box, Stack } from "@mui/material";
 export default function ListLabel() {
   return (
     <Stack sx={listLabelWrapperStyle}>
-      <Box sx={bookmarkBoxStyle}>
-        <Typo
-          className="text_M_14"
-          content="즐겨찾기"
-          color={colorChips.white}
-          customStyle={{ textAlign: "center" }}
-        />
-      </Box>
       <Box sx={nameBoxStyle}>
         <Typo
           className="text_M_14"
@@ -72,19 +64,14 @@ const baseLabelBoxStyle = {
   alignItems: "center",
 };
 
-export const bookmarkBoxStyle = {
-  ...baseLabelBoxStyle,
-  width: ["58px", "58px", "76.75px"],
-};
-
 export const nameBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["150px", "150px", "250.75px"],
+  width: ["200px", "200px", "300.75px"],
 };
 
 export const descBoxStyle = {
   ...baseLabelBoxStyle,
-  width: ["215px", "215px", "358.15px"],
+  width: ["223px", "223px", "384.9px"],
 };
 
 export const categoryBoxStyle = {

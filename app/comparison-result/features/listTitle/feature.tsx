@@ -1,21 +1,31 @@
+"use client";
+
 import { colorChips } from "@/global/styles/colorChips";
 import { Typo } from "@/global/styles/Typo";
 import { Box, Stack } from "@mui/material";
 import Link from "next/link";
 import React from "react";
+import { CustomSelect } from "@/global/components/CustomSelect";
+
+export interface ListTitleDropdownProps {
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; name: string }[];
+}
 
 export const ListTitle = {
-  Bookmark: function (): React.ReactElement {
+  // "내가 지원한 기업" 제목 및 링크 버튼 렌더링
+  Pick: function (): React.ReactElement {
     return (
       <Stack sx={listHeaderContainerStyle}>
         <Typo
           className="text_B_20"
-          content="내가 선택한 기업"
+          content="내가 지원한 기업"
           color={colorChips.white}
         />
         <Box>
-          {/* 빈 문자열은 현재 페이지 */}
-          <Link href="">
+          {/* 링크 클릭 시 "다른 기업 비교하기" 페이지로 이동 (필요에 따라 href 수정) */}
+          <Link href="company-comparison-page">
             <Box sx={btnBoxStyle}>
               <Typo
                 className="text_SB_16"
@@ -28,7 +38,10 @@ export const ListTitle = {
       </Stack>
     );
   },
-  Result: function (): React.ReactElement {
+  // "비교 결과 확인하기" 제목 및 드롭다운 렌더링
+  Result: function (props: ListTitleDropdownProps): React.ReactElement {
+    // options가 undefined일 경우 빈 배열([])로 처리
+    const options = props.options || [];
     return (
       <Stack sx={listHeaderContainerStyle}>
         <Typo
@@ -38,18 +51,20 @@ export const ListTitle = {
         />
         <Box>
           <Box sx={sortBoxStyle}>
-            <Typo
-              className="text_SB_20"
-              content="정렬"
-              color={colorChips.white}
+            <CustomSelect
+              options={options}
+              value={props.value}
+              handleChange={props.onChange}
+              defaultValue="salesRevenueRank"
             />
           </Box>
         </Box>
       </Stack>
     );
   },
-
-  Ranking: function (): React.ReactElement {
+  // "기업 순위 확인하기" 제목 및 드롭다운 렌더링
+  Ranking: function (props: ListTitleDropdownProps): React.ReactElement {
+    const options = props.options || [];
     return (
       <Stack sx={listHeaderContainerStyle}>
         <Typo
@@ -59,10 +74,11 @@ export const ListTitle = {
         />
         <Box>
           <Box sx={sortBoxStyle}>
-            <Typo
-              className="text_SB_20"
-              content="정렬"
-              color={colorChips.white}
+            <CustomSelect
+              options={options}
+              value={props.value}
+              handleChange={props.onChange}
+              defaultValue="salesRevenueRank"
             />
           </Box>
         </Box>
@@ -71,8 +87,10 @@ export const ListTitle = {
   },
 };
 
+/* 스타일 정의 */
+// ListTitle 공통 컨테이너 스타일
 const listHeaderContainerStyle = {
-  flexDirection: ["column", "row"] as const, // as const 고정 값
+  flexDirection: ["column", "row"] as const,
   justifyContent: "space-between",
   alignItems: ["flex-start", "center"],
   height: ["100%", "48px"],
@@ -81,6 +99,7 @@ const listHeaderContainerStyle = {
   mb: "16px",
 };
 
+// 링크 버튼 스타일
 const btnBoxStyle = {
   display: "flex",
   alignItems: "center",
@@ -91,11 +110,12 @@ const btnBoxStyle = {
   backgroundColor: "#EB5230",
 };
 
+// 드롭다운을 감싸는 박스 스타일
 const sortBoxStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   width: ["146px", "168px"],
   height: ["40px", "48px"],
-  border: `1px solid ${colorChips.white}`, //border는 컴포넌트 넣고 삭제
+  border: `1px solid ${colorChips.white}`,
 };
