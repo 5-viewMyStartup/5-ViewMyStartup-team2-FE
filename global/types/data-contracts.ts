@@ -76,7 +76,7 @@ export interface ApplicationListQuery {
 }
 
 export interface ApplicationListResponse {
-  applications: ApplicationDTO[];
+  applications: (ApplicationDTO & { companyId: string })[];
   page: number;
   totalPages: number;
 }

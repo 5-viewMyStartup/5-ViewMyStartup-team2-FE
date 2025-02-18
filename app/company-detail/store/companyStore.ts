@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface Company {
+interface CompanyDetail {
   id: string;
   idx: number;
   name: string;
@@ -12,11 +12,16 @@ interface Company {
   updatedAt: string;
   deletedAt: string;
   isBookmarked: boolean;
+  apllycant: number;
+  category: {
+    id: string;
+    category: string;
+  };
 }
 
 interface CompanyState {
-  company: Company;
-  setCompany: (data: Company) => void;
+  company: CompanyDetail;
+  setCompany: (data: CompanyDetail) => void;
 }
 
 export const useCompanyStore = create<CompanyState>((set) => ({
@@ -32,6 +37,11 @@ export const useCompanyStore = create<CompanyState>((set) => ({
     updatedAt: "",
     deletedAt: "",
     isBookmarked: false,
+    apllycant: 0,
+    category: {
+      id: "",
+      category: "",
+    },
   },
   setCompany: (data) => set({ company: data }), // 배열을 set
 }));

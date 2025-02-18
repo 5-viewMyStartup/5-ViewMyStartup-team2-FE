@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 
 interface CompanyItemsProps {
   order: number;
-  itemData: ApplicationDTO;
+  itemData: ApplicationDTO & { companyId: string };
 }
 
 export function CompanyItems({ order, itemData }: CompanyItemsProps) {
@@ -39,7 +39,7 @@ export function CompanyItems({ order, itemData }: CompanyItemsProps) {
       : colorChips.gray_300;
   const router = useRouter();
 
-  const companyId = itemData.id;
+  const companyId = itemData.companyId;
 
   const handleClick = () => {
     router.push(`/company-detail/${companyId}`);

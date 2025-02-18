@@ -13,10 +13,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PATH } from "../types/Path";
 import { LoginModal } from "./modal/LoginModal";
-import { loginAPI, userProfile } from "./modal/store/LoginApi";
+import { loginAPI, userProfile } from "../store/LoginApi";
 import Cookies from "js-cookie";
-import { useAuthStore, useUserStore } from "./modal/store/authStore";
-import { useUserNameStore } from "./modal/store/userStore";
+import { useAuthStore, useUserStore } from "../store/authStore";
+import { useUserNameStore } from "../store/userStore";
 import { Typo } from "../styles/Typo";
 
 export const Header = () => {

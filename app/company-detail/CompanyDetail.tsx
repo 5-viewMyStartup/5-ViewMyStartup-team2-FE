@@ -4,7 +4,8 @@ import Header from "./header/Header";
 import Description from "./header/Description";
 import Comments from "./comments/Comments";
 import { styled, Box } from "@mui/material";
-interface Company {
+
+interface CompanyDetail {
   id: string;
   idx: number;
   name: string;
@@ -16,9 +17,14 @@ interface Company {
   updatedAt: string;
   deletedAt: string;
   isBookmarked: boolean;
+  apllycant: number;
+  category: {
+    id: string;
+    category: string;
+  };
 }
 interface CompanyDetailProps {
-  company: Company;
+  company: CompanyDetail;
 }
 
 const CompanyDetail: React.FC<CompanyDetailProps> = ({ company }) => {
@@ -32,10 +38,11 @@ const CompanyDetail: React.FC<CompanyDetailProps> = ({ company }) => {
           stats={{
             monthlyRevenue: Number(company.salesRevenue),
             personnel: company.employeeCnt,
-            applicants: 0,
+            applicants: company.apllycant,
           }}
           id={company.id}
           idx={company.idx}
+          category={company.category.category}
         />
         <Description description={company.content} />
         <Comments companyId={company.id} />

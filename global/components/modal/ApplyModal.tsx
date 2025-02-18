@@ -8,13 +8,23 @@ import { CommonInput } from "../input/CommonInput";
 interface ApplyModalProps {
   open: boolean;
   handleClose: () => void;
-  companyData: { image: string; name: string };
+  companyData: { image: string; name: string; category: string };
+  onNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onContentChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onRoleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  values: { name: string; content: string; role: string };
+  onAplly: () => void;
 }
 
 export const ApplyModal: React.FC<ApplyModalProps> = ({
   open,
   handleClose,
   companyData,
+  onNameChange,
+  onContentChange,
+  onRoleChange,
+  values,
+  onAplly,
 }) => {
   return (
     <Modal open={open} onClose={handleClose}>
@@ -78,24 +88,31 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({
             </Box>
             <Box display={"flex"} gap={"8px"}>
               <Typo className="text_M_16" content={companyData.name} />
-              {/* <Typo
-                className="text_R_12"
-                content={companyData.category[0].category}
-              /> */}
+              <Typo className="text_R_12" content={companyData.category} />
             </Box>
           </Box>
         </Box>
         <Box gap={"16px"} display={"flex"} flexDirection={"column"}>
           <Typo className="text_B_18" content="지원자 이름" />
-          <CommonInput placeholder="지원자 이름을 입력해 주세요" />
+          <CommonInput
+            value={values.name}
+            onChange={onNameChange}
+            placeholder="지원자 이름을 입력해 주세요"
+          />
         </Box>
         <Box gap={"16px"} display={"flex"} flexDirection={"column"}>
           <Typo className="text_B_18" content="지원자 직무" />
-          <CommonInput placeholder="지원 직무를 입력해 주세요" />
+          <CommonInput
+            value={values.role}
+            onChange={onRoleChange}
+            placeholder="지원 직무를 입력해 주세요"
+          />
         </Box>
         <Box gap={"16px"} display={"flex"} flexDirection={"column"}>
           <Typo className="text_B_18" content="지원 코멘트" />
           <CommonInput
+            value={values.content}
+            onChange={onContentChange}
             multiline
             minRows={2}
             maxRows={3}
@@ -111,7 +128,11 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({
           >
             취소
           </Button>
-          <LargeBtn isDisabled={false} content="지원하기" />
+          <LargeBtn
+            onClickBtn={onAplly}
+            isDisabled={false}
+            content="지원하기"
+          />
         </Stack>
       </Stack>
     </Modal>

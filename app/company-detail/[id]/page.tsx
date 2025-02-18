@@ -6,7 +6,7 @@ import { useCompanyStore } from "../store/companyStore";
 import { useEffect, useState } from "react";
 import { getCompanyDetail } from "../store/companyApi";
 import Cookies from "js-cookie";
-interface Company {
+interface CompanyDetails {
   id: string;
   idx: number;
   name: string;
@@ -18,10 +18,15 @@ interface Company {
   updatedAt: string;
   deletedAt: string;
   isBookmarked: boolean;
+  apllycant: number;
+  category: {
+    id: string;
+    category: string;
+  };
 }
 const CompanyDetailPage = () => {
   const { id } = useParams() as { id: string };
-  const [companyData, setCompanyData] = useState<Company | null>(null);
+  const [companyData, setCompanyData] = useState<CompanyDetails | null>(null);
   const { company } = useCompanyStore();
   useEffect(() => {
     const userId = Cookies.get("id");

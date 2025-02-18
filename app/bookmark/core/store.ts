@@ -18,11 +18,14 @@ interface BookmarkState {
   currentPage: number;
   sort: string;
   isApplyModalOpen: boolean;
-  applyModalData: ApplyModalData | null;
+  applyModalData: (ApplyModalData & { companyId: string }) | null;
   fetchBookMarks: () => Promise<void>;
   setSort: (sort: string) => void;
   setPage: (page: number) => void;
-  toggleApplyModal: (open: boolean, data?: ApplyModalData) => void;
+  toggleApplyModal: (
+    open: boolean,
+    data?: ApplyModalData & { companyId: string }
+  ) => void;
 }
 
 export const useBookmarkStore = create<BookmarkState>((set, get) => ({
