@@ -39,7 +39,7 @@ export const CompanySelectModal: React.FC<CompanySelectModalProps> = ({
 
   // ✅ 최근 지원한 기업 데이터 가져오기 (1페이지만)
   const { isLoading: isApplicationLoading, companies: appliedCompanies } =
-    useApplicationFetch({ page: 1 });
+    useApplicationFetch();
 
   useEffect(() => {
     if (open) {

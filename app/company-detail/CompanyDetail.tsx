@@ -26,6 +26,7 @@ interface CompanyData {
   category: Category[];
   applicantCount: number;
   idx: number;
+  isBookmarked: boolean;
 }
 
 interface CompanyComment {
