@@ -28,11 +28,14 @@ const CompanyDetailPage = () => {
     if (!userId) {
       return console.log("error: userId 오류");
     }
+    if (id) {
+      return console.log("error: companyId 오류");
+    }
     getCompanyDetail(id, userId);
     if (company) {
       setCompanyData(company);
     }
-  }, [company]);
+  }, [id, company]);
 
   return companyData ? (
     <CompanyDetail company={companyData} />
