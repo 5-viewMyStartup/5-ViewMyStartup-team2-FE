@@ -54,7 +54,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             onClickBtn={hadleLogin}
           />
         </Box>
-        <Link>회원가입</Link>
       </Stack>
     </Modal>
   );

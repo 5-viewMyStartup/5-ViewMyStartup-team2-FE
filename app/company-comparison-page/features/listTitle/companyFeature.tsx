@@ -26,13 +26,13 @@ const CompanyListTitle: React.FC = () => {
   };
 
   // `useCompanyFetch` 훅을 사용하여 기업 목록 불러오기
-  const { isLoading, companies = [] } = useCompanyFetch(params); // `companies`가 undefined일 경우 빈 배열로 설정
+  const { isLoading } = useCompanyFetch(params); // `companies`가 undefined일 경우 빈 배열로 설정
 
   useEffect(() => {
-    if (!isLoading && companies.length > 0) {
+    if (isLoading && selectedSearchCompanies.length > 0) {
       setLoading(false); // 로딩이 끝났으면 false
     }
-  }, [isLoading, companies]); // isLoading과 companies 상태에 따라 effect 실행
+  }, [isLoading, selectedSearchCompanies]); // isLoading과 companies 상태에 따라 effect 실행
 
   // 모달 열기
   const handleOpenModal = () => setModalOpen(true);
@@ -153,7 +153,7 @@ const CompanyListTitle: React.FC = () => {
         sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
         <button
-          onClick={() => router.push("/company-comparison")} // ✅ 이동할 경로 설정
+          onClick={() => router.push("/comparison-result")} // ✅ 이동할 경로 설정
           disabled={selectedSearchCompanies.length === 0} // ✅ 선택한 기업이 없으면 비활성화
           style={{
             backgroundColor:

@@ -64,7 +64,7 @@ export default function BookmarkPage() {
   const handleModalClose = () => {
     toggleApplyModal(false);
   };
-  console.log();
+
   return (
     <Stack sx={listLayout}>
       {/* Sorting 컴포넌트 */}
