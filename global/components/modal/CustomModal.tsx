@@ -149,10 +149,8 @@ export const CustomModal: React.FC<CustomModalProps> = ({
 const modalStyle = {
   padding: { xs: "16px", sm: "24px", md: "24px" },
   backgroundColor: colorChips.black_300,
-
   gap: "24px",
   borderRadius: "16px",
-
   position: "absolute",
   top: "50%",
   left: "50%",
