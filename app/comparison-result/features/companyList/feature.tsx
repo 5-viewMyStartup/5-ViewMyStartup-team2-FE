@@ -9,7 +9,7 @@ interface CompanyListProps {
 export const CompanyList = {
   Pick: function ({ companies }: { companies: ResultCompany[] }) {
     return (
-      <div>
+      <div style={{ display: "flex" }}>
         {companies.map((company) => (
           <CompanyItems.Pick key={company.id} itemData={company} />
         ))}
