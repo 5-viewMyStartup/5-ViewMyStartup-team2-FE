@@ -172,3 +172,70 @@ export interface ComparisonSearchResponse {
     }; // 페이지네이션 정보
   };
 }
+
+// 비교 결과
+export interface ComparisonResultQuery {
+  page?: number;
+  keyword?: string;
+}
+
+export interface ResultCompany {
+  id: string;
+  /**
+   * 기업 이름
+   */
+  name: string;
+  /**
+   * 기업 로고 이미지 url
+   */
+  image?: string;
+  /**
+   * 기업 소개 내용
+   */
+  content: string;
+  /**
+   * 카테고리
+   * @example ["에듀테크", "재테크"]
+   */
+  category: { id: string; category: string }[];
+  /**
+   * 매출액
+   */
+  salesRevenue: string;
+  /**
+   * 재직자 수
+   */
+  employeeCnt: number;
+  /**
+   * 지원자 수
+   */
+  applicantCnt: number;
+  /**
+   * 지원자 랭킹
+   */
+  applicantRank: number;
+  /**
+   * 매출액 랭킹
+   */
+  salesRevenueRank: number;
+  /**
+   * 재직자 랭킹
+   */
+  employeeRank: number;
+}
+
+export interface Pagination {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+}
+
+export interface CompaniesResponse {
+  success: boolean;
+  message: string;
+  data: {
+    companies: ResultCompany[];
+    pagination: Pagination;
+  };
+}
