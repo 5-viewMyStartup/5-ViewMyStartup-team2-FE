@@ -19,13 +19,13 @@ import { LargeBtn } from "@/global/components/button/LargeBtn";
 
 interface BookmarkItemsProps {
   itemData: BookmarkDTO;
+  onApply?: (companyData: BookmarkDTO) => void;
 }
 
-export function BookmarkItems({ itemData }: BookmarkItemsProps) {
+export function BookmarkItems({ itemData, onApply }: BookmarkItemsProps) {
   const { imgSrc, handleImgErr } = useCompanyDefaultImg(itemData.image);
   return (
     <Stack sx={bookmarkItemBoxStyle}>
-      <Box sx={bookmarkBoxStyle}></Box>
       <Box sx={itemNameBoxStyle}>
         <Image
           src={imgSrc}
@@ -68,7 +68,12 @@ export function BookmarkItems({ itemData }: BookmarkItemsProps) {
       </Box>
       <Box sx={applyBoxStyle}>
         {!itemData.applied && (
-          <LargeBtn width="80px" isDisabled={false} content="지원하기" />
+          <LargeBtn
+            width="80px"
+            isDisabled={false}
+            content="지원하기"
+            onClickBtn={() => onApply && onApply(itemData)}
+          />
         )}
       </Box>
     </Stack>
@@ -82,13 +87,4 @@ const bookmarkItemBoxStyle = {
   "&:last-child": {
     borderBottom: "none",
   },
-};
-
-const bookmarkDescTypoStyle = {
-  overflow: "hidden", //넘치는 내용 숨기기
-  display: "-webkit-box", //말줄임표
-  WebkitLineClamp: 2, //최대 2줄까지만 표시
-  WebkitBoxOrient: "vertical" as const, //세로 방향 줄바꿈 적용
-  whiteSpace: "normal",
-  wordBreak: "break-word" as const, //단어 단위로 줄바꿈
 };

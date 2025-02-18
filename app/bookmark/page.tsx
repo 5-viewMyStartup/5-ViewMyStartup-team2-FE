@@ -1,13 +1,13 @@
 "use client";
-import { useBookmarkStore } from "./core/store";
+
+import { useEffect } from "react";
 import { Box, Stack } from "@mui/material";
 import { Features } from "./features";
 import { Single } from "./single";
 import { SkeletonCompanyList } from "@/global/components/SkeletonCompanyItems";
 import { ListPagination } from "@/global/components/ListPagination";
-import { useEffect, useCallback, useState } from "react";
-import { BookmarkListQuery } from "@/global/types/data-contracts";
-import { useBookmarkListFetch } from "./core/useBookmarkListFetch";
+import { ApplyModal } from "@/global/components/modal/ApplyModal";
+import { useBookmarkStore } from "./core/store";
 import Cookies from "js-cookie";
 import {
   listLayout,
@@ -16,58 +16,75 @@ import {
 } from "@/global/styles/companyListStyles";
 
 export default function BookmarkPage() {
-  const [params, setParams] = useState<BookmarkListQuery>({
-    userId: "",
-    page: 1,
-    limit: 10,
-    sort: "1", // Default: 지원한 기업 우선
-  });
+  const {
+    bookMarks,
+    totalPages,
+    currentPage,
+    fetchBookMarks,
+    setPage,
+    setSort,
+    isApplyModalOpen,
+    applyModalData,
+    toggleApplyModal,
+  } = useBookmarkStore();
 
-  /**
-   * @description Update query parameters dynamically
-   */
-  const updateParams = useCallback((newParams: Partial<BookmarkListQuery>) => {
-    setParams((prev) => ({ ...prev, ...newParams }));
-  }, []);
-
-  const { bookMarks, fetchBookMarks, totalPage } = useBookmarkStore();
   useEffect(() => {
-    const userId = Cookies.get("id");
-    updateParams({ userId });
-    if (!userId) {
-      console.error("userId가 없습니다. 로그인 상태를 확인하세요.");
+    // Optionally check for userId here if needed
+    if (!Cookies.get("id")) {
+      console.error("❌ 쿠키에서 userId를 찾을 수 없습니다.");
       return;
     }
-    fetchBookMarks({
-      userId: userId,
-      page: params.page,
-      limit: params.limit,
-      sort: params.sort,
-    });
-  }, [params.sort, params.page]);
+    fetchBookMarks();
+  }, [fetchBookMarks]);
+
+  const handleModalClose = () => {
+    toggleApplyModal(false);
+  };
 
   return (
     <Stack sx={listLayout}>
-      {/* Pass sorting update function to ListTitle */}
-      <Features.ListTitle onSelectSort={(sort) => updateParams({ sort })} />
+      {/* Sorting component */}
+      <Features.ListTitle onSelectSort={setSort} />
 
       <Box sx={scrollWrapper}>
         <Box sx={listWrapperStyle}>
           <Single.ListLabel />
-          {/* {isLoading || !bookmarks.length ? (
+          {bookMarks.length === 0 ? (
             <SkeletonCompanyList />
-          ) : ( */}
-          <Features.BookmarkList companies={bookMarks} page={params.page} />
-          {/* )} */}
+          ) : (
+            // Pass onApply callback; transform BookmarkDTO into ApplyModalData here.
+            <Features.BookmarkList
+              companies={bookMarks}
+              onApply={(companyData) =>
+                toggleApplyModal(true, {
+                  image: companyData.image ?? "",
+                  name: companyData.name,
+                  category: companyData.category, // stored as array; will convert below when rendering modal
+                })
+              }
+            />
+          )}
         </Box>
       </Box>
 
-      {/* Pagination Handling */}
       <ListPagination
-        page={params.page}
-        count={totalPage}
-        onPageChange={(page) => updateParams({ page })}
+        page={currentPage}
+        count={totalPages}
+        onPageChange={setPage}
       />
+
+      {isApplyModalOpen && applyModalData && (
+        <ApplyModal
+          open={isApplyModalOpen}
+          handleClose={handleModalClose}
+          companyData={{
+            image: applyModalData.image,
+            name: applyModalData.name,
+            // Convert category array to a string by joining the category names.
+            category: applyModalData.category.map((c) => c.category).join(", "),
+          }}
+        />
+      )}
     </Stack>
   );
 }
