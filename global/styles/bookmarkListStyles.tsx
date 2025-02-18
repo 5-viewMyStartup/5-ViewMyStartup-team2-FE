@@ -55,7 +55,6 @@ export const bookmarkBoxStyle = {
 
 export const descBoxStyle = {
   ...baseLabelBoxStyle,
-  display: ["none", "none", "flex"],
   width: ["223px", "223px", "384.9px"],
 };
 

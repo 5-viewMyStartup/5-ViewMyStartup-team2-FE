@@ -29,7 +29,7 @@ export default function BookmarkPage() {
   } = useBookmarkStore();
 
   useEffect(() => {
-    // Optionally check for userId here if needed
+    // 필요하다면 여기에서 userId를 확인할 수 있음
     if (!Cookies.get("id")) {
       console.error("❌ 쿠키에서 userId를 찾을 수 없습니다.");
       return;
@@ -43,7 +43,7 @@ export default function BookmarkPage() {
 
   return (
     <Stack sx={listLayout}>
-      {/* Sorting component */}
+      {/* Sorting 컴포넌트 */}
       <Features.ListTitle onSelectSort={setSort} />
 
       <Box sx={scrollWrapper}>
@@ -52,14 +52,14 @@ export default function BookmarkPage() {
           {bookMarks.length === 0 ? (
             <SkeletonCompanyList />
           ) : (
-            // Pass onApply callback; transform BookmarkDTO into ApplyModalData here.
+            // onApply 콜백을 전달; BookmarkDTO를 ApplyModalData로 변환하여 전달함
             <Features.BookmarkList
               companies={bookMarks}
               onApply={(companyData) =>
                 toggleApplyModal(true, {
                   image: companyData.image ?? "",
                   name: companyData.name,
-                  category: companyData.category, // stored as array; will convert below when rendering modal
+                  category: companyData.category, // 배열로 저장됨; 모달에서 렌더링할 때 변환 예정
                 })
               }
             />
@@ -80,7 +80,7 @@ export default function BookmarkPage() {
           companyData={{
             image: applyModalData.image,
             name: applyModalData.name,
-            // Convert category array to a string by joining the category names.
+            // 카테고리 배열을 문자열로 변환하여 표시함
             category: applyModalData.category.map((c) => c.category).join(", "),
           }}
         />

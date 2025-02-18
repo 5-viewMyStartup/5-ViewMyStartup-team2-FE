@@ -9,13 +9,15 @@ interface ListTitleProps {
 }
 
 const sortOptions = [
-  { value: "1", name: "지원한 기업 우선" }, // Applied companies first
-  { value: "2", name: "지원하지 않은 기업 우선" }, // Non-applied companies first
-  { value: "5", name: "지원자 수 많은 순" }, // Companies with most applicants
-  { value: "6", name: "지원자 수 적은 순" }, // Companies with least applicants
+  { value: "1", name: "지원한 기업 우선" },
+  { value: "2", name: "지원하지 않은 기업 우선" },
+  { value: "5", name: "지원자 수 많은 순" },
+  { value: "6", name: "지원자 수 적은 순" },
 ];
 
-export default function ListTitle({ onSelectSort }: ListTitleProps): React.ReactElement {
+export default function ListTitle({
+  onSelectSort,
+}: ListTitleProps): React.ReactElement {
   const [selectedSort, setSelectedSort] = useState<string>("1");
 
   const handleSortChange = (selectedValue: string) => {
@@ -51,7 +53,6 @@ const listHeaderContainerStyle = {
 const sortBoxStyle = {
   display: "flex",
   alignItems: "center",
-  width: ["146px", "168px"],
+  width: ["146px", "190px"],
   height: ["40px", "48px"],
-  border: `1px solid ${colorChips.white}`,
 };
