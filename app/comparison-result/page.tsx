@@ -12,6 +12,27 @@ export default function CompanyComparison() {
   const { selectedAppliedCompanies, selectedSearchCompanies } =
     useCompanyStore();
 
+  // 데이터를 타입에 맞게 변환하는 함수
+  const transformCompanyData = (company: ResultCompany): ResultCompany => {
+    return {
+      ...company,
+      category: Array.isArray(company.category)
+        ? company.category.map((cat) =>
+            typeof cat === "string" ? { id: cat, category: cat } : cat
+          )
+        : [],
+    };
+  };
+
+  // 각 데이터 배열을 변환
+  const transformedAppliedCompanies = useMemo(() => {
+    return selectedAppliedCompanies.map(transformCompanyData);
+  }, [selectedAppliedCompanies]);
+
+  const transformedSearchCompanies = useMemo(() => {
+    return selectedSearchCompanies.map(transformCompanyData);
+  }, [selectedSearchCompanies]);
+
   const dropdownOptions: { name: string; value: keyof ResultCompany }[] = [
     { name: "매출액", value: "salesRevenueRank" },
     { name: "사원 수", value: "employeeRank" },
@@ -36,24 +57,20 @@ export default function CompanyComparison() {
     setRankingPage(1);
   }, [rankingDropdown]);
 
+  // 변환된 데이터를 사용
   const companiesArray = useMemo(
-    () => selectedAppliedCompanies || [],
-    [selectedAppliedCompanies]
+    () => transformedAppliedCompanies || [],
+    [transformedAppliedCompanies]
   );
 
   const combinedCompaniesArray = useMemo(
-    () => [...selectedAppliedCompanies, ...selectedSearchCompanies],
-    [selectedAppliedCompanies, selectedSearchCompanies]
+    () => [...transformedAppliedCompanies, ...transformedSearchCompanies],
+    [transformedAppliedCompanies, transformedSearchCompanies]
   );
 
   // 정렬 함수 (메모이제이션 유지)
   const sortCompanies = useCallback(
     (data: ResultCompany[], key: keyof ResultCompany) => {
-      if (key === "applicantRank") {
-        return [...data].sort(
-          (a, b) => Number(b[key] ?? 0) - Number(a[key] ?? 0)
-        ); // 내림차순 정렬
-      }
       return [...data].sort(
         (a, b) => Number(a[key] ?? 0) - Number(b[key] ?? 0)
       ); // 오름차순 정렬

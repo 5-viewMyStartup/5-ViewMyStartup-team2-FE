@@ -108,7 +108,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.employeeCnt?.toString() || "0"}
+            content={`${itemData.employeeCnt}명`}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -116,7 +116,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.applicantRank?.toString() || "0"}
+            content={`${itemData.applicantCnt ?? 0}명`}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -127,7 +127,6 @@ export const CompanyItems = {
 
   Ranking: function ({ itemData, dropdownValue }: CompanyItemsRankingProps) {
     const { handleImgErr, imgSrc } = useCompanyDefaultImg(itemData.image);
-
     return (
       <Stack sx={companyItemBoxStyle}>
         <Box sx={rankingBoxStyle}>
@@ -186,7 +185,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.employeeCnt?.toString() || "0"}
+            content={`${itemData.employeeCnt}명`}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -194,7 +193,7 @@ export const CompanyItems = {
         <Box sx={dataBoxStyle}>
           <Typo
             className="text_R_14"
-            content={itemData.applicantRank?.toString() || "0"}
+            content={`${itemData.applicantCnt ?? 0}명`}
             color={colorChips.gray_100}
             customStyle={{ textAlign: "center" }}
           />
@@ -243,4 +242,6 @@ const PickItemBoxStyle = {
   },
 };
 
-const pickBoxStyle = {};
+const pickBoxStyle = {
+  display: "flex",
+};
