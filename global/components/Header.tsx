@@ -63,6 +63,7 @@ export const Header = () => {
     clearUserName();
     removeToken();
     setIsLogin(false);
+    route.replace(PATH.HOME);
   };
 
   useEffect(() => {
