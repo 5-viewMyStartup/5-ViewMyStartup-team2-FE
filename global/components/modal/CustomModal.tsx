@@ -25,11 +25,11 @@ interface CustomModalProps {
   searchPage: number;
   totalSearchPages: number;
   handleSearchPageChange: (page: number) => void;
-  pickPage: number;
-  totalPickPages: number;
-  handlePickPageChange: (page: number) => void;
+  pickPage?: number;
+  totalPickPages?: number;
+  handlePickPageChange?: (page: number) => void;
   totalCompaniesCount: number; // 전체 기업 수 (검색 결과 전체)
-  totalAppliedCompaniesCount: number; // 전체 지원한 기업 수
+  totalAppliedCompaniesCount?: number; // 전체 지원한 기업 수
   errorMessage?: string;
 }
 
@@ -48,11 +48,11 @@ export const CustomModal: React.FC<CustomModalProps> = ({
   searchPage,
   totalSearchPages,
   handleSearchPageChange,
-  pickPage, // 🚀 pickPage prop 사용
-  totalPickPages, // 🚀 totalPickPages prop 사용
-  handlePickPageChange, // 🚀 handlePickPageChange prop 사용
+  // pickPage, // 🚀 pickPage prop 사용
+  // totalPickPages, // 🚀 totalPickPages prop 사용
+  // handlePickPageChange, // 🚀 handlePickPageChange prop 사용
   totalCompaniesCount, // 전체 기업 수
-  totalAppliedCompaniesCount, // 전체 지원한 기업 수
+  // totalAppliedCompaniesCount, // 전체 지원한 기업 수
   errorMessage,
 }) => {
   const handleCompanyClick = (company: ComparisonCompanyDTO) => {
@@ -99,7 +99,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           <Typo
             color="input"
             className="text_B_18"
-            content={`최근 지원한 기업 (${totalAppliedCompaniesCount})`} //전체 기업 수
+            content={`최근 지원한 기업 (${appliedCompanies.length})`} //전체 기업 수
           />
           {appliedCompanies.map((company) => (
             <CustomListItem
@@ -113,14 +113,6 @@ export const CustomModal: React.FC<CustomModalProps> = ({
               handleClick={undefined}
             />
           ))}
-          <Box display="flex" justifyContent="center" mt={2}>
-            {/* 🚀 pickPage를 사용한 페이지네이션 추가 */}
-            <CustomPagination
-              page={pickPage}
-              count={totalPickPages}
-              handleChange={(e, value) => handlePickPageChange(value)}
-            />
-          </Box>
         </Stack>
         <Stack gap={"12px"} pt={"16px"}>
           <Typo
