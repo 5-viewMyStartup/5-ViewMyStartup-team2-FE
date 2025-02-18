@@ -1,64 +1,37 @@
 import { create } from "zustand";
-import axios from "axios";
 
-interface CompanyData {
+interface Company {
   id: string;
-  name: string;
-  image: string | null;
-  content: string;
-  employeeCnt: number;
-  salesRevenue: bigint;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
-  comments: CompanyComment[];
-  category: Category[];
-  applicantCount: number;
   idx: number;
-}
-
-interface CompanyComment {
-  id: string;
-  content: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface Category {
-  id: string;
   name: string;
+  image: string;
+  content: string;
+  salesRevenue: string;
+  employeeCnt: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  isBookmarked: boolean;
 }
 
-interface CompanyStore {
-  company: CompanyData | null;
-  loading: boolean;
-  error: string | null;
-  fetchCompany: (id: string) => Promise<void>;
-  setCompany: (company: CompanyData) => void;
+interface CompanyState {
+  company: Company;
+  setCompany: (data: Company) => void;
 }
 
-const useCompanyStore = create<CompanyStore>((set) => ({
-  company: null,
-  loading: false,
-  error: null,
-  fetchCompany: async (id: string) => {
-    try {
-      set({ loading: true });
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/company-detail/${id}`
-      );
-      if (!response.data) {
-        throw new Error("데이터가 없습니다.");
-      }
-      set({ company: response.data, error: null });
-    } catch (err) {
-      set({ error: "기업 정보를 불러오는데 실패했습니다." });
-      console.error(err);
-    } finally {
-      set({ loading: false });
-    }
+export const useCompanyStore = create<CompanyState>((set) => ({
+  company: {
+    id: "",
+    idx: 0,
+    name: "",
+    image: "",
+    content: "",
+    salesRevenue: "",
+    employeeCnt: 0,
+    createdAt: "",
+    updatedAt: "",
+    deletedAt: "",
+    isBookmarked: false,
   },
-  setCompany: (company: CompanyData) => set({ company }),
+  setCompany: (data) => set({ company: data }), // 배열을 set
 }));
-
-export default useCompanyStore;

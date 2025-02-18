@@ -81,7 +81,7 @@ export default function BookmarkPage() {
             image: applyModalData.image,
             name: applyModalData.name,
             // 카테고리 배열을 문자열로 변환하여 표시함
-            category: applyModalData.category.map((c) => c.category).join(", "),
+            // category: applyModalData.category.map((c) => c.category).join(", "),
           }}
         />
       )}

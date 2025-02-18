@@ -11,29 +11,27 @@ import ApplyButton from "./ApplyButton";
 // 타입 정의
 interface HeaderProps {
   name: string;
-  logo: string | null;
-  category: string;
+  logo: string;
   stats: {
     monthlyRevenue: number;
     personnel: number;
     applicants: number;
   };
+  isBookmarked: boolean;
   id: string;
   idx: number;
 }
 
 // 컴포넌트 로직
-const Header = ({ name, logo, category, stats, id, idx }: HeaderProps) => {
+const Header = ({ name, logo, stats, id, idx, isBookmarked }: HeaderProps) => {
   const [imageError, setImageError] = useState(false);
 
   const handleImageError = () => {
     setImageError(true);
   };
-
   const companyData = {
-    image: logo || "/assets/logo.svg",
+    image: logo,
     name,
-    category,
     id,
     idx,
   };
@@ -45,7 +43,7 @@ const Header = ({ name, logo, category, stats, id, idx }: HeaderProps) => {
           <Logo>
             {!imageError ? (
               <StyledImage
-                src={logo || ""}
+                src={logo ? logo : "/assets/default-company-img.svg"}
                 alt={name}
                 onError={handleImageError}
               />
@@ -62,12 +60,12 @@ const Header = ({ name, logo, category, stats, id, idx }: HeaderProps) => {
               {name}
             </Typo>
             <Typo className="text_M_20" color={colorChips.gray_200}>
-              {category}
+              {}
             </Typo>
           </TextContainer>
         </LogoContainer>
         <ButtonContainer>
-          <Bookmark />
+          <Bookmark companyId={id} isBookmarked={isBookmarked} />
           <ApplyButton companyData={companyData} />
         </ButtonContainer>
       </TopContainer>
