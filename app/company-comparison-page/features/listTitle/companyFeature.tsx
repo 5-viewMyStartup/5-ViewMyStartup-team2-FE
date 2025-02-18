@@ -11,7 +11,6 @@ import { useCompanyStore } from "@/app/company-comparison-page/store/useCompanyS
 import { CompanyCard } from "@/global/components/CompanyCard";
 
 const CompanyListTitle: React.FC = () => {
-  // const [selectedCompanies, setSelectedCompanies] = useState<CompanyDTO[]>([]); // 선택된 기업 목록
   const [modalOpen, setModalOpen] = useState(false); // 모달 상태
   const [loading, setLoading] = useState(true); // 로딩 상태 관리
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
@@ -19,9 +18,9 @@ const CompanyListTitle: React.FC = () => {
 
   // ✅ zustand에서 상태 및 액션 가져오기
   const {
-    selectedAppliedCompanies, // 최근 지원한 기업 목록
+    // selectedAppliedCompanies, // 최근 지원한 기업 목록
     selectedSearchCompanies, // 검색 결과에서 선택한 기업 목록
-    selectSearchCompany,
+    // selectSearchCompany,
     deselectSearchCompany,
   } = useCompanyStore();
 
@@ -30,7 +29,7 @@ const CompanyListTitle: React.FC = () => {
   };
 
   // `useCompanyFetch` 훅을 사용하여 기업 목록 불러오기
-  const { isLoading, companies = [], totalPages } = useCompanyFetch(params); // `companies`가 undefined일 경우 빈 배열로 설정
+  const { isLoading, companies = [] } = useCompanyFetch(params); // `companies`가 undefined일 경우 빈 배열로 설정
 
   useEffect(() => {
     if (!isLoading && companies.length > 0) {
@@ -53,13 +52,13 @@ const CompanyListTitle: React.FC = () => {
 
   // ✅ 기본 이미지를 적용하는 함수
   const defaultImage = "@/public/assets/default-company-img.svg";
-  const formatSelectedCompanies = (companies: ComparisonCompanyDTO[]) => {
-    return companies.map((company) => ({
-      ...company,
-      image: company.image || defaultImage, // 기본 이미지 적용
-      category: company.category || [],
-    }));
-  };
+  // const formatSelectedCompanies = (companies: ComparisonCompanyDTO[]) => {
+  //   return companies.map((company) => ({
+  //     ...company,
+  //     image: company.image || defaultImage, // 기본 이미지 적용
+  //     category: company.category || [],
+  //   }));
+  // };
 
   return (
     <Stack sx={{ width: "100%" }}>
@@ -181,13 +180,7 @@ const CompanyListTitle: React.FC = () => {
         </button>
       </Box>
       {/* 모달 컴포넌트 */}
-      <CompanySelectModal
-        open={modalOpen}
-        handleClose={handleCloseModal}
-        // onSelect={selectCompany} //zustand 사용
-        // onDeselect={deselectCompany} //zustand 사용
-        // selectedCompanies={formatSelectedCompanies(selectedCompanies)} // 기본 이미지가 포함된 데이터 전달
-      />
+      <CompanySelectModal open={modalOpen} handleClose={handleCloseModal} />
     </Stack>
   );
 };
