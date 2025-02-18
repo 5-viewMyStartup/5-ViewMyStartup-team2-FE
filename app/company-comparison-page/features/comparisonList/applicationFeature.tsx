@@ -5,10 +5,10 @@ import { companyListWrapperStyle } from "@/global/styles/companyListStyles";
 
 // import {} from "@/global/styles/companyListStyles"; //세정TODO: 스타일 가져와서 Stack에 넣기
 import { ApplicationItems } from "./components/ApplicationItems";
-import { CompanyDTO } from "@/global/types/data-contracts";
+import { ComparisonCompanyDTO } from "@/global/types/data-contracts";
 
 interface ApplicationListProps {
-  companies: CompanyDTO[];
+  companies: ComparisonCompanyDTO[];
   page: number | undefined;
 }
 

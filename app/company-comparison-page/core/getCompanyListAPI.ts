@@ -8,12 +8,13 @@ import {
 /** 기업 목록 조회
  * @param {Object} params - 쿼리 정보
  * @param {int} params.page - 페이지 번호
+ * @param {string} params.keyword - 검색어
  */
 
 export const getCompanyListAPI = async (
   params: Partial<ComparisonSearchQuery> = {}
 ): Promise<ComparisonSearchResponse> => {
-  const { page = 1 } = params;
+  const { page = 1, keyword } = params;
 
   try {
     //GET 요청을 보내서 기업 데이터 가져오기
@@ -21,7 +22,7 @@ export const getCompanyListAPI = async (
       await instance.get(
         "/api/comparison/search", //엔드포인트
         {
-          params: { page },
+          params: { page, keyword },
         }
       );
 
