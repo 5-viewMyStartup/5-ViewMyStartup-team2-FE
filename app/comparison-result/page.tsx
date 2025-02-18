@@ -135,10 +135,6 @@ export default function CompanyComparison() {
     );
   }
 
-  console.log("픽:  ", paginatedCompanies.pick);
-  console.log("결과:  ", paginatedCompanies.result);
-  console.log("랭킹: ", paginatedCompanies.ranking);
-
   return (
     <Stack sx={companyComparisonLayout}>
       {/* 내가 지원한 기업 섹션 */}

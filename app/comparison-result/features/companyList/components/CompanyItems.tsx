@@ -127,7 +127,6 @@ export const CompanyItems = {
 
   Ranking: function ({ itemData, dropdownValue }: CompanyItemsRankingProps) {
     const { handleImgErr, imgSrc } = useCompanyDefaultImg(itemData.image);
-    console.log("dropdownValue: ", dropdownValue);
     return (
       <Stack sx={companyItemBoxStyle}>
         <Box sx={rankingBoxStyle}>
