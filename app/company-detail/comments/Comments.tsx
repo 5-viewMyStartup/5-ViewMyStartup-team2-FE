@@ -8,17 +8,17 @@ import { CommentInput } from "@/global/components/input/CommentInput";
 import useCommentStore from "../store/commentStore";
 import Cookies from "js-cookie";
 
-interface CompanyCommentsProps {
-  companyId: string;
-}
-
 interface Comment {
   id: string;
   content: string;
-  user: {
-    nickname: string;
-  };
   createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  companyId: string;
+  user: { name: string; nickname: string; email: string };
+}
+interface CompanyCommentsProps {
+  companyId: string;
 }
 
 const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
@@ -54,6 +54,7 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
     try {
       await addComment(userId, companyId, comment);
       setComment("");
+      console.log(comments);
     } catch (error) {
       console.error("댓글 작성 실패:", error);
     }
@@ -100,12 +101,13 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
 
   // 현재 페이지의 댓글만 필터링
   useEffect(() => {
-    const currentComments = comments.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
-    setCommentList(currentComments);
+    setCommentList(comments);
   }, [comments]);
+
+  const currentComments = commentList.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // 총 페이지 수 계산
   const totalPages = Math.ceil(comments.length / itemsPerPage);
@@ -148,7 +150,7 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
               </tr>
             </thead>
             <tbody>
-              {commentList?.map((comment) => (
+              {currentComments.map((comment) => (
                 <tr key={comment.id}>
                   <td>
                     <Typo className="text_R_16" color={colorChips.gray_100}>
@@ -157,7 +159,7 @@ const CompanyComments = ({ companyId }: CompanyCommentsProps) => {
                   </td>
                   <td>
                     <Typo className="text_R_16" color={colorChips.gray_100}>
-                      {comment.createdAt.toLocaleDateString()}
+                      {new Date(comment.createdAt).toLocaleDateString()}
                     </Typo>
                   </td>
                   <td>
